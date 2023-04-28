@@ -5,7 +5,10 @@ import 'package:sedigram/theme/presentation/dimens.dart';
 class PrimaryButton extends StatelessWidget {
   final String buttonName;
 
-  const PrimaryButton({super.key, required this.buttonName});
+  const PrimaryButton({
+    required this.buttonName,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +17,9 @@ class PrimaryButton extends StatelessWidget {
       child: TextButton(
         onPressed: () {},
         style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(context.colorScheme.primary)),
+          backgroundColor:
+              MaterialStateProperty.all(context.colorScheme.primary),
+        ),
         child: Text(
           buttonName,
           style: context.textTheme.titleMedium?.copyWith(color: Colors.white),

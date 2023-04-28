@@ -7,10 +7,10 @@ class HaveAccountButton extends StatelessWidget {
   final VoidCallback onClick;
 
   const HaveAccountButton({
-    super.key,
     required this.description,
     required this.link,
     required this.onClick,
+    super.key,
   });
 
   @override

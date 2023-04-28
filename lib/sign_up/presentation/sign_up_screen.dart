@@ -18,54 +18,70 @@ class SignUpScreen extends StatelessWidget {
       ),
       body: Center(
         child: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            const Padding(
-              padding: EdgeInsets.only(top: Dimens.large),
-              child: Text(
-                'Sedigram',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(top: Dimens.large),
+                child: Text(
+                  'Sedigram',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: Dimens.xxLarge,
-            ),
-            const Padding(
+              const SizedBox(
+                height: Dimens.xxLarge,
+              ),
+              const Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: Dimens.medium, vertical: Dimens.smallX),
-                child: FormTextField(hintText: 'email')),
-            const Padding(
+                  horizontal: Dimens.medium,
+                  vertical: Dimens.smallX,
+                ),
+                child: FormTextField(hintText: 'email'),
+              ),
+              const Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: Dimens.medium, vertical: Dimens.smallX),
-                child: FormTextField(hintText: 'Password')),
-            const Padding(
+                  horizontal: Dimens.medium,
+                  vertical: Dimens.smallX,
+                ),
+                child: FormTextField(hintText: 'Password'),
+              ),
+              const Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: Dimens.medium, vertical: Dimens.smallX),
-                child: FormTextField(hintText: 'Repeat Password')),
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: Dimens.medium, vertical: Dimens.smallX),
-              child: PrimaryButton(buttonName: 'Sign up'),
-            ),
-            const SizedBox(
-              height: Dimens.xxLarge,
-            ),
-            const TextSeparatorWidget(),
-            const SizedBox(
-              height: Dimens.xxLarge,
-            ),
-            HaveAccountButton(
-              description: "Already have an account? ",
-              link: "Log in.",
-              onClick: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              },
-            ),
-          ]),
+                  horizontal: Dimens.medium,
+                  vertical: Dimens.smallX,
+                ),
+                child: FormTextField(hintText: 'Repeat Password'),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: Dimens.medium,
+                  vertical: Dimens.smallX,
+                ),
+                child: PrimaryButton(buttonName: 'Sign up'),
+              ),
+              const SizedBox(
+                height: Dimens.xxLarge,
+              ),
+              const TextSeparatorWidget(),
+              const SizedBox(
+                height: Dimens.xxLarge,
+              ),
+              HaveAccountButton(
+                description: 'Already have an account? ',
+                link: 'Log in.',
+                onClick: () {
+                  Navigator.push(
+                    context,
+                    // ignore: inference_failure_on_instance_creation
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

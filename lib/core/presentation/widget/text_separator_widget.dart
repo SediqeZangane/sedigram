@@ -7,7 +7,7 @@ class TextSeparatorWidget extends StatelessWidget {
 
   const TextSeparatorWidget({
     super.key,
-    this.text = "or",
+    this.text = 'OR',
   });
 
   @override
@@ -16,10 +16,11 @@ class TextSeparatorWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: Dimens.medium),
       child: Row(
         children: [
-          Container(
-            height: 2,
-            width: MediaQuery.of(context).size.width * 0.4,
-            color: Colors.black.withOpacity(0.2),
+          Expanded(
+            child: Container(
+              height: 2,
+              color: Colors.black.withOpacity(0.2),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: Dimens.small),
@@ -30,10 +31,11 @@ class TextSeparatorWidget extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            height: 2,
-            width: MediaQuery.of(context).size.width * 0.4,
-            color: Colors.black.withOpacity(0.2),
+          Expanded(
+            child: Container(
+              height: 2,
+              color: Colors.black.withOpacity(0.2),
+            ),
           ),
         ],
       ),
