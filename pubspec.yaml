@@ -17,3 +17,9 @@ dev_dependencies:
   very_good_analysis: ^4.0.0+1
 flutter:
   uses-material-design: true
+  fonts:
+    - family: SFPro
+      fonts:
+        - asset: assets/fonts/SFPRODISPLAYBOLD.OTF
+          weight: 600
+        - asset: assets/fonts/SFPRODISPLAYMEDIUM.OTF

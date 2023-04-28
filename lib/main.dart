@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: textTheme,
         colorScheme: colorScheme,
+        fontFamily: 'SFPro',
       ),
       home: const LoginScreen(),
     );

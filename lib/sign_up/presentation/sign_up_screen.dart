@@ -3,7 +3,6 @@ import 'package:sedigram/core/presentation/widget/form_text_field.dart';
 import 'package:sedigram/core/presentation/widget/have_account_button.dart';
 import 'package:sedigram/core/presentation/widget/primary_button.dart';
 import 'package:sedigram/core/presentation/widget/text_separator_widget.dart';
-import 'package:sedigram/login/presentation/login_screen.dart';
 import 'package:sedigram/theme/presentation/dimens.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -73,7 +72,7 @@ class SignUpScreen extends StatelessWidget {
                 description: 'Already have an account? ',
                 link: 'Log in.',
                 onClick: () {
-                  Navigator.pushNamed(context, LoginScreen.routeNamed);
+                  Navigator.of(context).pop();
                 },
               ),
             ],
