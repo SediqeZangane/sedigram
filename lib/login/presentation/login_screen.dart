@@ -25,42 +25,49 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: Dimens.large),
+              Padding(
+                padding: const EdgeInsets.only(top: Dimens.large),
                 child: Text(
-                  'Sedigram',
+                  context.localization.appName,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(
                 height: Dimens.xxLarge,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
+              Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: Dimens.medium,
                   vertical: Dimens.smallX,
                 ),
-                child: FormTextField(hintText: 'email'),
+                child: FormTextField(
+                  hintText: context.localization.emailTextField,
+                ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
+              Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: Dimens.medium,
                   vertical: Dimens.smallX,
                 ),
-                child: FormTextField(hintText: 'Password'),
+                child: FormTextField(
+                  hintText: context.localization.passwordTextField,
+                ),
               ),
               forgetPassWidget(context),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimens.medium),
-                child: PrimaryButton(buttonName: 'Log in'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Dimens.medium),
+                child: PrimaryButton(buttonName: context.localization.loginCTA),
               ),
               const SizedBox(height: Dimens.xxLarge),
               const TextSeparatorWidget(),
               const SizedBox(height: Dimens.xxLarge),
               HaveAccountButton(
-                description: "Don't have an account? ",
-                link: 'Sign up.',
+                description: context.localization.doNotHaveAccount,
+                link: context.localization.signUpCTA,
                 onClick: () {
                   Navigator.pushNamed(context, SignUpScreen.routeNamed);
                 },
@@ -82,7 +89,7 @@ class LoginScreen extends StatelessWidget {
         ),
         child: GestureDetector(
           child: Text(
-            'Forget Password?',
+            context.localization.forgetPasswordText,
             style: context.textTheme.bodySmall?.copyWith(
               color: context.colorScheme.primary,
               fontWeight: FontWeight.w500,

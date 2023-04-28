@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/core/presentation/widget/form_text_field.dart';
 import 'package:sedigram/core/presentation/widget/have_account_button.dart';
 import 'package:sedigram/core/presentation/widget/primary_button.dart';
@@ -22,44 +23,54 @@ class SignUpScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: Dimens.large),
+              Padding(
+                padding: const EdgeInsets.only(top: Dimens.large),
                 child: Text(
-                  'Sedigram',
+                  context.localization.appName,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(
                 height: Dimens.xxLarge,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
+              Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: Dimens.medium,
                   vertical: Dimens.smallX,
                 ),
-                child: FormTextField(hintText: 'email'),
+                child: FormTextField(
+                  hintText: context.localization.emailTextField,
+                ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
+              Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: Dimens.medium,
                   vertical: Dimens.smallX,
                 ),
-                child: FormTextField(hintText: 'Password'),
+                child: FormTextField(
+                  hintText: context.localization.passwordTextField,
+                ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
+              Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: Dimens.medium,
                   vertical: Dimens.smallX,
                 ),
-                child: FormTextField(hintText: 'Repeat Password'),
+                child: FormTextField(
+                  hintText: context.localization.repeatPasswordTextField,
+                ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
+              Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: Dimens.medium,
                   vertical: Dimens.smallX,
                 ),
-                child: PrimaryButton(buttonName: 'Sign up'),
+                child:
+                    PrimaryButton(buttonName: context.localization.signUpCTA),
               ),
               const SizedBox(
                 height: Dimens.xxLarge,
@@ -69,8 +80,8 @@ class SignUpScreen extends StatelessWidget {
                 height: Dimens.xxLarge,
               ),
               HaveAccountButton(
-                description: 'Already have an account? ',
-                link: 'Log in.',
+                description: context.localization.haveAccount,
+                link: context.localization.loginCTA,
                 onClick: () {
                   Navigator.of(context).pop();
                 },

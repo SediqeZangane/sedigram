@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
 import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
 import 'package:sedigram/theme/presentation/color_scheme.dart';
@@ -24,6 +26,16 @@ class MyApp extends StatelessWidget {
         colorScheme: colorScheme,
         fontFamily: 'SFPro',
       ),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'), // English
+        Locale('es'), // Spanish
+      ],
       home: const LoginScreen(),
     );
   }
