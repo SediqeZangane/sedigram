@@ -7,6 +7,8 @@ import 'package:sedigram/login/presentation/login_screen.dart';
 import 'package:sedigram/theme/presentation/dimens.dart';
 
 class SignUpScreen extends StatelessWidget {
+  static const String routeNamed = 'signUp';
+
   const SignUpScreen({super.key});
 
   @override
@@ -71,13 +73,7 @@ class SignUpScreen extends StatelessWidget {
                 description: 'Already have an account? ',
                 link: 'Log in.',
                 onClick: () {
-                  Navigator.push(
-                    context,
-                    // ignore: inference_failure_on_instance_creation
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, LoginScreen.routeNamed);
                 },
               ),
             ],

@@ -19,6 +19,7 @@ class FormTextField extends StatelessWidget {
           hintText: hintText,
           hintStyle: context.textTheme.titleSmall
               ?.copyWith(color: Colors.black.withOpacity(0.2)),
+          border: const OutlineInputBorder(),
         ),
       ),
     );
