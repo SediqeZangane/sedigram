@@ -1,12 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sedigram/firebase_options.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
 import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
 import 'package:sedigram/theme/presentation/color_scheme.dart';
 import 'package:sedigram/theme/presentation/text_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

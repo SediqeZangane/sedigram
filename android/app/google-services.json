@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "627711550873",
+    "project_id": "sedigramproject",
+    "storage_bucket": "sedigramproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627711550873:android:984f140ff6b92e1bcc1f08",
+        "android_client_info": {
+          "package_name": "com.example.sedigram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627711550873-nt2nddl979pve2asd17jqtmet0mh038h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6yQcrGj7PDsmenaUUiUooyARTuSqHYyA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627711550873-nt2nddl979pve2asd17jqtmet0mh038h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "627711550873-t06ettv4hc1hl5l9io0vo36ttovjjgtt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sedigram"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
