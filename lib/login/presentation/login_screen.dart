@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/core/presentation/widget/form_text_field.dart';
 import 'package:sedigram/core/presentation/widget/have_account_button.dart';
 import 'package:sedigram/core/presentation/widget/primary_button.dart';
 import 'package:sedigram/core/presentation/widget/text_separator_widget.dart';
+import 'package:sedigram/login/application/login_bloc.dart';
+import 'package:sedigram/login/application/login_event.dart';
 import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
 import 'package:sedigram/theme/presentation/dimens.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const String routeNamed = 'login';
 
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late final TextEditingController emailController;
+  late final TextEditingController passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +64,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 child: FormTextField(
                   hintText: context.localization.emailTextField,
+                  textEditingController: emailController,
                 ),
               ),
               Padding(
@@ -55,12 +74,23 @@ class LoginScreen extends StatelessWidget {
                 ),
                 child: FormTextField(
                   hintText: context.localization.passwordTextField,
+                  textEditingController: passwordController,
                 ),
               ),
               forgetPassWidget(context),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Dimens.medium),
-                child: PrimaryButton(buttonName: context.localization.loginCTA),
+                child: PrimaryButton(
+                  buttonName: context.localization.loginCTA,
+                  onPressed: () {
+                    context.read<LoginBloc>().add(
+                          SubmitLoginEvent(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          ),
+                        );
+                  },
+                ),
               ),
               const SizedBox(height: Dimens.xxLarge),
               const TextSeparatorWidget(),

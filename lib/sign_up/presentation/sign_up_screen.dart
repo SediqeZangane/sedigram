@@ -69,8 +69,10 @@ class SignUpScreen extends StatelessWidget {
                   horizontal: Dimens.medium,
                   vertical: Dimens.smallX,
                 ),
-                child:
-                    PrimaryButton(buttonName: context.localization.signUpCTA),
+                child: PrimaryButton(
+                  buttonName: context.localization.signUpCTA,
+                  onPressed: () {},
+                ),
               ),
               const SizedBox(
                 height: Dimens.xxLarge,

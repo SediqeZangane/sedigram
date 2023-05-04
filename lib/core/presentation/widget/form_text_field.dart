@@ -3,9 +3,11 @@ import 'package:sedigram/core/presentation/util/context_extension.dart';
 
 class FormTextField extends StatelessWidget {
   final String hintText;
+  final TextEditingController? textEditingController;
 
   const FormTextField({
     required this.hintText,
+    this.textEditingController,
     super.key,
   });
 
@@ -21,6 +23,7 @@ class FormTextField extends StatelessWidget {
               ?.copyWith(color: Colors.black.withOpacity(0.2)),
           border: const OutlineInputBorder(),
         ),
+        controller: textEditingController,
       ),
     );
   }

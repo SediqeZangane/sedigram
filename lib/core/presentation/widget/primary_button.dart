@@ -4,9 +4,11 @@ import 'package:sedigram/theme/presentation/dimens.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String buttonName;
+  final VoidCallback onPressed;
 
   const PrimaryButton({
     required this.buttonName,
+    required this.onPressed,
     super.key,
   });
 
@@ -15,7 +17,7 @@ class PrimaryButton extends StatelessWidget {
     return SizedBox(
       height: Dimens.primaryButtonHeight,
       child: TextButton(
-        onPressed: () {},
+        onPressed: onPressed,
         style: ButtonStyle(
           backgroundColor:
               MaterialStateProperty.all(context.colorScheme.primary),
