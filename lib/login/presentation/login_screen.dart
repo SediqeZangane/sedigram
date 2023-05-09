@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sedigram/auth/application/auth_bloc.dart';
+import 'package:sedigram/auth/application/auth_event.dart';
+import 'package:sedigram/auth/application/auth_state.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/core/presentation/widget/form_text_field.dart';
 import 'package:sedigram/core/presentation/widget/have_account_button.dart';
 import 'package:sedigram/core/presentation/widget/primary_button.dart';
 import 'package:sedigram/core/presentation/widget/text_separator_widget.dart';
 import 'package:sedigram/home/presentation/home_screen.dart';
-import 'package:sedigram/login/application/login_bloc.dart';
-import 'package:sedigram/login/application/login_event.dart';
-import 'package:sedigram/login/application/login_state.dart';
 import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
 import 'package:sedigram/theme/presentation/dimens.dart';
 
@@ -34,13 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
+    return BlocListener<AuthBloc, AuthState>(
       listenWhen: (p, c) => p.loginResult != c.loginResult,
       listener: (_, state) {
-        if (state.loginResult == LoginResult.succeed) {
+        if (state.loginResult == AuthResult.succeed) {
           Navigator.pushNamed(context, HomeScreen.routeNamed);
         }
-        if (state.loginResult == LoginResult.failed) {
+        if (state.loginResult == AuthResult.failed) {
           const showSnackBar = SnackBar(
             content: Text('Log in failed'),
           );
@@ -96,16 +96,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: Dimens.medium),
-                  child: BlocBuilder<LoginBloc, LoginState>(
+                  child: BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
-                      if (state.isLoging) {
+                      if (state.isLoading) {
                         return const Center(child: CircularProgressIndicator());
                       } else {
                         return PrimaryButton(
                           buttonName: context.localization.loginCTA,
                           onPressed: () {
-                            context.read<LoginBloc>().add(
-                                  SubmitLoginEvent(
+                            context.read<AuthBloc>().add(
+                                  SubmitAuthEvent(
                                     email: emailController.text,
                                     password: passwordController.text,
                                   ),
