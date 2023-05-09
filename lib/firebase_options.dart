@@ -2,7 +2,11 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_classes_with_only_static_members
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+// ignore: combinators_ordering
+    show
+        defaultTargetPlatform,
+        kIsWeb,
+        TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -39,6 +43,7 @@ class DefaultFirebaseOptions {
           'DefaultFirebaseOptions have not been configured for linux - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
+      // ignore: no_default_cases
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -70,7 +75,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '627711550873',
     projectId: 'sedigramproject',
     storageBucket: 'sedigramproject.appspot.com',
-    iosClientId: '627711550873-t06ettv4hc1hl5l9io0vo36ttovjjgtt.apps.googleusercontent.com',
+    iosClientId:
+        '627711550873-t06ettv4hc1hl5l9io0vo36ttovjjgtt.apps.googleusercontent.com',
     iosBundleId: 'com.example.sedigram',
   );
 }

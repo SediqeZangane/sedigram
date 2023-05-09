@@ -2,21 +2,30 @@
 
 class AuthState {
   final bool isLoading;
-  final AuthResult loginResult;
+  final LoginResult loginResult;
+  final bool isLogin;
 
   AuthState.init()
       : isLoading = false,
-        loginResult = AuthResult.none;
+        loginResult = LoginResult.none,
+        isLogin = false;
 
   AuthState({
     required this.isLoading,
     required this.loginResult,
+    required this.isLogin,
   });
 
-  AuthState copyWith({bool? isLoading, AuthResult? loginResult}) => AuthState(
+  AuthState copyWith({
+    bool? isLoading,
+    LoginResult? loginResult,
+    bool? isLogin,
+  }) =>
+      AuthState(
         isLoading: isLoading ?? this.isLoading,
         loginResult: loginResult ?? this.loginResult,
+        isLogin: isLogin ?? this.isLogin,
       );
 }
 
-enum AuthResult { succeed, failed, none }
+enum LoginResult { succeed, failed, none }

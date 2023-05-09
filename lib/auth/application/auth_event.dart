@@ -1,8 +1,10 @@
 abstract class AuthEvent {}
 
-class SubmitAuthEvent implements AuthEvent {
+class SubmitLoginEvent implements AuthEvent {
   final String email;
   final String password;
 
-  SubmitAuthEvent({required this.email, required this.password});
+  SubmitLoginEvent({required this.email, required this.password});
 }
+
+class CheckLoginEvent implements AuthEvent {}

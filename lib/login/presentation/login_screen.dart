@@ -37,10 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<AuthBloc, AuthState>(
       listenWhen: (p, c) => p.loginResult != c.loginResult,
       listener: (_, state) {
-        if (state.loginResult == AuthResult.succeed) {
+        if (state.loginResult == LoginResult.succeed) {
           Navigator.pushNamed(context, HomeScreen.routeNamed);
         }
-        if (state.loginResult == AuthResult.failed) {
+        if (state.loginResult == LoginResult.failed) {
           const showSnackBar = SnackBar(
             content: Text('Log in failed'),
           );
@@ -105,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           buttonName: context.localization.loginCTA,
                           onPressed: () {
                             context.read<AuthBloc>().add(
-                                  SubmitAuthEvent(
+                                  SubmitLoginEvent(
                                     email: emailController.text,
                                     password: passwordController.text,
                                   ),
