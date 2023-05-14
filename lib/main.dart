@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/firebase_options.dart';
+import 'package:sedigram/home/application/home_bloc.dart';
 import 'package:sedigram/home/presentation/home_screen.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
 import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
@@ -33,7 +34,12 @@ class MyApp extends StatelessWidget {
         routes: {
           LoginScreen.routeNamed: (context) => const LoginScreen(),
           SignUpScreen.routeNamed: (context) => const SignUpScreen(),
-          HomeScreen.routeNamed: (context) => const HomeScreen(),
+          HomeScreen.routeNamed: (context) => BlocProvider(
+                create: (_) {
+                  return HomeBloc();
+                },
+                child: const HomeScreen(),
+              ),
           SplashScreen.routeNamed: (context) => const SplashScreen(),
         },
         theme: ThemeData(
