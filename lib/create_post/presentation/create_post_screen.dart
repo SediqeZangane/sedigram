@@ -82,9 +82,21 @@ class CreatePostScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final path = folder.files[index];
                               return GestureDetector(
-                                child: Image.file(
-                                  File(path),
-                                  fit: BoxFit.cover,
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    Image.file(
+                                      File(path),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Visibility(
+                                        visible: state.selectedPath == path,
+                                        child: const Icon(Icons.check_circle),
+                                      ),
+                                    )
+                                  ],
                                 ),
                                 onTap: () {
                                   context
