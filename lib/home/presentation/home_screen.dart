@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
+import 'package:sedigram/create_post/application/create_post_bloc.dart';
+import 'package:sedigram/create_post/application/create_post_event.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
 import 'package:sedigram/home/application/home_bloc.dart';
 import 'package:sedigram/home/application/home_event.dart';
@@ -69,19 +71,42 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildBody(int currentIndex) {
-    switch (currentIndex) {
-      case 0:
-        return const Text('home');
-      case 1:
-        return const Text('search');
-      case 2:
-        return const CreatePostScreen();
-      case 3:
-        return const Text('like');
-      case 4:
-        return const Text('profile');
-      default:
-        return const Text('Not Yet');
-    }
+    // switch (currentIndex) {
+    //   case 0:
+    //     return const Text('home');
+    //   case 1:
+    //     return const Text('search');
+    //   case 2:
+    //     return BlocProvider(
+    //       child: const CreatePostScreen(),
+    //       create: (context) {
+    //         return CreatePostBloc()..add(GetImagesEvent());
+    //       },
+    //     );
+    //   case 3:
+    //     return const Text('like');
+    //   case 4:
+    //     return const Text('profile');
+    //   default:
+    //     return const Text('Not Yet');
+    // }
+
+    return IndexedStack(
+      alignment: Alignment.center,
+      index: currentIndex,
+      children: [
+        const Text('home'),
+        const Text('search'),
+        BlocProvider(
+          child: const CreatePostScreen(),
+          create: (context) {
+            return CreatePostBloc()..add(GetImagesEvent());
+          },
+        ),
+        const Text('like'),
+        const Text('profile'),
+        const Text('Not Yet'),
+      ],
+    );
   }
 }

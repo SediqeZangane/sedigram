@@ -4,13 +4,11 @@ import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/auth/application/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  User? user;
-
   AuthBloc() : super(AuthState.init()) {
     on<AuthEvent>(
       (event, emit) async {
         if (event is CheckLoginEvent) {
-          user = FirebaseAuth.instance.currentUser;
+          final user = FirebaseAuth.instance.currentUser;
 
           emit(
             state.copyWith(
