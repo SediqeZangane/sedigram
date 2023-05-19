@@ -15,9 +15,9 @@ class SplashScreen extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.isLogin) {
-          Navigator.pushNamed(context, HomeScreen.routeNamed);
+          Navigator.pushReplacementNamed(context, HomeScreen.routeNamed);
         } else {
-          Navigator.pushNamed(context, LoginScreen.routeNamed);
+          Navigator.pushReplacementNamed(context, LoginScreen.routeNamed);
         }
       },
       child: const ColoredBox(

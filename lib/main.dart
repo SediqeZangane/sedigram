@@ -5,10 +5,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
+import 'package:sedigram/create_post/presentation/create_post_screen.dart';
 import 'package:sedigram/firebase_options.dart';
 import 'package:sedigram/home/application/home_bloc.dart';
 import 'package:sedigram/home/presentation/home_screen.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
+import 'package:sedigram/save_post/application/save_post_bloc.dart';
+import 'package:sedigram/save_post/presentation/save_post_screen.dart';
 import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
 import 'package:sedigram/splash/presentation/splash_screen.dart';
 import 'package:sedigram/theme/presentation/color_scheme.dart';
@@ -41,6 +44,17 @@ class MyApp extends StatelessWidget {
                 child: const HomeScreen(),
               ),
           SplashScreen.routeNamed: (context) => const SplashScreen(),
+          CreatePostScreen.routeNamed: (context) => const CreatePostScreen(),
+          SavePostScreen.routeNamed: (context) {
+            final path = ModalRoute.of(context)!.settings.arguments as String;
+
+            return BlocProvider(
+              child: SavePostScreen(
+                imagePath: path,
+              ),
+              create: (context) => SavePostBloc(),
+            );
+          },
         },
         theme: ThemeData(
           textTheme: textTheme,

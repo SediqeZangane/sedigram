@@ -7,8 +7,11 @@ import 'package:sedigram/create_post/application/create_post_bloc.dart';
 import 'package:sedigram/create_post/application/create_post_event.dart';
 import 'package:sedigram/create_post/application/create_post_state.dart';
 import 'package:sedigram/create_post/domain/model/folder_path_model.dart';
+import 'package:sedigram/save_post/presentation/save_post_screen.dart';
 
 class CreatePostScreen extends StatelessWidget {
+  static const String routeNamed = 'createPostScreen';
+
   const CreatePostScreen({super.key});
 
   @override
@@ -53,8 +56,32 @@ class CreatePostScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 18),
-                        child:
-                            Text('Next', style: context.textTheme.titleMedium),
+                        child: InkWell(
+                          child: Text(
+                            'Next',
+                            style: context.textTheme.titleMedium
+                                ?.copyWith(color: context.colorScheme.primary),
+                          ),
+                          onTap: () {
+                            if (state.selectedPath != null) {
+                              Navigator.of(context).pushNamed<void>(
+                                SavePostScreen.routeNamed,
+                                arguments: state.selectedPath,
+                              );
+
+                              // Navigator.of(context).push<void>(
+                              //   MaterialPageRoute(
+                              //     builder: (context) => BlocProvider(
+                              //       child: SavePostScreen(
+                              //         imagePath: state.selectedPath!,
+                              //       ),
+                              //       create: (context) => SavePostBloc(),
+                              //     ),
+                              //   ),
+                              // );
+                            }
+                          },
+                        ),
                       )
                     ],
                   ),
