@@ -6,6 +6,7 @@
   "repeatPasswordTextField": "Repeat Password",
   "forgetPasswordText": "Forget Password",
   "loginCTA": "Log in",
+  "loginWithGoogleCTA": "Continue with Google",
   "signUpCTA": "Sign up",
   "authSeparatorText": "OR",
   "doNotHaveAccount": "Don't have an account? ",

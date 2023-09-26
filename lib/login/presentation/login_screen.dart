@@ -116,6 +116,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Dimens.medium,
+                    vertical: Dimens.smallX,
+                  ),
+                  child: BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        return PrimaryButton(
+                          buttonName: context.localization.loginWithGoogleCTA,
+                          onPressed: () {
+                            context.read<AuthBloc>().add(
+                                  SubmitGoogleSignInEvent(),
+                                );
+                          },
+                          textColor: context.colorScheme.onSurface,
+                          bgColor: context.colorScheme.onSurfaceVariant,
+                          leadingImage: 'assets/g.png',
+                          borderSide: true,
+                        );
+                      }
+                    },
+                  ),
+                ),
                 const SizedBox(height: Dimens.xxLarge),
                 const TextSeparatorWidget(),
                 const SizedBox(height: Dimens.xxLarge),
