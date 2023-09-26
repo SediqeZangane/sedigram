@@ -8,3 +8,5 @@ class SubmitLoginEvent implements AuthEvent {
 }
 
 class CheckLoginEvent implements AuthEvent {}
+
+class SubmitGoogleSignInEvent implements AuthEvent {}

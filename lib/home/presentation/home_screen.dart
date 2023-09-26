@@ -7,6 +7,7 @@ import 'package:sedigram/create_post/presentation/create_post_screen.dart';
 import 'package:sedigram/home/application/home_bloc.dart';
 import 'package:sedigram/home/application/home_event.dart';
 import 'package:sedigram/home/application/home_state.dart';
+import 'package:sedigram/profile/presentation/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeNamed = 'homeScreen';
@@ -104,7 +105,7 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         const Text('like'),
-        const Text('profile'),
+        const ProfileScreen(),
         const Text('Not Yet'),
       ],
     );

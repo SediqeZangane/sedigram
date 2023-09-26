@@ -58,7 +58,7 @@ class CreatePostScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 18),
                         child: InkWell(
                           child: Text(
-                            'Next',
+                            context.localization.nextButton,
                             style: context.textTheme.titleMedium
                                 ?.copyWith(color: context.colorScheme.primary),
                           ),

@@ -9,5 +9,6 @@
   "signUpCTA": "Sign up",
   "authSeparatorText": "OR",
   "doNotHaveAccount": "Don't have an account? ",
-  "haveAccount": "Already have an account? "
+  "haveAccount": "Already have an account? ",
+  "nextButton": "Next"
 }
