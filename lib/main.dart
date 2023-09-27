@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
+import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
 import 'package:sedigram/firebase_options.dart';
 import 'package:sedigram/home/application/home_bloc.dart';
 import 'package:sedigram/home/presentation/home_screen.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
               create: (context) => SavePostBloc(),
             );
           },
+          EditProfileScreen.routeNamed: (context) => const EditProfileScreen(),
         },
         theme: ThemeData(
           textTheme: textTheme,
