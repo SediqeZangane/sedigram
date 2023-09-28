@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_state.dart';
+import 'package:shimmer/shimmer.dart';
 
 class EditProfileScreen extends StatelessWidget {
   static const String routeNamed = 'editProfileScreen';
@@ -57,7 +58,18 @@ class EditProfileScreen extends StatelessWidget {
       child: Row(
         children: [
           Expanded(child: Text(field)),
-          Expanded(flex: 3, child: Text(info))
+          Expanded(
+            flex: 3,
+            child: BlocBuilder<EditProfileBloc, EditProfileState>(
+              builder: (BuildContext context, EditProfileState state) {
+                if (state.isLoading) {
+                  return Center(child: shimmerWidget());
+                } else {
+                  return Text(info);
+                }
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -71,6 +83,9 @@ class EditProfileScreen extends StatelessWidget {
   }
 
   Widget listInfo(BuildContext context, EditProfileState state) {
+    // if (state.isLoading) {
+    //   return const Center(child: CircularProgressIndicator());
+    // } else
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -110,5 +125,16 @@ class EditProfileScreen extends StatelessWidget {
         profileInfo('Gender', state.user.gender),
       ],
     );
+  }
+
+  Widget shimmerWidget() {
+    return Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.white,
+        child: Container(
+          height: 10,
+          width: 100,
+          color: Colors.green,
+        ));
   }
 }
