@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
+import 'package:sedigram/core/presentation/widget/form_text_field.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_state.dart';
 import 'package:shimmer/shimmer.dart';
@@ -65,7 +66,10 @@ class EditProfileScreen extends StatelessWidget {
                 if (state.isLoading) {
                   return Center(child: shimmerWidget());
                 } else {
-                  return Text(info);
+                  return FormTextField(
+                    hintText: field,
+                    border: const UnderlineInputBorder(),
+                  );
                 }
               },
             ),
@@ -86,44 +90,48 @@ class EditProfileScreen extends StatelessWidget {
     // if (state.isLoading) {
     //   return const Center(child: CircularProgressIndicator());
     // } else
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const CircleAvatar(
-          radius: 48,
-        ),
-        infoRow(
-          child: Text(
-            'Change Profile Photo',
-            style: TextStyle(color: context.colorScheme.primary, fontSize: 16),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const CircleAvatar(
+            radius: 48,
           ),
-        ),
-        profileInfo('Name', state.user.name),
-        profileInfo('Username', state.user.userName),
-        profileInfo('Website', state.user.webSite),
-        profileInfo('Bio', state.user.bio),
-        infoRow(
-          child: Align(
-            alignment: Alignment.centerLeft,
+          infoRow(
             child: Text(
-              'Switch to Professional Account ',
-              style: TextStyle(color: context.colorScheme.primary),
+              'Change Profile Photo',
+              style:
+                  TextStyle(color: context.colorScheme.primary, fontSize: 16),
             ),
           ),
-        ),
-        infoRow(
-          child: const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Private Information',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          Divider(),
+          profileInfo('Name', state.user.name),
+          profileInfo('Username', state.user.userName),
+          profileInfo('Website', state.user.webSite),
+          profileInfo('Bio', state.user.bio),
+          infoRow(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Switch to Professional Account ',
+                style: TextStyle(color: context.colorScheme.primary),
+              ),
             ),
           ),
-        ),
-        profileInfo('Email', state.user.email),
-        profileInfo('Phone', state.user.phone),
-        profileInfo('Gender', state.user.gender),
-      ],
+          infoRow(
+            child: const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Private Information',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          profileInfo('Email', state.user.email),
+          profileInfo('Phone', state.user.phone),
+          profileInfo('Gender', state.user.gender),
+        ],
+      ),
     );
   }
 

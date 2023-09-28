@@ -4,10 +4,12 @@ import 'package:sedigram/core/presentation/util/context_extension.dart';
 class FormTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController? textEditingController;
+  final InputBorder? border;
 
   const FormTextField({
     required this.hintText,
     this.textEditingController,
+    this.border,
     super.key,
   });
 
@@ -21,7 +23,7 @@ class FormTextField extends StatelessWidget {
           hintText: hintText,
           hintStyle: context.textTheme.titleSmall
               ?.copyWith(color: Colors.black.withOpacity(0.2)),
-          border: const OutlineInputBorder(),
+          border: border ?? const OutlineInputBorder(),
         ),
         controller: textEditingController,
       ),
