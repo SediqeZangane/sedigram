@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
+import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
+import 'package:sedigram/edit_profile/application/edit_profile_state.dart';
 
 class EditProfileScreen extends StatelessWidget {
   static const String routeNamed = 'editProfileScreen';
@@ -43,46 +46,8 @@ class EditProfileScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const CircleAvatar(
-              radius: 48,
-            ),
-            infoRow(
-              child: Text(
-                'Change Profile Photo',
-                style:
-                    TextStyle(color: context.colorScheme.primary, fontSize: 16),
-              ),
-            ),
-            profileInfo('Name', 'data'),
-            profileInfo('Username', 'data'),
-            profileInfo('Website', 'data'),
-            profileInfo('Bio', 'data'),
-            infoRow(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Switch to Professional Account ',
-                  style: TextStyle(color: context.colorScheme.primary),
-                ),
-              ),
-            ),
-            infoRow(
-              child: const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Private Information',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            profileInfo('Email', 'data'),
-            profileInfo('Phone', 'data'),
-            profileInfo('Gender', 'data'),
-          ],
-        ),
+        child:
+            BlocBuilder<EditProfileBloc, EditProfileState>(builder: listInfo),
       ),
     );
   }
@@ -102,6 +67,48 @@ class EditProfileScreen extends StatelessWidget {
     return SizedBox(
       height: 48,
       child: Center(child: child),
+    );
+  }
+
+  Widget listInfo(BuildContext context, EditProfileState state) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const CircleAvatar(
+          radius: 48,
+        ),
+        infoRow(
+          child: Text(
+            'Change Profile Photo',
+            style: TextStyle(color: context.colorScheme.primary, fontSize: 16),
+          ),
+        ),
+        profileInfo('Name', state.user.name),
+        profileInfo('Username', state.user.userName),
+        profileInfo('Website', state.user.webSite),
+        profileInfo('Bio', state.user.bio),
+        infoRow(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Switch to Professional Account ',
+              style: TextStyle(color: context.colorScheme.primary),
+            ),
+          ),
+        ),
+        infoRow(
+          child: const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Private Information',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+        profileInfo('Email', state.user.email),
+        profileInfo('Phone', state.user.phone),
+        profileInfo('Gender', state.user.gender),
+      ],
     );
   }
 }
