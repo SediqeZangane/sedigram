@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/core/presentation/widget/form_text_field.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_state.dart';
 import 'package:shimmer/shimmer.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends StatefulWidget {
   static const String routeNamed = 'editProfileScreen';
 
   const EditProfileScreen({super.key});
+
+  @override
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
+  final formKey = GlobalKey<FormState>();
+  User newUser = User.empty();
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +47,23 @@ class EditProfileScreen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(top: 16, right: 12),
-            child: Text(
-              'Done',
-              style:
-                  TextStyle(color: context.colorScheme.primary, fontSize: 16),
+            child: InkWell(
+              onTap: () {
+                if (formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('info Saved')),
+                  );
+                  print(newUser.name);
+                  print(newUser.userName);
+                  print(newUser.userId);
+                }
+              },
+              child: Text(
+                'Done',
+                style:
+                    TextStyle(color: context.colorScheme.primary, fontSize: 16),
+              ),
             ),
           )
         ],
@@ -54,11 +76,16 @@ class EditProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget profileInfo(String field, String info) {
+  Widget profileInfo({
+    required String nameField,
+    required String fieldInfo,
+    FormFieldValidator<String?>? validator,
+    FormFieldSetter<String>? onSaved,
+  }) {
     return infoRow(
       child: Row(
         children: [
-          Expanded(child: Text(field)),
+          Expanded(child: Text(nameField)),
           Expanded(
             flex: 3,
             child: BlocBuilder<EditProfileBloc, EditProfileState>(
@@ -67,8 +94,10 @@ class EditProfileScreen extends StatelessWidget {
                   return Center(child: shimmerWidget());
                 } else {
                   return FormTextField(
-                    hintText: field,
+                    hintText: nameField,
                     border: const UnderlineInputBorder(),
+                    validator: validator,
+                    onSaved: onSaved,
                   );
                 }
               },
@@ -91,46 +120,97 @@ class EditProfileScreen extends StatelessWidget {
     //   return const Center(child: CircularProgressIndicator());
     // } else
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const CircleAvatar(
-            radius: 48,
-          ),
-          infoRow(
-            child: Text(
-              'Change Profile Photo',
-              style:
-                  TextStyle(color: context.colorScheme.primary, fontSize: 16),
+      child: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const CircleAvatar(
+              radius: 48,
             ),
-          ),
-          Divider(),
-          profileInfo('Name', state.user.name),
-          profileInfo('Username', state.user.userName),
-          profileInfo('Website', state.user.webSite),
-          profileInfo('Bio', state.user.bio),
-          infoRow(
-            child: Align(
-              alignment: Alignment.centerLeft,
+            infoRow(
               child: Text(
-                'Switch to Professional Account ',
-                style: TextStyle(color: context.colorScheme.primary),
+                'Change Profile Photo',
+                style:
+                    TextStyle(color: context.colorScheme.primary, fontSize: 16),
               ),
             ),
-          ),
-          infoRow(
-            child: const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Private Information',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            const Divider(),
+            profileInfo(
+              nameField: 'Name',
+              fieldInfo: state.user.name,
+              onSaved: (value) {
+                newUser = newUser.copyWith(name: value);
+              },
+            ),
+            profileInfo(
+              nameField: 'Username',
+              fieldInfo: state.user.userName,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'pls fill the field';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                newUser = newUser.copyWith(userName: value);
+              },
+            ),
+            profileInfo(
+              nameField: 'Website',
+              fieldInfo: state.user.webSite,
+              onSaved: (value) {
+                newUser = newUser.copyWith(webSite: value);
+              },
+            ),
+            profileInfo(
+              nameField: 'Bio',
+              fieldInfo: state.user.bio,
+              onSaved: (value) {
+                newUser = newUser.copyWith(bio: value);
+              },
+            ),
+            infoRow(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Switch to Professional Account ',
+                  style: TextStyle(color: context.colorScheme.primary),
+                ),
               ),
             ),
-          ),
-          profileInfo('Email', state.user.email),
-          profileInfo('Phone', state.user.phone),
-          profileInfo('Gender', state.user.gender),
-        ],
+            infoRow(
+              child: const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Private Information',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            profileInfo(
+              nameField: 'Email',
+              fieldInfo: state.user.email,
+              onSaved: (value) {
+                newUser = newUser.copyWith(email: value);
+              },
+            ),
+            profileInfo(
+              nameField: 'Phone',
+              fieldInfo: state.user.phone,
+              onSaved: (value) {
+                newUser = newUser.copyWith(phone: value);
+              },
+            ),
+            profileInfo(
+              nameField: 'Gender',
+              fieldInfo: state.user.gender,
+              onSaved: (value) {
+                newUser = newUser.copyWith(gender: value);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

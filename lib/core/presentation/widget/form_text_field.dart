@@ -5,11 +5,15 @@ class FormTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController? textEditingController;
   final InputBorder? border;
+  final FormFieldValidator<String?>? validator;
+  final FormFieldSetter<String>? onSaved;
 
   const FormTextField({
     required this.hintText,
     this.textEditingController,
     this.border,
+    this.validator,
+    this.onSaved,
     super.key,
   });
 
@@ -17,7 +21,9 @@ class FormTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredBox(
       color: context.colorScheme.onSurfaceVariant,
-      child: TextField(
+      child: TextFormField(
+        validator: validator,
+        onSaved: onSaved,
         decoration: InputDecoration(
           isDense: true,
           hintText: hintText,

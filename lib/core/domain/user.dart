@@ -41,4 +41,26 @@ class User {
       gender: json['gender'] as String? ?? '',
     );
   }
+
+  User copyWith({
+    String? userId,
+    String? name,
+    String? userName,
+    String? webSite,
+    String? bio,
+    String? email,
+    String? phone,
+    String? gender,
+  }) {
+    return User(
+      userId: userId ?? this.userId,
+      name: name ?? this.name,
+      userName: userName ?? this.userName,
+      webSite: webSite ?? this.webSite,
+      bio: bio ?? this.bio,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      gender: gender ?? this.gender,
+    );
+  }
 }
