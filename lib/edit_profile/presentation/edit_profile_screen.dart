@@ -82,6 +82,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               );
               Navigator.of(context).pop();
             }
+
+            if (state.error != '') {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.error)),
+              );
+            }
           },
         ),
       ),

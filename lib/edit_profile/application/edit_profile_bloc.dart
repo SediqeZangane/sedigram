@@ -12,7 +12,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         try {
           final userId = FirebaseAuth.instance.currentUser!.uid;
           final user = await FirestoreService().getUser(userId);
-          emit(state.copyWith(isLoading: false, user: user));
+          emit(state.copyWith(isLoading: false, user: user, error: ''));
         } catch (_) {
           emit(state.copyWith(isLoading: false, error: "Couldn't get user"));
         }
@@ -23,7 +23,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           final user = event.updateUser.copyWith(userId: userId);
 
           await FirestoreService().updateUser(user);
-          emit(state.copyWith(saved: true, user: user));
+          emit(state.copyWith(saved: true, user: user, error: ''));
         } catch (_) {
           emit(state.copyWith(error: "Couldn't update user"));
         }
