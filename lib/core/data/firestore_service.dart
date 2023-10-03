@@ -22,4 +22,15 @@ class FirestoreService {
       );
     }
   }
+
+  Future<void> updateUser(User updatedUser) async {
+    final collection = FirebaseFirestore.instance.collection('users');
+    final doc = collection.doc(updatedUser.userId);
+    final exist = (await doc.get()).exists;
+    if (exist) {
+      return doc.update(updatedUser.toJson());
+    } else {
+      return doc.set(updatedUser.toJson());
+    }
+  }
 }

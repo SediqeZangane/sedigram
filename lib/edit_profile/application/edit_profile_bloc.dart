@@ -18,8 +18,14 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         }
       }
       if (event is EditProfileSaveEvent) {
-        emit(state.copyWith(isLoading: true));
-        try {} catch (_) {}
+        try {
+          final userId = FirebaseAuth.instance.currentUser!.uid;
+          final user = event.updateUser.copyWith(userId: userId);
+
+          await FirestoreService().updateUser(user);
+        } catch (_) {
+          emit(state.copyWith(error: "Couldn't update user"));
+        }
       }
     });
   }

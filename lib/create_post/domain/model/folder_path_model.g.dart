@@ -12,7 +12,6 @@ FolderPathModel _$FolderPathModelFromJson(Map<String, dynamic> json) =>
       folderName: json['folderName'] as String,
     );
 
-// ignore: unused_element
 Map<String, dynamic> _$FolderPathModelToJson(FolderPathModel instance) =>
     <String, dynamic>{
       'files': instance.files,

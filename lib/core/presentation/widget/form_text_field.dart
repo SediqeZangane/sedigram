@@ -3,6 +3,7 @@ import 'package:sedigram/core/presentation/util/context_extension.dart';
 
 class FormTextField extends StatelessWidget {
   final String hintText;
+  final String? initialValue;
   final TextEditingController? textEditingController;
   final InputBorder? border;
   final FormFieldValidator<String?>? validator;
@@ -10,6 +11,7 @@ class FormTextField extends StatelessWidget {
 
   const FormTextField({
     required this.hintText,
+    this.initialValue,
     this.textEditingController,
     this.border,
     this.validator,
@@ -24,6 +26,7 @@ class FormTextField extends StatelessWidget {
       child: TextFormField(
         validator: validator,
         onSaved: onSaved,
+        initialValue: initialValue,
         decoration: InputDecoration(
           isDense: true,
           hintText: hintText,

@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'user.g.dart';
+
+@JsonSerializable()
 class User {
   final String userId;
   final String name;
@@ -29,18 +34,22 @@ class User {
         phone = '',
         gender = '';
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      userId: json['userId'] as String? ?? '',
-      name: json['name'] as String? ?? '',
-      userName: json['userName'] as String? ?? '',
-      webSite: json['webSite'] as String? ?? '',
-      bio: json['bio'] as String? ?? '',
-      email: json['email'] as String? ?? '',
-      phone: json['phone'] as String? ?? '',
-      gender: json['gender'] as String? ?? '',
-    );
-  }
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  // factory User.fromJson(Map<String, dynamic> json) {
+  //   return User(
+  //     userId: json['userId'] as String? ?? '',
+  //     name: json['name'] as String? ?? '',
+  //     userName: json['userName'] as String? ?? '',
+  //     webSite: json['webSite'] as String? ?? '',
+  //     bio: json['bio'] as String? ?? '',
+  //     email: json['email'] as String? ?? '',
+  //     phone: json['phone'] as String? ?? '',
+  //     gender: json['gender'] as String? ?? '',
+  //   );
+  // }
 
   User copyWith({
     String? userId,

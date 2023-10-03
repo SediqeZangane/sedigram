@@ -99,6 +99,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     border: const UnderlineInputBorder(),
                     validator: validator,
                     onSaved: onSaved,
+                    initialValue: fieldInfo,
                   );
                 }
               },
