@@ -23,6 +23,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           final user = event.updateUser.copyWith(userId: userId);
 
           await FirestoreService().updateUser(user);
+          emit(state.copyWith(saved: true, user: user));
         } catch (_) {
           emit(state.copyWith(error: "Couldn't update user"));
         }

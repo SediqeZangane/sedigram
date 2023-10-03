@@ -55,9 +55,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   context.read<EditProfileBloc>().add(
                         EditProfileSaveEvent(updateUser: newUser),
                       );
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('info Saved')),
-                  );
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   const SnackBar(content: Text('info Saved')),
+                  // );
                 }
               },
               child: Text(
@@ -72,7 +72,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       body: Padding(
         padding: const EdgeInsets.only(left: 16),
         child:
-            BlocBuilder<EditProfileBloc, EditProfileState>(builder: listInfo),
+            // BlocBuilder<EditProfileBloc, EditProfileState>(builder: listInfo),
+            BlocConsumer<EditProfileBloc, EditProfileState>(
+          builder: listInfo,
+          listener: (buildContext, state) {
+            if (state.saved) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('info Saved')),
+              );
+              Navigator.of(context).pop();
+            }
+          },
+        ),
       ),
     );
   }
