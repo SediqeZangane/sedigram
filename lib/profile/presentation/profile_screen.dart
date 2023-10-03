@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
+import 'package:sedigram/profile/application/profile_bloc.dart';
+import 'package:sedigram/profile/application/profile_state.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -24,7 +27,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         actions: [
           Padding(
-              padding: const EdgeInsets.only(right: 20.0),
+              padding: const EdgeInsets.only(right: 20),
               child: GestureDetector(
                 onTap: () {},
                 child: const Icon(
@@ -37,90 +40,101 @@ class ProfileScreen extends StatelessWidget {
           size: 30,
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Row(
+      body: BlocConsumer<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const CircleAvatar(
-                radius: 48,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const CircleAvatar(
+                    radius: 48,
+                  ),
+                  Column(
+                    children: const [Text('21'), Text('Posts')],
+                  ),
+                  Column(
+                    children: const [Text('212'), Text('Followers')],
+                  ),
+                  Column(
+                    children: const [Text('195'), Text('Following')],
+                  ),
+                ],
               ),
-              Column(
-                children: const [Text('21'), Text('Posts')],
-              ),
-              Column(
-                children: const [Text('212'), Text('Followers')],
-              ),
-              Column(
-                children: const [Text('195'), Text('Following')],
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 28, bottom: 20, left: 32),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text('Jacob West'),
-                SizedBox(
-                  height: 8,
+              Padding(
+                padding: const EdgeInsets.only(top: 24, bottom: 8, left: 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(state.currentUser.name),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(state.currentUser.userName),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      state.currentUser.bio,
+                      style: const TextStyle(fontWeight: FontWeight.w400),
+                    )
+                  ],
                 ),
-                Text(
-                  'Posts',
-                  style: TextStyle(fontWeight: FontWeight.w400),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(EditProfileScreen.routeNamed);
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(EditProfileScreen.routeNamed);
 
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => const EditProfileScreen()),
-                // );
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    side: const BorderSide(
-                      color: Colors.black12,
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const EditProfileScreen()),
+                    // );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                        side: const BorderSide(
+                          color: Colors.black12,
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Edit Profile',
+                      style: TextStyle(color: context.colorScheme.onSurface),
                     ),
                   ),
                 ),
               ),
-              child: Center(
-                child: Text(
-                  'Edit Profile',
-                  style: TextStyle(color: context.colorScheme.onSurface),
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 4,
+                    mainAxisSpacing: 4,
+                  ),
+                  itemBuilder: (context, index) {
+                    return const ColoredBox(color: Colors.lightBlueAccent);
+                  },
+                  itemCount: 20,
                 ),
-              ),
-            ),
-          ),
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 4,
-              ),
-              itemBuilder: (context, index) {
-                return const ColoredBox(color: Colors.lightBlueAccent);
-              },
-              itemCount: 20,
-            ),
-          )),
-        ],
+              )),
+            ],
+          );
+        },
+        listener: (context, state) {},
       ),
     );
   }

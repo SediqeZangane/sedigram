@@ -7,6 +7,8 @@ import 'package:sedigram/create_post/presentation/create_post_screen.dart';
 import 'package:sedigram/home/application/home_bloc.dart';
 import 'package:sedigram/home/application/home_event.dart';
 import 'package:sedigram/home/application/home_state.dart';
+import 'package:sedigram/profile/application/profile_bloc.dart';
+import 'package:sedigram/profile/application/profile_event.dart';
 import 'package:sedigram/profile/presentation/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -105,7 +107,12 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         const Text('like'),
-        const ProfileScreen(),
+        BlocProvider(
+          create: (context) {
+            return ProfileBloc()..add(ProfileInitEvent());
+          },
+          child: const ProfileScreen(),
+        ),
         const Text('Not Yet'),
       ],
     );
