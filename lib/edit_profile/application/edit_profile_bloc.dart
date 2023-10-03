@@ -17,6 +17,10 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           emit(state.copyWith(isLoading: false, error: "Couldn't get user"));
         }
       }
+      if (event is EditProfileSaveEvent) {
+        emit(state.copyWith(isLoading: true));
+        try {} catch (_) {}
+      }
     });
   }
 }

@@ -4,6 +4,7 @@ import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/core/presentation/widget/form_text_field.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
+import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_state.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -51,12 +52,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               onTap: () {
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
+                  context.read<EditProfileBloc>().add(
+                        EditProfileSaveEvent(updateUser: newUser),
+                      );
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('info Saved')),
                   );
-                  print(newUser.name);
-                  print(newUser.userName);
-                  print(newUser.userId);
                 }
               },
               child: Text(
