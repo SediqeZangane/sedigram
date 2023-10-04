@@ -53,13 +53,31 @@ class ProfileScreen extends StatelessWidget {
                     radius: 48,
                   ),
                   Column(
-                    children: const [Text('21'), Text('Posts')],
+                    children: [
+                      Text(state.userInfo.posts.length.toString()),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 8),
+                        child: Text('Posts'),
+                      )
+                    ],
                   ),
                   Column(
-                    children: const [Text('212'), Text('Followers')],
+                    children: [
+                      Text(state.userInfo.followers.length.toString()),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 8),
+                        child: Text('Followers'),
+                      )
+                    ],
                   ),
                   Column(
-                    children: const [Text('195'), Text('Following')],
+                    children: [
+                      Text(state.userInfo.followings.length.toString()),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 8),
+                        child: Text('Following'),
+                      )
+                    ],
                   ),
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sedigram/core/domain/user.dart';
+import 'package:sedigram/core/domain/user_info.dart';
 
 class FirestoreService {
   Future<User> getUser(String userId) async {
@@ -10,16 +11,7 @@ class FirestoreService {
     if (userData != null) {
       return User.fromJson(userData);
     } else {
-      return User(
-        userId: userId,
-        name: '',
-        userName: '',
-        webSite: '',
-        bio: '',
-        email: '',
-        phone: '',
-        gender: '',
-      );
+      return User.empty().copyWith(userId: userId);
     }
   }
 
@@ -31,6 +23,18 @@ class FirestoreService {
       return doc.update(updatedUser.toJson());
     } else {
       return doc.set(updatedUser.toJson());
+    }
+  }
+
+  Future<UserInfo> getUserInfo(String userId) async {
+    final userInfoDoc =
+        FirebaseFirestore.instance.collection('userInfo').doc(userId);
+    final userInfoDocSnapshot = await userInfoDoc.get();
+    final userInfo = userInfoDocSnapshot.data();
+    if (userInfo != null) {
+      return UserInfo.fromJson(userInfo);
+    } else {
+      return UserInfo.empty().copyWith(userId: userId);
     }
   }
 }
