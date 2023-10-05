@@ -37,4 +37,15 @@ class FirestoreService {
       return UserInfo.empty().copyWith(userId: userId);
     }
   }
+
+  Future<void> updateUserInfo(UserInfo updatedUserInfo) async {
+    final collection = FirebaseFirestore.instance.collection('userInfo');
+    final doc = collection.doc(updatedUserInfo.userId);
+    final exist = (await doc.get()).exists;
+    if (exist) {
+      return doc.update(updatedUserInfo.toJson());
+    } else {
+      return doc.set(updatedUserInfo.toJson());
+    }
+  }
 }

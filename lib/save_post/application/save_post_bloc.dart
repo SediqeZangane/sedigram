@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide UserInfo;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart' as p;
 import 'package:sedigram/core/data/fire_storage.dart';
+import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/core/domain/posts.dart';
 import 'package:sedigram/save_post/application/save_post_event.dart';
 import 'package:sedigram/save_post/application/save_post_state.dart';
@@ -36,6 +37,9 @@ class SavePostBloc extends Bloc<SavePostEvent, SavePostState> {
             final result = await FireStorage().insertPosts(newPostInfo);
             if (result) {
               emit(state.copyWith(isLoading: false, uploaded: true));
+              final userInfo = await FirestoreService().getUserInfo(userId);
+              userInfo.posts.add(postId);
+              await FirestoreService().updateUserInfo(userInfo);
             } else {
               emit(state.copyWith(isLoading: false, uploaded: false));
             }
