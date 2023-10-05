@@ -10,6 +10,7 @@ dependencies:
   cupertino_icons: ^1.0.5
   firebase_auth: ^4.4.2
   firebase_core: ^2.10.0
+  firebase_storage: ^11.2.8
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
@@ -20,7 +21,9 @@ dependencies:
   google_sign_in: ^6.1.5
   intl: any
   json_annotation: ^4.8.1
+  path: ^1.8.2
   shimmer: ^3.0.0
+  uuid: ^4.1.0
 
 
 dev_dependencies:

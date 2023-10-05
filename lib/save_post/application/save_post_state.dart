@@ -1,13 +1,28 @@
 class SavePostState {
-  final String? imageSelected;
+  final String? caption;
+  final bool isLoading;
+  final bool uploaded;
 
-  SavePostState({required this.imageSelected});
+  SavePostState({
+    required this.caption,
+    required this.isLoading,
+    required this.uploaded,
+  });
 
-  SavePostState.init() : imageSelected = null;
+  SavePostState.init()
+      : caption = '',
+        isLoading = false,
+        uploaded = false;
 
-  SavePostState copyWith({String? imageSelected}) {
+  SavePostState copyWith({
+    String? caption,
+    bool? isLoading,
+    bool? uploaded,
+  }) {
     return SavePostState(
-      imageSelected: imageSelected ?? this.imageSelected,
+      caption: caption ?? this.caption,
+      isLoading: isLoading ?? this.isLoading,
+      uploaded: uploaded ?? this.uploaded,
     );
   }
 }

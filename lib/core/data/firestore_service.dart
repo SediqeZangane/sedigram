@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/core/domain/user_info.dart';
 
@@ -35,6 +38,23 @@ class FirestoreService {
       return UserInfo.fromJson(userInfo);
     } else {
       return UserInfo.empty().copyWith(userId: userId);
+    }
+  }
+
+  Future<bool> uploadImageFile(
+    String imageFilePath,
+    String imageFileName,
+    String userId,
+  ) async {
+    final file = File(imageFilePath);
+    final storage = FirebaseStorage.instance;
+
+    try {
+      await storage.ref('$userId/$imageFileName').putFile(file);
+      return true;
+    } on FirebaseException catch (e) {
+      print('error is = $e');
+      return false;
     }
   }
 }
