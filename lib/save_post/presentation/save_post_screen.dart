@@ -7,7 +7,7 @@ import 'package:sedigram/save_post/application/save_post_bloc.dart';
 import 'package:sedigram/save_post/application/save_post_event.dart';
 import 'package:sedigram/save_post/application/save_post_state.dart';
 
-class SavePostScreen extends StatelessWidget {
+class SavePostScreen extends StatefulWidget {
   static const String routeNamed = 'savePostScreen';
 
   final String imagePath;
@@ -18,13 +18,32 @@ class SavePostScreen extends StatelessWidget {
   });
 
   @override
+  State<SavePostScreen> createState() => _SavePostScreenState();
+}
+
+class _SavePostScreenState extends State<SavePostScreen> {
+  late final TextEditingController captionController;
+
+  @override
+  void initState() {
+    super.initState();
+    captionController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    captionController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<SavePostBloc, SavePostState>(
       listener: (context, state) {
         if (state.uploaded) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Image Uploaded Successfully'),
+              content: Text('Post Uploaded Successfully'),
             ),
           );
         }
@@ -34,25 +53,27 @@ class SavePostScreen extends StatelessWidget {
           child: Column(
             children: [
               Image.file(
-                File(imagePath),
+                File(widget.imagePath),
                 fit: BoxFit.cover,
               ),
-              const TextField(
-                decoration:
-                    InputDecoration(hintText: 'Write your caption . . . . '),
+              TextField(
+                controller: captionController,
+                decoration: const InputDecoration(
+                    hintText: 'Write your caption . . . . '),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 8, top: 16),
                 child: Align(
-                    alignment: Alignment.centerRight,
-                    child: BlocBuilder<SavePostBloc, SavePostState>(
-                        builder: (context, state) {
+                  alignment: Alignment.centerRight,
+                  child: BlocBuilder<SavePostBloc, SavePostState>(
+                    builder: (context, state) {
                       return TextButton(
                         onPressed: () {
                           if (!state.isLoading) {
-                            context
-                                .read<SavePostBloc>()
-                                .add(SavePostUploadEvent(imagePath: imagePath));
+                            context.read<SavePostBloc>().add(
+                                SavePostUploadEvent(
+                                    imagePath: widget.imagePath,
+                                    caption: captionController.text));
                           }
                         },
                         style: ButtonStyle(
@@ -73,7 +94,9 @@ class SavePostScreen extends StatelessWidget {
                                     ?.copyWith(color: Colors.white),
                               ),
                       );
-                    })),
+                    },
+                  ),
+                ),
               ),
             ],
           ),
