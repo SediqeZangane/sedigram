@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_state.dart';
@@ -20,9 +20,14 @@ class SplashScreen extends StatelessWidget {
           Navigator.pushReplacementNamed(context, LoginScreen.routeNamed);
         }
       },
-      child: const ColoredBox(
-        color: Color(0xFFB74093),
-        child: Text('splash'),
+      child: ColoredBox(
+        color: Colors.white,
+        child: Center(
+          child: SizedBox(
+            height: 80,
+            child: Image.asset('assets/icon/sedigram_Icon.png'),
+          ),
+        ),
       ),
     );
   }
