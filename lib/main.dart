@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
+import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
@@ -21,6 +24,9 @@ import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
 import 'package:sedigram/splash/presentation/splash_screen.dart';
 import 'package:sedigram/theme/presentation/color_scheme.dart';
 import 'package:sedigram/theme/presentation/text_theme.dart';
+import 'package:uuid/uuid.dart';
+
+import 'core/data/fire_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,7 +64,14 @@ class MyApp extends StatelessWidget {
               child: SavePostScreen(
                 imagePath: path,
               ),
-              create: (context) => SavePostBloc(),
+              create: (context) => SavePostBloc(
+                FirebaseAuth.instance,
+                FireStorage(FirebaseStorage.instance),
+                const Uuid(),
+                FirestoreService(
+                  FirebaseFirestore.instance,
+                ),
+              ),
             );
           },
           EditProfileScreen.routeNamed: (context) => BlocProvider(
