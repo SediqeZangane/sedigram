@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sedigram/core/domain/posts.dart';
 import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/core/domain/user_info.dart';
 
 class FirestoreService {
+  final FirebaseFirestore firebaseFirestore;
+
+  FirestoreService(this.firebaseFirestore);
+
   Future<User> getUser(String userId) async {
-    final userDoc = FirebaseFirestore.instance.collection('users').doc(userId);
+    final userDoc = firebaseFirestore.collection('users').doc(userId);
     final userSnapshot = await userDoc.get();
     // Map<String, dynamic>?
     final userData = userSnapshot.data();
@@ -16,7 +21,7 @@ class FirestoreService {
   }
 
   Future<void> updateUser(User updatedUser) async {
-    final collection = FirebaseFirestore.instance.collection('users');
+    final collection = firebaseFirestore.collection('users');
     final doc = collection.doc(updatedUser.userId);
     final exist = (await doc.get()).exists;
     if (exist) {
@@ -27,8 +32,7 @@ class FirestoreService {
   }
 
   Future<UserInfo> getUserInfo(String userId) async {
-    final userInfoDoc =
-        FirebaseFirestore.instance.collection('userInfo').doc(userId);
+    final userInfoDoc = firebaseFirestore.collection('userInfo').doc(userId);
     final userInfoDocSnapshot = await userInfoDoc.get();
     final userInfo = userInfoDocSnapshot.data();
     if (userInfo != null) {
@@ -39,13 +43,25 @@ class FirestoreService {
   }
 
   Future<void> updateUserInfo(UserInfo updatedUserInfo) async {
-    final collection = FirebaseFirestore.instance.collection('userInfo');
+    final collection = firebaseFirestore.collection('userInfo');
     final doc = collection.doc(updatedUserInfo.userId);
     final exist = (await doc.get()).exists;
     if (exist) {
       return doc.update(updatedUserInfo.toJson());
     } else {
       return doc.set(updatedUserInfo.toJson());
+    }
+  }
+
+  Future<bool> insertPosts(Posts newPost) async {
+    final collection = firebaseFirestore.collection('posts');
+    final doc = collection.doc(newPost.postId);
+
+    try {
+      final isSet = await doc.set(newPost.toJson());
+      return true;
+    } catch (_) {
+      return false;
     }
   }
 }

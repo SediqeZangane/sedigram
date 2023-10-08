@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide UserInfo;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart' as p;
 import 'package:sedigram/core/data/fire_storage.dart';
@@ -20,7 +22,8 @@ class SavePostBloc extends Bloc<SavePostEvent, SavePostState> {
           final randomId = const Uuid().v4();
           final uniqueRandomName = randomId + extension;
 
-          final imageUrl = await FireStorage().uploadImageFile(
+          final imageUrl =
+              await FireStorage(FirebaseStorage.instance).uploadImageFile(
             event.imagePath,
             uniqueRandomName,
             userId,
@@ -34,12 +37,16 @@ class SavePostBloc extends Bloc<SavePostEvent, SavePostState> {
               createdAt: DateTime.now().millisecondsSinceEpoch,
               userId: userId,
             );
-            final result = await FireStorage().insertPosts(newPostInfo);
+            final result = await FirestoreService(FirebaseFirestore.instance)
+                .insertPosts(newPostInfo);
             if (result) {
               emit(state.copyWith(isLoading: false, uploaded: true));
-              final userInfo = await FirestoreService().getUserInfo(userId);
+              final userInfo =
+                  await FirestoreService(FirebaseFirestore.instance)
+                      .getUserInfo(userId);
               userInfo.posts.add(postId);
-              await FirestoreService().updateUserInfo(userInfo);
+              await FirestoreService(FirebaseFirestore.instance)
+                  .updateUserInfo(userInfo);
             } else {
               emit(state.copyWith(isLoading: false, uploaded: false));
             }

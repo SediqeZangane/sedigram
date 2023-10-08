@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/data/firestore_service.dart';
@@ -12,8 +13,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           emit(state.copyWith(isLoading: true));
           try {
             final userId = FirebaseAuth.instance.currentUser!.uid;
-            final user = await FirestoreService().getUser(userId);
-            final userInfo = await FirestoreService().getUserInfo(userId);
+            final user = await FirestoreService(FirebaseFirestore.instance)
+                .getUser(userId);
+            final userInfo = await FirestoreService(FirebaseFirestore.instance)
+                .getUserInfo(userId);
 
             emit(
               state.copyWith(
