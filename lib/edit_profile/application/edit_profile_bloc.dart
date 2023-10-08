@@ -6,12 +6,14 @@ import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_state.dart';
 
 class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
-  EditProfileBloc() : super(EditProfileState.init()) {
+  final FirebaseAuth firebaseAuth;
+
+  EditProfileBloc(this.firebaseAuth) : super(EditProfileState.init()) {
     on<EditProfileEvent>((event, emit) async {
       if (event is EditProfileInitEvent) {
         emit(state.copyWith(isLoading: true));
         try {
-          final userId = FirebaseAuth.instance.currentUser!.uid;
+          final userId = firebaseAuth.currentUser!.uid;
           final user = await FirestoreService(FirebaseFirestore.instance)
               .getUser(userId);
           emit(state.copyWith(isLoading: false, user: user, error: ''));
@@ -21,7 +23,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       }
       if (event is EditProfileSaveEvent) {
         try {
-          final userId = FirebaseAuth.instance.currentUser!.uid;
+          final userId = firebaseAuth.currentUser!.uid;
           final user = event.updateUser.copyWith(userId: userId);
 
           await FirestoreService(FirebaseFirestore.instance).updateUser(user);

@@ -6,13 +6,15 @@ import 'package:sedigram/profile/application/profile_event.dart';
 import 'package:sedigram/profile/application/profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc() : super(ProfileState.init()) {
+  final FirebaseAuth firebaseAuth;
+
+  ProfileBloc(this.firebaseAuth) : super(ProfileState.init()) {
     on<ProfileEvent>(
       (event, emit) async {
         if (event is ProfileInitEvent) {
           emit(state.copyWith(isLoading: true));
           try {
-            final userId = FirebaseAuth.instance.currentUser!.uid;
+            final userId = firebaseAuth.currentUser!.uid;
             final user = await FirestoreService(FirebaseFirestore.instance)
                 .getUser(userId);
             final userInfo = await FirestoreService(FirebaseFirestore.instance)
