@@ -27,14 +27,15 @@ class ProfileScreen extends StatelessWidget {
         ),
         actions: [
           Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: GestureDetector(
-                onTap: () {},
-                child: const Icon(
-                  Icons.menu,
-                  color: Colors.black,
-                ),
-              )),
+            padding: const EdgeInsets.only(right: 20),
+            child: GestureDetector(
+              onTap: () {},
+              child: const Icon(
+                Icons.menu,
+                color: Colors.black,
+              ),
+            ),
+          ),
         ],
         actionsIconTheme: const IconThemeData(
           size: 30,
@@ -135,20 +136,22 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                  child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    crossAxisSpacing: 4,
-                    mainAxisSpacing: 4,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      crossAxisSpacing: 4,
+                      mainAxisSpacing: 4,
+                    ),
+                    itemBuilder: (context, index) {
+                      return const ColoredBox(color: Colors.lightBlueAccent);
+                    },
+                    itemCount: 20,
                   ),
-                  itemBuilder: (context, index) {
-                    return const ColoredBox(color: Colors.lightBlueAccent);
-                  },
-                  itemCount: 20,
                 ),
-              )),
+              ),
             ],
           );
         },

@@ -9,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
+import 'package:sedigram/core/data/fire_storage.dart';
 import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
@@ -25,8 +26,6 @@ import 'package:sedigram/splash/presentation/splash_screen.dart';
 import 'package:sedigram/theme/presentation/color_scheme.dart';
 import 'package:sedigram/theme/presentation/text_theme.dart';
 import 'package:uuid/uuid.dart';
-
-import 'core/data/fire_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,11 +57,11 @@ class MyApp extends StatelessWidget {
           SplashScreen.routeNamed: (context) => const SplashScreen(),
           CreatePostScreen.routeNamed: (context) => const CreatePostScreen(),
           SavePostScreen.routeNamed: (context) {
-            final path = ModalRoute.of(context)!.settings.arguments as String;
+            final path = ModalRoute.of(context)!.settings.arguments as String?;
 
             return BlocProvider(
               child: SavePostScreen(
-                imagePath: path,
+                imagePath: path!,
               ),
               create: (context) => SavePostBloc(
                 FirebaseAuth.instance,

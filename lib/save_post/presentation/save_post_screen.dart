@@ -59,7 +59,8 @@ class _SavePostScreenState extends State<SavePostScreen> {
               TextField(
                 controller: captionController,
                 decoration: const InputDecoration(
-                    hintText: 'Write your caption . . . . '),
+                  hintText: 'Write your caption . . . . ',
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 8, top: 16),
@@ -71,9 +72,11 @@ class _SavePostScreenState extends State<SavePostScreen> {
                         onPressed: () {
                           if (!state.isLoading) {
                             context.read<SavePostBloc>().add(
-                                SavePostUploadEvent(
+                                  SavePostUploadEvent(
                                     imagePath: widget.imagePath,
-                                    caption: captionController.text));
+                                    caption: captionController.text,
+                                  ),
+                                );
                           }
                         },
                         style: ButtonStyle(

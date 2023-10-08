@@ -71,9 +71,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16),
-        child:
-            // BlocBuilder<EditProfileBloc, EditProfileState>(builder: listInfo),
-            BlocConsumer<EditProfileBloc, EditProfileState>(
+        child: BlocConsumer<EditProfileBloc, EditProfileState>(
           builder: listInfo,
           listener: (buildContext, state) {
             if (state.saved) {
@@ -236,12 +234,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Widget shimmerWidget() {
     return Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.white,
-        child: Container(
-          height: 10,
-          width: 100,
-          color: Colors.green,
-        ));
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.white,
+      child: Container(
+        height: 10,
+        width: 100,
+        color: Colors.green,
+      ),
+    );
   }
 }

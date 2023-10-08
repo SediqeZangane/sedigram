@@ -23,8 +23,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
               // FolderPathModel.fromJson(
               //   Map<String, dynamic>.from(e as Map),
               // )
-              Map map = e as Map;
-              Map<String, dynamic> json = Map<String, dynamic>.from(map);
+              final map = e as Map;
+              final json = Map<String, dynamic>.from(map);
               return FolderPathModel.fromJson(json);
             },
           ).toList();

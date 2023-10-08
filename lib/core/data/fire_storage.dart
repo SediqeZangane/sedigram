@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 
 class FireStorage {
   final FirebaseStorage firebaseStorage;
@@ -19,7 +20,7 @@ class FireStorage {
           await firebaseStorage.ref('$userId/$imageFileName').putFile(file);
       return await uploadTaskSnapshot.ref.getDownloadURL();
     } on FirebaseException catch (e) {
-      print('error is = $e');
+      debugPrint('error is = $e');
       return null;
     }
   }

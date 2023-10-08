@@ -58,7 +58,7 @@ class FirestoreService {
     final doc = collection.doc(newPost.postId);
 
     try {
-      final isSet = await doc.set(newPost.toJson());
+      await doc.set(newPost.toJson());
       return true;
     } catch (_) {
       return false;
