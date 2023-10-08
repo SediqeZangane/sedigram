@@ -5,11 +5,15 @@ import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/auth/application/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(AuthState.init()) {
+  final FirebaseAuth firebaseAuth;
+  final GoogleSignIn googleSignIn;
+
+  AuthBloc(this.firebaseAuth, this.googleSignIn) : super(AuthState.init()) {
     on<AuthEvent>(
       (event, emit) async {
         if (event is CheckLoginEvent) {
-          final user = FirebaseAuth.instance.currentUser;
+          // final firebaseAuth = FirebaseAuth.instance;
+          final user = firebaseAuth.currentUser;
 
           emit(
             state.copyWith(
@@ -23,7 +27,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               state.copyWith(isLoading: true, loginResult: LoginResult.none),
             );
             final userCredential =
-                await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await firebaseAuth.signInWithEmailAndPassword(
               email: event.email,
               password: event.password,
             );
@@ -47,8 +51,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             emit(
               state.copyWith(isLoading: true, loginResult: LoginResult.none),
             );
-
-            final googleUser = await GoogleSignIn().signIn();
+            final googleUser = await googleSignIn.signIn();
 
             // Obtain the auth details from the request
             final googleAuth = await googleUser?.authentication;

@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
@@ -34,7 +36,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc()..add(CheckLoginEvent()),
+      create: (context) => AuthBloc(FirebaseAuth.instance, GoogleSignIn())
+        ..add(CheckLoginEvent()),
       child: MaterialApp(
         title: 'Flutter Demo',
         routes: {
