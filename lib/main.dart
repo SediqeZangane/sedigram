@@ -75,8 +75,10 @@ class MyApp extends StatelessWidget {
           },
           EditProfileScreen.routeNamed: (context) => BlocProvider(
                 child: const EditProfileScreen(),
-                create: (context) => EditProfileBloc(FirebaseAuth.instance)
-                  ..add(EditProfileInitEvent()),
+                create: (context) => EditProfileBloc(
+                  FirebaseAuth.instance,
+                  FirestoreService(FirebaseFirestore.instance),
+                )..add(EditProfileInitEvent()),
               ),
         },
         theme: ThemeData(

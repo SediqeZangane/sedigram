@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'posts.dart';
+part of 'post.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Posts _$PostsFromJson(Map<String, dynamic> json) => Posts(
+Post _$PostFromJson(Map<String, dynamic> json) => Post(
       postId: json['postId'] as String,
       caption: json['caption'] as String,
       imageUrl: json['imageUrl'] as String,
@@ -14,7 +14,7 @@ Posts _$PostsFromJson(Map<String, dynamic> json) => Posts(
       userId: json['userId'] as String,
     );
 
-Map<String, dynamic> _$PostsToJson(Posts instance) => <String, dynamic>{
+Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'postId': instance.postId,
       'caption': instance.caption,
       'imageUrl': instance.imageUrl,

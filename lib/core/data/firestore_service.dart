@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sedigram/core/domain/posts.dart';
+import 'package:sedigram/core/domain/post.dart';
 import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/core/domain/user_info.dart';
 
@@ -53,7 +53,7 @@ class FirestoreService {
     }
   }
 
-  Future<bool> insertPosts(Posts newPost) async {
+  Future<bool> insertPosts(Post newPost) async {
     final collection = firebaseFirestore.collection('posts');
     final doc = collection.doc(newPost.postId);
 
@@ -63,5 +63,18 @@ class FirestoreService {
     } catch (_) {
       return false;
     }
+  }
+
+  Future<List<Post>> getPosts(String userId) async {
+    final postsQuery = firebaseFirestore
+        .collection('posts')
+        .where('userId', isEqualTo: userId);
+
+    final querySnapshot = await postsQuery.get();
+
+    final listPosts = querySnapshot.docs.map((doc) {
+      return Post.fromJson(doc.data());
+    }).toList();
+    return listPosts;
   }
 }

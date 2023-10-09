@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
@@ -141,14 +142,17 @@ class ProfileScreen extends StatelessWidget {
                   child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
+                      crossAxisCount: 3,
                       crossAxisSpacing: 4,
                       mainAxisSpacing: 4,
                     ),
                     itemBuilder: (context, index) {
-                      return const ColoredBox(color: Colors.lightBlueAccent);
+                      return CachedNetworkImage(
+                        imageUrl: state.posts[index].imageUrl,
+                        fit: BoxFit.cover,
+                      );
                     },
-                    itemCount: 20,
+                    itemCount: state.userInfo.posts.length,
                   ),
                 ),
               ),

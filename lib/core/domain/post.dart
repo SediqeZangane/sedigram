@@ -1,16 +1,16 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'posts.g.dart';
+part 'post.g.dart';
 
 @JsonSerializable()
-class Posts {
+class Post {
   String postId;
   String caption;
   String imageUrl;
   int createdAt;
   String userId;
 
-  Posts({
+  Post({
     required this.postId,
     required this.caption,
     required this.imageUrl,
@@ -18,25 +18,25 @@ class Posts {
     required this.userId,
   });
 
-  Posts.empty()
+  Post.empty()
       : postId = '',
         caption = '',
         imageUrl = '',
         createdAt = DateTime.now().millisecondsSinceEpoch,
         userId = '';
 
-  factory Posts.fromJson(Map<String, dynamic> json) => _$PostsFromJson(json);
+  factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PostsToJson(this);
+  Map<String, dynamic> toJson() => _$PostToJson(this);
 
-  Posts copyWith({
+  Post copyWith({
     String? postId,
     String? caption,
     String? imageUrl,
     int? createdAt,
     String? userId,
   }) {
-    return Posts(
+    return Post(
       postId: postId ?? this.postId,
       caption: caption ?? this.caption,
       imageUrl: imageUrl ?? this.imageUrl,

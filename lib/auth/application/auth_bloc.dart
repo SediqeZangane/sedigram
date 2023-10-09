@@ -64,7 +64,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
             // Once signed in, return the UserCredential
             final userCredential =
-                await FirebaseAuth.instance.signInWithCredential(credential);
+                await firebaseAuth.signInWithCredential(credential);
 
             emit(
               state.copyWith(

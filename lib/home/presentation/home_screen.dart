@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -110,7 +111,10 @@ class HomeScreen extends StatelessWidget {
         const Text('like'),
         BlocProvider(
           create: (context) {
-            return ProfileBloc(FirebaseAuth.instance)..add(ProfileInitEvent());
+            return ProfileBloc(
+              FirebaseAuth.instance,
+              FirebaseFirestore.instance,
+            )..add(ProfileInitEvent());
           },
           child: const ProfileScreen(),
         ),

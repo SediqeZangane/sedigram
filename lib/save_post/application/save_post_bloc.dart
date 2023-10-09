@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart' as p;
 import 'package:sedigram/core/data/fire_storage.dart';
 import 'package:sedigram/core/data/firestore_service.dart';
-import 'package:sedigram/core/domain/posts.dart';
+import 'package:sedigram/core/domain/post.dart';
 import 'package:sedigram/save_post/application/save_post_event.dart';
 import 'package:sedigram/save_post/application/save_post_state.dart';
 import 'package:uuid/uuid.dart';
@@ -37,7 +37,7 @@ class SavePostBloc extends Bloc<SavePostEvent, SavePostState> {
           );
           if (imageUrl != null) {
             final postId = uuid.v4();
-            final newPostInfo = Posts(
+            final newPostInfo = Post(
               postId: postId,
               caption: event.caption,
               imageUrl: imageUrl,

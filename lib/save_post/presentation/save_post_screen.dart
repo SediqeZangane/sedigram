@@ -46,6 +46,7 @@ class _SavePostScreenState extends State<SavePostScreen> {
               content: Text('Post Uploaded Successfully'),
             ),
           );
+          Navigator.of(context).pop();
         }
       },
       child: Scaffold(
