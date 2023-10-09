@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
+import 'package:sedigram/post_detail/post_detail_screen.dart';
 import 'package:sedigram/profile/application/profile_bloc.dart';
 import 'package:sedigram/profile/application/profile_state.dart';
 
@@ -42,7 +43,7 @@ class ProfileScreen extends StatelessWidget {
           size: 30,
         ),
       ),
-      body: BlocConsumer<ProfileBloc, ProfileState>(
+      body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,12 +111,6 @@ class ProfileScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context)
                         .pushNamed(EditProfileScreen.routeNamed);
-
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const EditProfileScreen()),
-                    // );
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -147,9 +142,18 @@ class ProfileScreen extends StatelessWidget {
                       mainAxisSpacing: 4,
                     ),
                     itemBuilder: (context, index) {
-                      return CachedNetworkImage(
-                        imageUrl: state.posts[index].imageUrl,
-                        fit: BoxFit.cover,
+                      return InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            PostDetailScreen.routeNamed,
+                            arguments: state.posts,
+                          );
+                        },
+                        child: CachedNetworkImage(
+                          imageUrl: state.posts[index].imageUrl,
+                          fit: BoxFit.cover,
+                        ),
                       );
                     },
                     itemCount: state.userInfo.posts.length,
@@ -159,7 +163,6 @@ class ProfileScreen extends StatelessWidget {
             ],
           );
         },
-        listener: (context, state) {},
       ),
     );
   }

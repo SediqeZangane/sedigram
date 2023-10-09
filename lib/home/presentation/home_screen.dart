@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/create_post/application/create_post_bloc.dart';
 import 'package:sedigram/create_post/application/create_post_event.dart';
@@ -113,7 +114,7 @@ class HomeScreen extends StatelessWidget {
           create: (context) {
             return ProfileBloc(
               FirebaseAuth.instance,
-              FirebaseFirestore.instance,
+              FirestoreService(FirebaseFirestore.instance),
             )..add(ProfileInitEvent());
           },
           child: const ProfileScreen(),
