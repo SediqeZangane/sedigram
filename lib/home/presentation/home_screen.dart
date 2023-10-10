@@ -13,6 +13,7 @@ import 'package:sedigram/home/application/home_state.dart';
 import 'package:sedigram/profile/application/profile_bloc.dart';
 import 'package:sedigram/profile/application/profile_event.dart';
 import 'package:sedigram/profile/presentation/profile_screen.dart';
+import 'package:sedigram/user/application/global_user_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeNamed = 'homeScreen';
@@ -115,6 +116,7 @@ class HomeScreen extends StatelessWidget {
             return ProfileBloc(
               FirebaseAuth.instance,
               FirestoreService(FirebaseFirestore.instance),
+              GlobalUserBloc(),
             )..add(ProfileInitEvent());
           },
           child: const ProfileScreen(),
