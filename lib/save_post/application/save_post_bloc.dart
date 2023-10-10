@@ -46,10 +46,10 @@ class SavePostBloc extends Bloc<SavePostEvent, SavePostState> {
             );
             final result = await firestoreService.insertPosts(newPostInfo);
             if (result) {
-              emit(state.copyWith(isLoading: false, uploaded: true));
               final userInfo = await firestoreService.getUserInfo(userId);
               userInfo.posts.add(postId);
               await firestoreService.updateUserInfo(userInfo);
+              emit(state.copyWith(isLoading: false, uploaded: true));
             } else {
               emit(state.copyWith(isLoading: false, uploaded: false));
             }

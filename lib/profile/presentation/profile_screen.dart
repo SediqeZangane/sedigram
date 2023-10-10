@@ -160,7 +160,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        itemCount: userState.userInfo.posts.length,
+                        itemCount: state.posts.length,
                       ),
                     );
                   },
