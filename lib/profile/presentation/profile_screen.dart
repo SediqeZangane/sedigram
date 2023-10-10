@@ -6,6 +6,8 @@ import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
 import 'package:sedigram/post_detail/post_detail_screen.dart';
 import 'package:sedigram/profile/application/profile_bloc.dart';
 import 'package:sedigram/profile/application/profile_state.dart';
+import 'package:sedigram/user/application/global_user_bloc.dart';
+import 'package:sedigram/user/application/global_user_state.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -43,8 +45,8 @@ class ProfileScreen extends StatelessWidget {
           size: 30,
         ),
       ),
-      body: BlocBuilder<ProfileBloc, ProfileState>(
-        builder: (context, state) {
+      body: BlocBuilder<GlobalUserBloc, GlobalUserState>(
+        builder: (context, userState) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -57,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text(state.userInfo.posts.length.toString()),
+                      Text(userState.userInfo.posts.length.toString()),
                       const Padding(
                         padding: EdgeInsets.only(top: 8),
                         child: Text('Posts'),
@@ -66,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text(state.userInfo.followers.length.toString()),
+                      Text(userState.userInfo.followers.length.toString()),
                       const Padding(
                         padding: EdgeInsets.only(top: 8),
                         child: Text('Followers'),
@@ -75,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text(state.userInfo.followings.length.toString()),
+                      Text(userState.userInfo.followings.length.toString()),
                       const Padding(
                         padding: EdgeInsets.only(top: 8),
                         child: Text('Following'),
@@ -89,16 +91,16 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(state.currentUser.name),
+                    Text(userState.user.name),
                     const SizedBox(
                       height: 8,
                     ),
-                    Text(state.currentUser.userName),
+                    Text(userState.user.userName),
                     const SizedBox(
                       height: 8,
                     ),
                     Text(
-                      state.currentUser.bio,
+                      userState.user.bio,
                       style: const TextStyle(fontWeight: FontWeight.w400),
                     )
                   ],
@@ -132,32 +134,36 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 4,
-                      mainAxisSpacing: 4,
-                    ),
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            PostDetailScreen.routeNamed,
-                            arguments: state.posts,
+                child: BlocBuilder<ProfileBloc, ProfileState>(
+                  builder: (context, state) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 4,
+                          mainAxisSpacing: 4,
+                        ),
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                PostDetailScreen.routeNamed,
+                                arguments: state.posts,
+                              );
+                            },
+                            child: CachedNetworkImage(
+                              imageUrl: state.posts[index].imageUrl,
+                              fit: BoxFit.cover,
+                            ),
                           );
                         },
-                        child: CachedNetworkImage(
-                          imageUrl: state.posts[index].imageUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    },
-                    itemCount: state.userInfo.posts.length,
-                  ),
+                        itemCount: userState.userInfo.posts.length,
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

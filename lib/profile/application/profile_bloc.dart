@@ -16,17 +16,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           emit(state.copyWith(isLoading: true));
           try {
             final userId = firebaseAuth.currentUser!.uid;
-            final user = await firestoreService.getUser(userId);
-            final userInfo = await firestoreService.getUserInfo(userId);
 
             final posts = await firestoreService.getPosts(userId);
 
             emit(
               state.copyWith(
                 isLoading: false,
-                currentUser: user,
                 error: '',
-                userInfo: userInfo,
                 posts: posts,
               ),
             );

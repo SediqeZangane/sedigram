@@ -15,15 +15,25 @@ class PostDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: ListView.builder(
         itemCount: posts.length,
         itemBuilder: (context, index) {
-          return SizedBox(
-            height: 200,
+          return Padding(
+            padding: const EdgeInsets.only(left: 8),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: CachedNetworkImage(imageUrl: posts[index].imageUrl),
+                Row(
+                  children: const [
+                    CircleAvatar(radius: 24),
+                    SizedBox(width: 10),
+                    Text('userName'),
+                  ],
+                ),
+                CachedNetworkImage(
+                  imageUrl: posts[index].imageUrl,
+                  fit: BoxFit.fitWidth,
                 ),
                 Text(
                   posts[index].caption,

@@ -27,6 +27,8 @@ import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
 import 'package:sedigram/splash/presentation/splash_screen.dart';
 import 'package:sedigram/theme/presentation/color_scheme.dart';
 import 'package:sedigram/theme/presentation/text_theme.dart';
+import 'package:sedigram/user/application/global_user_bloc.dart';
+import 'package:sedigram/user/application/global_user_event.dart';
 import 'package:uuid/uuid.dart';
 
 void main() async {
@@ -42,9 +44,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(FirebaseAuth.instance, GoogleSignIn())
-        ..add(CheckLoginEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(FirebaseAuth.instance, GoogleSignIn())
+            ..add(CheckLoginEvent()),
+        ),
+        BlocProvider<GlobalUserBloc>(
+          create: (context) => GlobalUserBloc()
+            ..add(
+              GlobalUserUpdateEvent(),
+            ),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         routes: {
