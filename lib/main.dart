@@ -11,7 +11,6 @@ import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/core/data/fire_storage.dart';
 import 'package:sedigram/core/data/firestore_service.dart';
-import 'package:sedigram/core/domain/post.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
@@ -23,6 +22,7 @@ import 'package:sedigram/login/presentation/login_screen.dart';
 import 'package:sedigram/post_detail/application/post_detail_bloc.dart';
 import 'package:sedigram/post_detail/application/post_detail_event.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen.dart';
+import 'package:sedigram/post_detail/presentation/post_detail_screen_arguments.dart';
 import 'package:sedigram/save_post/application/save_post_bloc.dart';
 import 'package:sedigram/save_post/presentation/save_post_screen.dart';
 import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
@@ -97,17 +97,20 @@ class MyApp extends StatelessWidget {
                 )..add(EditProfileInitEvent()),
               ),
           PostDetailScreen.routeNamed: (context) {
-            final posts =
-                ModalRoute.of(context)!.settings.arguments as List<Post>?;
+            final args = ModalRoute.of(context)!.settings.arguments
+                as PostDetailScreenArguments?;
+
             return BlocProvider(
               create: (context) {
                 return PostDetailBloc(
                   firebaseAuth: FirebaseAuth.instance,
                   firestoreService:
                       FirestoreService(FirebaseFirestore.instance),
-                )..add(PostDetailInitEvent(posts: posts!));
+                )..add(PostDetailInitEvent(posts: args.posts));
               },
-              child: PostDetailScreen(),
+              child: PostDetailScreen(
+                postIndex: args!.postIndex,
+              ),
             );
           },
         },

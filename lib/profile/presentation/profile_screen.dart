@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen.dart';
+import 'package:sedigram/post_detail/presentation/post_detail_screen_arguments.dart';
 import 'package:sedigram/profile/application/profile_bloc.dart';
 import 'package:sedigram/profile/application/profile_state.dart';
 import 'package:sedigram/user/application/global_user_bloc.dart';
@@ -151,7 +152,10 @@ class ProfileScreen extends StatelessWidget {
                               Navigator.pushNamed(
                                 context,
                                 PostDetailScreen.routeNamed,
-                                arguments: state.posts,
+                                arguments: PostDetailScreenArguments(
+                                  posts: state.posts,
+                                  postIndex: index,
+                                ),
                               );
                             },
                             child: CachedNetworkImage(

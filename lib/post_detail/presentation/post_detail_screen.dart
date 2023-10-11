@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:sedigram/post_detail/application/post_detail_bloc.dart';
 import 'package:sedigram/post_detail/application/post_detail_event.dart';
 import 'package:sedigram/post_detail/application/post_detail_state.dart';
@@ -9,10 +10,12 @@ import 'package:sedigram/user/application/global_user_state.dart';
 
 class PostDetailScreen extends StatelessWidget {
   static const String routeNamed = 'postDetailScreen';
+  static const List<String> actions = ['Delete', 'Edit'];
 
-  final List<String> actions = ['Delete', 'Edit'];
+  final int postIndex;
 
-  PostDetailScreen({
+  const PostDetailScreen({
+    required this.postIndex,
     super.key,
   });
 
@@ -34,7 +37,8 @@ class PostDetailScreen extends StatelessWidget {
       ),
       body: BlocBuilder<PostDetailBloc, PostDetailState>(
         builder: (context, state) {
-          return ListView.builder(
+          return ScrollablePositionedList.builder(
+            initialScrollIndex: postIndex,
             itemCount: state.posts.length,
             itemBuilder: (context, index) {
               return Column(
