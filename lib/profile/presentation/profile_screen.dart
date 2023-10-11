@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
-import 'package:sedigram/post_detail/post_detail_screen.dart';
+import 'package:sedigram/post_detail/presentation/post_detail_screen.dart';
 import 'package:sedigram/profile/application/profile_bloc.dart';
 import 'package:sedigram/profile/application/profile_state.dart';
 import 'package:sedigram/user/application/global_user_bloc.dart';

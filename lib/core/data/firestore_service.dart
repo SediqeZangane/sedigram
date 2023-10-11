@@ -68,6 +68,7 @@ class FirestoreService {
   Future<List<Post>> getPosts(String userId) async {
     final postsQuery = firebaseFirestore
         .collection('posts')
+        .orderBy('createdAt', descending: true)
         .where('userId', isEqualTo: userId);
 
     final querySnapshot = await postsQuery.get();

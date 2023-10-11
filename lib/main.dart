@@ -22,7 +22,7 @@ import 'package:sedigram/home/presentation/home_screen.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
 import 'package:sedigram/post_detail/application/post_detail_bloc.dart';
 import 'package:sedigram/post_detail/application/post_detail_event.dart';
-import 'package:sedigram/post_detail/post_detail_screen.dart';
+import 'package:sedigram/post_detail/presentation/post_detail_screen.dart';
 import 'package:sedigram/save_post/application/save_post_bloc.dart';
 import 'package:sedigram/save_post/presentation/save_post_screen.dart';
 import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
