@@ -86,6 +86,7 @@ class MyApp extends StatelessWidget {
                 FirestoreService(
                   FirebaseFirestore.instance,
                 ),
+                GlobalUserBloc(),
               ),
             );
           },
@@ -106,6 +107,7 @@ class MyApp extends StatelessWidget {
                   firebaseAuth: FirebaseAuth.instance,
                   firestoreService:
                       FirestoreService(FirebaseFirestore.instance),
+                  globalUserBloc: GlobalUserBloc(),
                 )..add(PostDetailInitEvent(posts: args.posts));
               },
               child: PostDetailScreen(

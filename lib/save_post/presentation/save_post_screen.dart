@@ -6,8 +6,6 @@ import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/save_post/application/save_post_bloc.dart';
 import 'package:sedigram/save_post/application/save_post_event.dart';
 import 'package:sedigram/save_post/application/save_post_state.dart';
-import 'package:sedigram/user/application/global_user_bloc.dart';
-import 'package:sedigram/user/application/global_user_event.dart';
 
 class SavePostScreen extends StatefulWidget {
   static const String routeNamed = 'savePostScreen';
@@ -48,7 +46,6 @@ class _SavePostScreenState extends State<SavePostScreen> {
               content: Text('Post Uploaded Successfully'),
             ),
           );
-          context.read<GlobalUserBloc>().add(GlobalUserUpdateEvent());
           Navigator.of(context).pop();
         }
       },

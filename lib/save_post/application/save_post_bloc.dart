@@ -6,6 +6,8 @@ import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/core/domain/post.dart';
 import 'package:sedigram/save_post/application/save_post_event.dart';
 import 'package:sedigram/save_post/application/save_post_state.dart';
+import 'package:sedigram/user/application/global_user_bloc.dart';
+import 'package:sedigram/user/application/global_user_event.dart';
 import 'package:uuid/uuid.dart';
 
 class SavePostBloc extends Bloc<SavePostEvent, SavePostState> {
@@ -13,12 +15,14 @@ class SavePostBloc extends Bloc<SavePostEvent, SavePostState> {
   final FireStorage fireStorage;
   final Uuid uuid;
   final FirestoreService firestoreService;
+  final GlobalUserBloc globalUserBloc;
 
   SavePostBloc(
     this.firebaseAuth,
     this.fireStorage,
     this.uuid,
     this.firestoreService,
+    this.globalUserBloc,
   ) : super(SavePostState.init()) {
     on<SavePostEvent>(
       (event, emit) async {
@@ -49,6 +53,8 @@ class SavePostBloc extends Bloc<SavePostEvent, SavePostState> {
               final userInfo = await firestoreService.getUserInfo(userId);
               userInfo.posts.add(postId);
               await firestoreService.updateUserInfo(userInfo);
+              globalUserBloc.add(GlobalUserUpdateEvent());
+
               emit(state.copyWith(isLoading: false, uploaded: true));
             } else {
               emit(state.copyWith(isLoading: false, uploaded: false));
