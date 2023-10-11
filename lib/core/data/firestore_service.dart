@@ -77,4 +77,12 @@ class FirestoreService {
     }).toList();
     return listPosts;
   }
+
+  Future<void> deletePost(String userId, String postId) async {
+    final userInfo = await getUserInfo(userId);
+    userInfo.posts.removeWhere((element) => element == postId);
+    await updateUserInfo(userInfo);
+    final postDoc = firebaseFirestore.collection('posts').doc(postId);
+    await postDoc.delete();
+  }
 }
