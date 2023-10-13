@@ -13,6 +13,7 @@ import 'package:sedigram/home/application/home_state.dart';
 import 'package:sedigram/profile/application/profile_bloc.dart';
 import 'package:sedigram/profile/application/profile_event.dart';
 import 'package:sedigram/profile/presentation/profile_screen.dart';
+import 'package:sedigram/search/application/search_bloc.dart';
 import 'package:sedigram/search/presentation/search_screen.dart';
 import 'package:sedigram/user/application/global_user_bloc.dart';
 
@@ -104,7 +105,15 @@ class HomeScreen extends StatelessWidget {
       index: currentIndex,
       children: [
         const Text('home'),
-        const SearchScreen(),
+        BlocProvider(
+          create: (context) {
+            return SearchBloc(
+              firebaseAuth: FirebaseAuth.instance,
+              firestoreService: FirestoreService(FirebaseFirestore.instance),
+            );
+          },
+          child: const SearchScreen(),
+        ),
         BlocProvider(
           child: const CreatePostScreen(),
           create: (context) {

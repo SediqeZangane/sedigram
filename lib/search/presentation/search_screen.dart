@@ -63,7 +63,7 @@ class _SearchScreenState extends State<SearchScreen> {
       body: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           return ListView.builder(
-            itemCount: 15,
+            itemCount: state.user.length,
             itemBuilder: (context, index) {
               return ListTile(
                 leading: const CircleAvatar(
