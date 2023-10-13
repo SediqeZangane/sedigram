@@ -19,6 +19,7 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        centerTitle: true,
         leading: const Center(child: Text('')),
         title: Padding(
           padding: const EdgeInsets.only(left: 40),

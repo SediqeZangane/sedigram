@@ -23,16 +23,12 @@ class PostDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Center(
-          child: Padding(
-            padding: EdgeInsets.only(right: 36),
-            child: Text(
-              'Posts',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
+        title: const Text(
+          'Posts',
+          style: TextStyle(color: Colors.black),
         ),
       ),
       body: BlocBuilder<PostDetailBloc, PostDetailState>(

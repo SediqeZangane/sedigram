@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:sedigram/core/domain/post.dart';
 import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/core/domain/user_info.dart';
@@ -85,5 +86,38 @@ class FirestoreService {
     await updateUserInfo(userInfo);
     final postDoc = firebaseFirestore.collection('posts').doc(postId);
     await postDoc.delete();
+  }
+
+  Future<List<User>> getAllUsers(String query) async {
+    try {
+      final QuerySnapshot querySnapshot = await firebaseFirestore
+          .collection('users')
+          .where(
+            'userName',
+            isGreaterThanOrEqualTo: query,
+            isLessThan: query.substring(0, query.length - 1) +
+                String.fromCharCode(query.codeUnitAt(query.length - 1) + 1),
+          )
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final List<QueryDocumentSnapshot<Object?>> listDoc = querySnapshot.docs;
+        final List<Map<String, dynamic>> listMap = listDoc
+            .where((element) => element.data() != null)
+            // ignore: cast_nullable_to_non_nullable
+            .map((doc) => doc.data() as Map<String, dynamic>)
+            .toList();
+
+        // ignore: unnecessary_lambdas
+        final listUser = listMap.map((e) => User.fromJson(e)).toList();
+        return listUser;
+      } else {
+        // No users found
+        return [];
+      }
+    } catch (e) {
+      debugPrint('Error fetching users: $e');
+      return [];
+    }
   }
 }

@@ -25,6 +25,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Padding(
@@ -39,11 +40,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           ),
         ),
-        title: const Center(
-          child: Text(
-            'Edit Profile',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
+        title: const Text(
+          'Edit Profile',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         actions: [
           Padding(
