@@ -14,7 +14,14 @@ import 'package:sedigram/user/application/global_user_bloc.dart';
 import 'package:sedigram/user/application/global_user_state.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  static const String routeNamed = 'profileScreen';
+
+  final String userId;
+
+  const ProfileScreen({
+    required this.userId,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

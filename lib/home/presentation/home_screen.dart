@@ -16,6 +16,7 @@ import 'package:sedigram/profile/presentation/profile_screen.dart';
 import 'package:sedigram/search/application/search_bloc.dart';
 import 'package:sedigram/search/presentation/search_screen.dart';
 import 'package:sedigram/user/application/global_user_bloc.dart';
+import 'package:sedigram/user/application/global_user_state.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeNamed = 'homeScreen';
@@ -129,7 +130,13 @@ class HomeScreen extends StatelessWidget {
               GlobalUserBloc(),
             )..add(ProfileInitEvent());
           },
-          child: const ProfileScreen(),
+          child: BlocBuilder<GlobalUserBloc, GlobalUserState>(
+            builder: (context, state) {
+              return ProfileScreen(
+                userId: state.user.userId,
+              );
+            },
+          ),
         ),
         const Text('Not Yet'),
       ],

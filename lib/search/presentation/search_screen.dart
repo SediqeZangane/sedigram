@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sedigram/profile/presentation/profile_screen.dart';
 import 'package:sedigram/search/application/search_bloc.dart';
 import 'package:sedigram/search/application/search_event.dart';
 import 'package:sedigram/search/application/search_state.dart';
@@ -66,6 +67,14 @@ class _SearchScreenState extends State<SearchScreen> {
             itemCount: state.user.length,
             itemBuilder: (context, index) {
               return ListTile(
+                onTap: () {
+                  final selectedUserId = state.user[index].userId;
+                  Navigator.pushNamed(
+                    context,
+                    ProfileScreen.routeNamed,
+                    arguments: selectedUserId,
+                  );
+                },
                 leading: const CircleAvatar(
                   radius: 24,
                   backgroundColor: Colors.cyanAccent,
