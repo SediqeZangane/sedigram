@@ -84,6 +84,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if (event is LogOutEvent) {
           await FirebaseAuth.instance.signOut();
         }
+
+        if (event is SubmitSignUpEvent) {
+          try {
+            emit(
+              state.copyWith(isLoading: true, loginResult: LoginResult.none),
+            );
+            final userCredential =
+                await firebaseAuth.createUserWithEmailAndPassword(
+              email: event.email,
+              password: event.password,
+            );
+
+            emit(
+              state.copyWith(
+                isLoading: false,
+                loginResult: (userCredential.user != null)
+                    ? LoginResult.succeed
+                    : LoginResult.failed,
+              ),
+            );
+          } catch (_) {
+            emit(
+              state.copyWith(isLoading: false, loginResult: LoginResult.failed),
+            );
+          }
+        }
       },
     );
   }
