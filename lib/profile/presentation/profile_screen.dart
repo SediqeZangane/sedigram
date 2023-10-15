@@ -112,33 +112,34 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(EditProfileScreen.routeNamed);
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.white),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        side: const BorderSide(
-                          color: Colors.black12,
+              if (profileState.isMine)
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushNamed(EditProfileScreen.routeNamed);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          side: const BorderSide(
+                            color: Colors.black12,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Edit Profile',
-                      style: TextStyle(color: context.colorScheme.onSurface),
+                    child: Center(
+                      child: Text(
+                        'Edit Profile',
+                        style: TextStyle(color: context.colorScheme.onSurface),
+                      ),
                     ),
                   ),
                 ),
-              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),

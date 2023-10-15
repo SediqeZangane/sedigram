@@ -30,20 +30,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         } else if (event is ProfileUpdateEvent) {
           emit(state.copyWith(isLoading: true));
           try {
-            final posts = await firestoreService.getPosts(event.userId);
+            final ownerId = globalUserBloc.state.user.userId;
+            emit(state.copyWith(isMine: ownerId == event.userId));
 
             final user = await firestoreService.getUser(event.userId);
-            final userInfo = await firestoreService.getUserInfo(event.userId);
+            emit(state.copyWith(user: user));
 
-            emit(
-              state.copyWith(
-                isLoading: false,
-                error: '',
-                posts: posts,
-                user: user,
-                userInfo: userInfo,
-              ),
-            );
+            final userInfo = await firestoreService.getUserInfo(event.userId);
+            emit(state.copyWith(userInfo: userInfo));
+
+            final posts = await firestoreService.getPosts(event.userId);
+            emit(state.copyWith(isLoading: false, error: '', posts: posts));
           } catch (_) {
             emit(state.copyWith(isLoading: false, error: "Couldn't get user"));
           }
