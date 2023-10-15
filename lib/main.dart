@@ -23,6 +23,8 @@ import 'package:sedigram/post_detail/application/post_detail_bloc.dart';
 import 'package:sedigram/post_detail/application/post_detail_event.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen_arguments.dart';
+import 'package:sedigram/profile/application/profile_bloc.dart';
+import 'package:sedigram/profile/application/profile_event.dart';
 import 'package:sedigram/profile/presentation/profile_screen.dart';
 import 'package:sedigram/save_post/application/save_post_bloc.dart';
 import 'package:sedigram/save_post/presentation/save_post_screen.dart';
@@ -120,8 +122,17 @@ class MyApp extends StatelessWidget {
             final userId =
                 ModalRoute.of(context)!.settings.arguments as String?;
 
-            return ProfileScreen(
-              userId: userId!,
+            return BlocProvider(
+              create: (context) {
+                return ProfileBloc(
+                  FirebaseAuth.instance,
+                  FirestoreService(FirebaseFirestore.instance),
+                  GlobalUserBloc(),
+                )..add(ProfileInitEvent(userId: userId));
+              },
+              child: ProfileScreen(
+                userId: userId!,
+              ),
             );
           }
         },

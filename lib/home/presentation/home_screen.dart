@@ -122,23 +122,30 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         const Text('like'),
-        BlocProvider(
-          create: (context) {
-            return ProfileBloc(
-              FirebaseAuth.instance,
-              FirestoreService(FirebaseFirestore.instance),
-              GlobalUserBloc(),
-            )..add(ProfileInitEvent());
-          },
-          child: BlocBuilder<GlobalUserBloc, GlobalUserState>(
-            builder: (context, state) {
-              return ProfileScreen(
+        BlocBuilder<GlobalUserBloc, GlobalUserState>(
+          builder: (context, state) {
+            if (state.user.userId.isEmpty) {
+              return const CircularProgressIndicator();
+            }
+            return BlocProvider(
+              create: (context) {
+                print('id global : ${state.user.userId}');
+                return ProfileBloc(
+                  FirebaseAuth.instance,
+                  FirestoreService(FirebaseFirestore.instance),
+                  GlobalUserBloc(),
+                )..add(
+                    ProfileInitEvent(
+                      userId: state.user.userId,
+                    ),
+                  );
+              },
+              child: ProfileScreen(
                 userId: state.user.userId,
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
-        const Text('Not Yet'),
       ],
     );
   }

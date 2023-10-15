@@ -69,6 +69,7 @@ class _SearchScreenState extends State<SearchScreen> {
               return ListTile(
                 onTap: () {
                   final selectedUserId = state.user[index].userId;
+
                   Navigator.pushNamed(
                     context,
                     ProfileScreen.routeNamed,

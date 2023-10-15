@@ -1,5 +1,17 @@
 abstract class ProfileEvent {}
 
-class ProfileInitEvent implements ProfileEvent {}
+class ProfileInitEvent implements ProfileEvent {
+  final String userId;
 
-class ProfileUpdateEvent implements ProfileEvent {}
+  const ProfileInitEvent({
+    required this.userId,
+  });
+}
+
+class ProfileUpdateEvent implements ProfileEvent {
+  final String userId;
+
+  const ProfileUpdateEvent({
+    required this.userId,
+  });
+}
