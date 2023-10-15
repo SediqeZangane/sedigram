@@ -23,24 +23,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileEvent>(
       (event, emit) async {
         if (event is ProfileInitEvent) {
-          _userSubscription = globalUserBloc.stream.listen((event) {
-            add(ProfileUpdateEvent());
+          _userSubscription = globalUserBloc.stream.listen((_) {
+            add(ProfileUpdateEvent(userId: event.userId));
           });
-          add(ProfileUpdateEvent());
+          add(ProfileUpdateEvent(userId: event.userId));
         } else if (event is ProfileUpdateEvent) {
           emit(state.copyWith(isLoading: true));
           try {
-            final userId = firebaseAuth.currentUser!.uid;
+            final ownerId = globalUserBloc.state.user.userId;
+            emit(state.copyWith(isMine: ownerId == event.userId));
 
-            final posts = await firestoreService.getPosts(userId);
+            final user = await firestoreService.getUser(event.userId);
+            emit(state.copyWith(user: user));
 
-            emit(
-              state.copyWith(
-                isLoading: false,
-                error: '',
-                posts: posts,
-              ),
-            );
+            final userInfo = await firestoreService.getUserInfo(event.userId);
+            emit(state.copyWith(userInfo: userInfo));
+
+            final posts = await firestoreService.getPosts(event.userId);
+            emit(state.copyWith(isLoading: false, error: '', posts: posts));
           } catch (_) {
             emit(state.copyWith(isLoading: false, error: "Couldn't get user"));
           }

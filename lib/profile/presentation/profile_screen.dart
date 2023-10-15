@@ -10,11 +10,16 @@ import 'package:sedigram/post_detail/presentation/post_detail_screen.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen_arguments.dart';
 import 'package:sedigram/profile/application/profile_bloc.dart';
 import 'package:sedigram/profile/application/profile_state.dart';
-import 'package:sedigram/user/application/global_user_bloc.dart';
-import 'package:sedigram/user/application/global_user_state.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  static const String routeNamed = 'profileScreen';
+
+  final String userId;
+
+  const ProfileScreen({
+    required this.userId,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +51,8 @@ class ProfileScreen extends StatelessWidget {
           },
         ),
       ),
-      body: BlocBuilder<GlobalUserBloc, GlobalUserState>(
-        builder: (context, userState) {
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, profileState) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -60,7 +65,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text(userState.userInfo.posts.length.toString()),
+                      Text(profileState.userInfo.posts.length.toString()),
                       const Padding(
                         padding: EdgeInsets.only(top: 8),
                         child: Text('Posts'),
@@ -69,7 +74,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text(userState.userInfo.followers.length.toString()),
+                      Text(profileState.userInfo.followers.length.toString()),
                       const Padding(
                         padding: EdgeInsets.only(top: 8),
                         child: Text('Followers'),
@@ -78,7 +83,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text(userState.userInfo.followings.length.toString()),
+                      Text(profileState.userInfo.followings.length.toString()),
                       const Padding(
                         padding: EdgeInsets.only(top: 8),
                         child: Text('Following'),
@@ -92,82 +97,79 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(userState.user.name),
+                    Text(profileState.user.name),
                     const SizedBox(
                       height: 8,
                     ),
-                    Text(userState.user.userName),
+                    Text(profileState.user.userName),
                     const SizedBox(
                       height: 8,
                     ),
                     Text(
-                      userState.user.bio,
+                      profileState.user.bio,
                       style: const TextStyle(fontWeight: FontWeight.w400),
                     )
                   ],
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(EditProfileScreen.routeNamed);
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.white),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        side: const BorderSide(
-                          color: Colors.black12,
+              if (profileState.isMine)
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushNamed(EditProfileScreen.routeNamed);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          side: const BorderSide(
+                            color: Colors.black12,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Edit Profile',
-                      style: TextStyle(color: context.colorScheme.onSurface),
+                    child: Center(
+                      child: Text(
+                        'Edit Profile',
+                        style: TextStyle(color: context.colorScheme.onSurface),
+                      ),
                     ),
                   ),
                 ),
-              ),
               Expanded(
-                child: BlocBuilder<ProfileBloc, ProfileState>(
-                  builder: (context, state) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 4,
-                          mainAxisSpacing: 4,
-                        ),
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                PostDetailScreen.routeNamed,
-                                arguments: PostDetailScreenArguments(
-                                  posts: state.posts,
-                                  postIndex: index,
-                                ),
-                              );
-                            },
-                            child: CachedNetworkImage(
-                              imageUrl: state.posts[index].imageUrl,
-                              fit: BoxFit.cover,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 4,
+                      mainAxisSpacing: 4,
+                    ),
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            PostDetailScreen.routeNamed,
+                            arguments: PostDetailScreenArguments(
+                              posts: profileState.posts,
+                              postIndex: index,
                             ),
                           );
                         },
-                        itemCount: state.posts.length,
-                      ),
-                    );
-                  },
+                        child: CachedNetworkImage(
+                          imageUrl: profileState.posts[index].imageUrl,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
+                    itemCount: profileState.posts.length,
+                  ),
                 ),
               ),
             ],
