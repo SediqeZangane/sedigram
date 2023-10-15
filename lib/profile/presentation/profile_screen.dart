@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sedigram/auth/application/auth_bloc.dart';
+import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
+import 'package:sedigram/login/presentation/login_screen.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen_arguments.dart';
 import 'package:sedigram/profile/application/profile_bloc.dart';
@@ -31,20 +34,16 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: GestureDetector(
-              onTap: () {},
-              child: const Icon(
-                Icons.menu,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
-        actionsIconTheme: const IconThemeData(
-          size: 30,
+        iconTheme: const IconThemeData(color: Colors.black, size: 30),
+      ),
+      endDrawer: Drawer(
+        child: ListTile(
+          leading: const Icon(Icons.logout),
+          title: const Text('Log Out'),
+          onTap: () {
+            Navigator.of(context).pop();
+            deleteDialog(context);
+          },
         ),
       ),
       body: BlocBuilder<GlobalUserBloc, GlobalUserState>(
@@ -175,6 +174,42 @@ class ProfileScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  void deleteDialog(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Log Out'),
+          content: const Text('Are you sure ?\n'),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Yes'),
+              onPressed: () {
+                context.read<AuthBloc>().add(LogOutEvent());
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  LoginScreen.routeNamed,
+                  (route) => false,
+                );
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('NO'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
