@@ -80,6 +80,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             );
           }
         }
+
+        if (event is LogOutEvent) {
+          await FirebaseAuth.instance.signOut();
+        }
       },
     );
   }
