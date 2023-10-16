@@ -17,6 +17,57 @@ class CreatePostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: BlocBuilder<CreatePostBloc, CreatePostState>(
+            builder: (context, state) {
+          return AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            leading: const Icon(
+              Icons.clear,
+              color: Colors.black,
+            ),
+            title: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                value: state.folder,
+                items: getFolders(state.folderList),
+                onChanged: (folderPathModel) {
+                  if (folderPathModel != null) {
+                    context.read<CreatePostBloc>().add(
+                          ChangeFoldersEvent(
+                            selectedFolder: folderPathModel,
+                          ),
+                        );
+                  }
+                },
+              ),
+            ),
+            actions: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 18),
+                  child: InkWell(
+                    child: Text(
+                      context.localization.nextButton,
+                      style: context.textTheme.titleMedium
+                          ?.copyWith(color: context.colorScheme.primary),
+                    ),
+                    onTap: () {
+                      if (state.selectedPath != null) {
+                        Navigator.of(context).pushNamed<void>(
+                          SavePostScreen.routeNamed,
+                          arguments: state.selectedPath,
+                        );
+                      }
+                    },
+                  ),
+                ),
+              )
+            ],
+          );
+        }),
+      ),
       body: SafeArea(
         child: BlocBuilder<CreatePostBloc, CreatePostState>(
           builder: (context, state) {
@@ -28,69 +79,14 @@ class CreatePostScreen extends StatelessWidget {
             } else {
               return Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 18),
-                            child: Icon(Icons.clear),
-                          ),
-                          DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              value: state.folder,
-                              items: getFolders(state.folderList),
-                              onChanged: (folderPathModel) {
-                                if (folderPathModel != null) {
-                                  context.read<CreatePostBloc>().add(
-                                        ChangeFoldersEvent(
-                                          selectedFolder: folderPathModel,
-                                        ),
-                                      );
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 18),
-                        child: InkWell(
-                          child: Text(
-                            context.localization.nextButton,
-                            style: context.textTheme.titleMedium
-                                ?.copyWith(color: context.colorScheme.primary),
-                          ),
-                          onTap: () {
-                            if (state.selectedPath != null) {
-                              Navigator.of(context).pushNamed<void>(
-                                SavePostScreen.routeNamed,
-                                arguments: state.selectedPath,
-                              );
-
-                              // Navigator.of(context).push<void>(
-                              //   MaterialPageRoute(
-                              //     builder: (context) => BlocProvider(
-                              //       child: SavePostScreen(
-                              //         imagePath: state.selectedPath!,
-                              //       ),
-                              //       create: (context) => SavePostBloc(),
-                              //     ),
-                              //   ),
-                              // );
-                            }
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                  const Divider(),
                   Container(
                     color: context.colorScheme.onSurface,
                     height: (context.screenHeight) * 0.45,
                     child: state.selectedPath != null
-                        ? Image.file(File(state.selectedPath!))
+                        ? Image.file(
+                            File(state.selectedPath!),
+                            fit: BoxFit.fitWidth,
+                          )
                         : const SizedBox.shrink(),
                   ),
                   const Divider(),
