@@ -20,53 +20,54 @@ class CreatePostScreen extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: BlocBuilder<CreatePostBloc, CreatePostState>(
-            builder: (context, state) {
-          return AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            leading: const Icon(
-              Icons.clear,
-              color: Colors.black,
-            ),
-            title: DropdownButtonHideUnderline(
-              child: DropdownButton(
-                value: state.folder,
-                items: getFolders(state.folderList),
-                onChanged: (folderPathModel) {
-                  if (folderPathModel != null) {
-                    context.read<CreatePostBloc>().add(
-                          ChangeFoldersEvent(
-                            selectedFolder: folderPathModel,
-                          ),
-                        );
-                  }
-                },
+          builder: (context, state) {
+            return AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              leading: const Icon(
+                Icons.clear,
+                color: Colors.black,
               ),
-            ),
-            actions: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 18),
-                  child: InkWell(
-                    child: Text(
-                      context.localization.nextButton,
-                      style: context.textTheme.titleMedium
-                          ?.copyWith(color: context.colorScheme.primary),
-                    ),
-                    onTap: () {
-                      if (state.selectedPath != null) {
-                        Navigator.of(context).pushNamed<void>(
-                          SavePostScreen.routeNamed,
-                          arguments: state.selectedPath,
-                        );
-                      }
-                    },
-                  ),
+              title: DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  value: state.folder,
+                  items: getFolders(state.folderList),
+                  onChanged: (folderPathModel) {
+                    if (folderPathModel != null) {
+                      context.read<CreatePostBloc>().add(
+                            ChangeFoldersEvent(
+                              selectedFolder: folderPathModel,
+                            ),
+                          );
+                    }
+                  },
                 ),
-              )
-            ],
-          );
-        }),
+              ),
+              actions: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 18),
+                    child: InkWell(
+                      child: Text(
+                        context.localization.nextButton,
+                        style: context.textTheme.titleMedium
+                            ?.copyWith(color: context.colorScheme.primary),
+                      ),
+                      onTap: () {
+                        if (state.selectedPath != null) {
+                          Navigator.of(context).pushNamed<void>(
+                            SavePostScreen.routeNamed,
+                            arguments: state.selectedPath,
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                )
+              ],
+            );
+          },
+        ),
       ),
       body: SafeArea(
         child: BlocBuilder<CreatePostBloc, CreatePostState>(

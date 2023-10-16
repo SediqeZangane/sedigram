@@ -28,4 +28,4 @@ class AuthState {
       );
 }
 
-enum LoginResult { succeed, failed, none }
+enum LoginResult { succeed, logInFailed, signUpFailed, none }

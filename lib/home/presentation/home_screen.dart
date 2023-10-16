@@ -129,7 +129,7 @@ class HomeScreen extends StatelessWidget {
             }
             return BlocProvider(
               create: (context) {
-                print('id global : ${state.user.userId}');
+                debugPrint('id global : ${state.user.userId}');
                 return ProfileBloc(
                   FirebaseAuth.instance,
                   FirestoreService(FirebaseFirestore.instance),

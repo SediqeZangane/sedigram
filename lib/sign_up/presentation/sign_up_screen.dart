@@ -42,9 +42,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         if (state.loginResult == LoginResult.succeed) {
           Navigator.pushNamed(context, HomeScreen.routeNamed);
         }
-        if (state.loginResult == LoginResult.failed) {
+        if (state.loginResult == LoginResult.signUpFailed) {
           const showSnackBar = SnackBar(
-            content: Text('SignUp in failed'),
+            content: Text('SignUp failed'),
           );
           ScaffoldMessenger.of(context).showSnackBar(showSnackBar);
         }

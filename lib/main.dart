@@ -52,8 +52,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(
-          create: (context) => AuthBloc(FirebaseAuth.instance, GoogleSignIn())
-            ..add(CheckLoginEvent()),
+          create: (context) => AuthBloc(
+            FirebaseAuth.instance,
+            GoogleSignIn(),
+            GlobalUserBloc(),
+          )..add(CheckLoginEvent()),
         ),
         BlocProvider<GlobalUserBloc>(
           create: (context) => GlobalUserBloc()

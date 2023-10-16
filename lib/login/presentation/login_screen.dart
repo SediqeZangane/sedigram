@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state.loginResult == LoginResult.succeed) {
           Navigator.pushNamed(context, HomeScreen.routeNamed);
         }
-        if (state.loginResult == LoginResult.failed) {
+        if (state.loginResult == LoginResult.logInFailed) {
           const showSnackBar = SnackBar(
             content: Text('Log in failed'),
           );
