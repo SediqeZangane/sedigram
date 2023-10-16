@@ -118,6 +118,7 @@ class MyApp extends StatelessWidget {
               },
               child: PostDetailScreen(
                 postIndex: args!.postIndex,
+                userName: args.userName,
               ),
             );
           },

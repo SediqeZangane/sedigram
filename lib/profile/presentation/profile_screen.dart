@@ -159,6 +159,7 @@ class ProfileScreen extends StatelessWidget {
                             arguments: PostDetailScreenArguments(
                               posts: profileState.posts,
                               postIndex: index,
+                              userName: profileState.user.userName,
                             ),
                           );
                         },

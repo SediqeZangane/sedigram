@@ -5,17 +5,17 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:sedigram/post_detail/application/post_detail_bloc.dart';
 import 'package:sedigram/post_detail/application/post_detail_event.dart';
 import 'package:sedigram/post_detail/application/post_detail_state.dart';
-import 'package:sedigram/user/application/global_user_bloc.dart';
-import 'package:sedigram/user/application/global_user_state.dart';
 
 class PostDetailScreen extends StatelessWidget {
   static const String routeNamed = 'postDetailScreen';
   static const List<String> actions = ['Delete', 'Edit'];
 
   final int postIndex;
+  final String userName;
 
   const PostDetailScreen({
     required this.postIndex,
+    required this.userName,
     super.key,
   });
 
@@ -30,19 +30,23 @@ class PostDetailScreen extends StatelessWidget {
           'Posts',
           style: TextStyle(color: Colors.black),
         ),
+        leading: const Icon(
+          Icons.arrow_back,
+          color: Colors.black,
+        ),
       ),
       body: BlocBuilder<PostDetailBloc, PostDetailState>(
-        builder: (context, state) {
+        builder: (context, postState) {
           return ScrollablePositionedList.builder(
             initialScrollIndex: postIndex,
-            itemCount: state.posts.length,
+            itemCount: postState.posts.length,
             itemBuilder: (context, index) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                      bottom: 8,
+                      bottom: 12,
                       left: 4,
                       right: 4,
                     ),
@@ -53,77 +57,76 @@ class PostDetailScreen extends StatelessWidget {
                           children: [
                             const CircleAvatar(radius: 24),
                             const SizedBox(width: 10),
-                            BlocBuilder<GlobalUserBloc, GlobalUserState>(
-                              builder: (context, state) {
-                                return Text(
-                                  state.user.userName,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                );
-                              },
+                            Text(
+                              userName,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
                           ],
                         ),
-                        DropdownButton(
-                          items: actions
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (String? value) {
-                            if (value == 'Delete') {
-                              showDialog<void>(
-                                context: context,
-                                builder: (_) {
-                                  return AlertDialog(
-                                    title: const Text('Delete Post'),
-                                    content: const Text('Are you sure ?\n'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        style: TextButton.styleFrom(
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .labelLarge,
-                                        ),
-                                        child: const Text('Yes'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          context.read<PostDetailBloc>().add(
-                                                PostDetailDeleteEvent(
-                                                  selectedPost:
-                                                      state.posts[index],
-                                                ),
-                                              );
-                                        },
-                                      ),
-                                      TextButton(
-                                        style: TextButton.styleFrom(
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .labelLarge,
-                                        ),
-                                        child: const Text('NO'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
+                        if (postState.isMine)
+                          DropdownButton(
+                            items: actions
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
                               );
-                            }
-                          },
-                          icon: const Icon(Icons.more_horiz_sharp),
-                        ),
+                            }).toList(),
+                            onChanged: (String? value) {
+                              if (value == 'Delete') {
+                                showDialog<void>(
+                                  context: context,
+                                  builder: (_) {
+                                    return AlertDialog(
+                                      title: const Text('Delete Post'),
+                                      content: const Text('Are you sure ?\n'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                          child: const Text('Yes'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            context.read<PostDetailBloc>().add(
+                                                  PostDetailDeleteEvent(
+                                                    selectedPost:
+                                                        postState.posts[index],
+                                                  ),
+                                                );
+                                          },
+                                        ),
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                          child: const Text('NO'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                            icon: const Icon(Icons.more_horiz_sharp),
+                          ),
                       ],
                     ),
                   ),
-                  CachedNetworkImage(
-                    imageUrl: state.posts[index].imageUrl,
+                  Center(
+                    child: CachedNetworkImage(
+                      imageUrl: postState.posts[index].imageUrl,
+                    ),
                   ),
                   Row(
                     children: const [
@@ -138,13 +141,14 @@ class PostDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 4, bottom: 12),
                     child: Text(
-                      state.posts[index].caption,
+                      postState.posts[index].caption,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
+                  const Divider()
                 ],
               );
             },

@@ -18,7 +18,14 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
   }) : super(PostDetailState.init()) {
     on((event, emit) async {
       if (event is PostDetailInitEvent) {
-        emit(state.copyWith(posts: event.posts));
+        final ownerId = globalUserBloc.state.user.userId;
+
+        emit(
+          state.copyWith(
+            posts: event.posts,
+            isMine: ownerId == event.posts[0].userId,
+          ),
+        );
       }
       if (event is PostDetailDeleteEvent) {
         final userId = firebaseAuth.currentUser!.uid;
