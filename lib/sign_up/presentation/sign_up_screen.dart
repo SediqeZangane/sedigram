@@ -40,7 +40,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           previous.loginResult != current.loginResult,
       listener: (context, state) {
         if (state.loginResult == LoginResult.succeed) {
-          Navigator.pushNamed(context, HomeScreen.routeNamed);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            HomeScreen.routeNamed,
+            (route) => false,
+          );
         }
         if (state.loginResult == LoginResult.signUpFailed) {
           const showSnackBar = SnackBar(

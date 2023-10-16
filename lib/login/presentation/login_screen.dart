@@ -38,7 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
       listenWhen: (p, c) => p.loginResult != c.loginResult,
       listener: (_, state) {
         if (state.loginResult == LoginResult.succeed) {
-          Navigator.pushNamed(context, HomeScreen.routeNamed);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            HomeScreen.routeNamed,
+            (route) => false,
+          );
         }
         if (state.loginResult == LoginResult.logInFailed) {
           const showSnackBar = SnackBar(
