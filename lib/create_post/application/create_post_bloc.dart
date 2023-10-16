@@ -41,7 +41,12 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         }
       }
       if (event is ChangeFoldersEvent) {
-        emit(state.copyWith(folder: event.selectedFolder));
+        emit(
+          state.copyWith(
+            folder: event.selectedFolder,
+            selectedPath: event.selectedFolder.files.first,
+          ),
+        );
       }
       if (event is SelectedImagesEvent) {
         emit(state.copyWith(selectedPath: event.path));
