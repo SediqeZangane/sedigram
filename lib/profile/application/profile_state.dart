@@ -9,6 +9,7 @@ class ProfileState {
   final User user;
   final UserInfo userInfo;
   final bool isMine;
+  final bool followed;
 
   ProfileState({
     required this.isLoading,
@@ -17,6 +18,7 @@ class ProfileState {
     required this.user,
     required this.userInfo,
     required this.isMine,
+    required this.followed,
   });
 
   ProfileState.init()
@@ -25,7 +27,8 @@ class ProfileState {
         posts = [],
         user = User.empty(),
         userInfo = UserInfo.empty(),
-        isMine = true;
+        isMine = true,
+        followed = false;
 
   ProfileState copyWith({
     bool? isLoading,
@@ -34,6 +37,7 @@ class ProfileState {
     User? user,
     UserInfo? userInfo,
     bool? isMine,
+    bool? followed,
   }) {
     return ProfileState(
       isLoading: isLoading ?? this.isLoading,
@@ -42,6 +46,7 @@ class ProfileState {
       user: user ?? this.user,
       userInfo: userInfo ?? this.userInfo,
       isMine: isMine ?? this.isMine,
+      followed: followed ?? this.followed,
     );
   }
 }

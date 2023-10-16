@@ -9,6 +9,7 @@ import 'package:sedigram/login/presentation/login_screen.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen_arguments.dart';
 import 'package:sedigram/profile/application/profile_bloc.dart';
+import 'package:sedigram/profile/application/profile_event.dart';
 import 'package:sedigram/profile/application/profile_state.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -112,63 +113,7 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              if (profileState.isMine)
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(EditProfileScreen.routeNamed);
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.white),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
-                          side: const BorderSide(
-                            color: Colors.black12,
-                          ),
-                        ),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Edit Profile',
-                        style: TextStyle(color: context.colorScheme.onSurface),
-                      ),
-                    ),
-                  ),
-                )
-              else
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: TextButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.blueAccent),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
-                          side: const BorderSide(
-                            color: Colors.black12,
-                          ),
-                        ),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Follow',
-                        style: TextStyle(
-                          color: context.colorScheme.onSurface,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+              _buildCTA(profileState),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -207,6 +152,83 @@ class ProfileScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget _buildCTA(ProfileState profileState) {
+    if (profileState.isMine) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Builder(
+          builder: (context) {
+            return TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(EditProfileScreen.routeNamed);
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    side: const BorderSide(
+                      color: Colors.black12,
+                    ),
+                  ),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  'Edit Profile',
+                  style: TextStyle(color: context.colorScheme.onSurface),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Builder(
+          builder: (context) {
+            return TextButton(
+              onPressed: () {
+                context.read<ProfileBloc>().add(
+                      ProfileFollowEvent(
+                        userId: profileState.user.userId,
+                      ),
+                    );
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  profileState.followed
+                      ? context.colorScheme.onPrimary
+                      : context.colorScheme.primary,
+                ),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    side: const BorderSide(
+                      color: Colors.black12,
+                    ),
+                  ),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  profileState.followed ? 'Unfollow' : 'Follow',
+                  style: TextStyle(
+                    color: profileState.followed
+                        ? context.colorScheme.onSurface
+                        : context.colorScheme.onPrimary,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    }
   }
 
   void deleteDialog(BuildContext context) {

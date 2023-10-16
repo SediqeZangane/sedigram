@@ -15,3 +15,11 @@ class ProfileUpdateEvent implements ProfileEvent {
     required this.userId,
   });
 }
+
+class ProfileFollowEvent implements ProfileEvent {
+  final String userId;
+
+  const ProfileFollowEvent({
+    required this.userId,
+  });
+}
