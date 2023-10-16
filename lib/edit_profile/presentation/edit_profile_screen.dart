@@ -30,14 +30,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.only(top: 16, left: 4),
-          child: InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
+          child: TextButton(
             child: const Text(
               'Cancel',
               style: TextStyle(color: Colors.black, fontSize: 16),
             ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
         ),
         title: const Text(
@@ -47,8 +47,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(top: 16, right: 12),
-            child: InkWell(
-              onTap: () {
+            child: TextButton(
+              child: Text(
+                'Done',
+                style:
+                    TextStyle(color: context.colorScheme.primary, fontSize: 16),
+              ),
+              onPressed: () {
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
                   context.read<EditProfileBloc>().add(
@@ -59,11 +64,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   // );
                 }
               },
-              child: Text(
-                'Done',
-                style:
-                    TextStyle(color: context.colorScheme.primary, fontSize: 16),
-              ),
             ),
           )
         ],

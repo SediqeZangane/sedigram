@@ -139,6 +139,35 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                )
+              else
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: TextButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blueAccent),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          side: const BorderSide(
+                            color: Colors.black12,
+                          ),
+                        ),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Follow',
+                        style: TextStyle(
+                          color: context.colorScheme.onSurface,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               Expanded(
                 child: Padding(

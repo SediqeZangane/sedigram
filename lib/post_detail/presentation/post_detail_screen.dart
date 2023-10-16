@@ -30,9 +30,14 @@ class PostDetailScreen extends StatelessWidget {
           'Posts',
           style: TextStyle(color: Colors.black),
         ),
-        leading: const Icon(
-          Icons.arrow_back,
-          color: Colors.black,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
       ),
       body: BlocBuilder<PostDetailBloc, PostDetailState>(

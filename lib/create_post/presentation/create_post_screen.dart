@@ -24,9 +24,14 @@ class CreatePostScreen extends StatelessWidget {
             return AppBar(
               elevation: 0,
               backgroundColor: Colors.transparent,
-              leading: const Icon(
-                Icons.clear,
-                color: Colors.black,
+              leading: IconButton(
+                icon: const Icon(
+                  Icons.clear,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
               title: DropdownButtonHideUnderline(
                 child: DropdownButton(
@@ -47,13 +52,13 @@ class CreatePostScreen extends StatelessWidget {
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 18),
-                    child: InkWell(
+                    child: TextButton(
                       child: Text(
                         context.localization.nextButton,
                         style: context.textTheme.titleMedium
                             ?.copyWith(color: context.colorScheme.primary),
                       ),
-                      onTap: () {
+                      onPressed: () {
                         if (state.selectedPath != null) {
                           Navigator.of(context).pushNamed<void>(
                             SavePostScreen.routeNamed,
