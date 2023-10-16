@@ -192,11 +192,19 @@ class ProfileScreen extends StatelessWidget {
           builder: (context) {
             return TextButton(
               onPressed: () {
-                context.read<ProfileBloc>().add(
-                      ProfileFollowEvent(
-                        userId: profileState.user.userId,
-                      ),
-                    );
+                if (profileState.followed) {
+                  context.read<ProfileBloc>().add(
+                        ProfileUnfollowEvent(
+                          userId: profileState.user.userId,
+                        ),
+                      );
+                } else {
+                  context.read<ProfileBloc>().add(
+                        ProfileFollowEvent(
+                          userId: profileState.user.userId,
+                        ),
+                      );
+                }
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(

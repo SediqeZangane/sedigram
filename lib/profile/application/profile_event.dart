@@ -23,3 +23,11 @@ class ProfileFollowEvent implements ProfileEvent {
     required this.userId,
   });
 }
+
+class ProfileUnfollowEvent implements ProfileEvent {
+  final String userId;
+
+  const ProfileUnfollowEvent({
+    required this.userId,
+  });
+}

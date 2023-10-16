@@ -41,6 +41,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             final userInfo = await firestoreService.getUserInfo(event.userId);
             emit(state.copyWith(userInfo: userInfo));
 
+            final ownerUserInfo = globalUserBloc.state.userInfo;
+            final myFollowing = ownerUserInfo.followings.contains(event.userId);
+            emit(state.copyWith(followed: myFollowing));
+
             final posts = await firestoreService.getPosts(event.userId);
             emit(state.copyWith(isLoading: false, error: '', posts: posts));
           } catch (_) {
@@ -70,6 +74,30 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
             globalUserBloc.add(GlobalUserUpdateEvent());
             emit(state.copyWith(followed: true));
+          } catch (e) {
+            debugPrint('$e');
+          }
+        }
+
+        if (event is ProfileUnfollowEvent) {
+          try {
+            final ownerId = globalUserBloc.state.user.userId;
+            final ownerUserInfo = await firestoreService.getUserInfo(ownerId);
+            final followings = ownerUserInfo.followings;
+            // ignore: cascade_invocations
+            followings.remove(event.userId);
+            final newOwnerInfo = ownerUserInfo.copyWith(followings: followings);
+            await firestoreService.updateUserInfo(newOwnerInfo);
+
+            final userInfo = await firestoreService.getUserInfo(event.userId);
+            final followers = userInfo.followers;
+            // ignore: cascade_invocations
+            followers.remove(ownerId);
+            final newUserInfo = userInfo.copyWith(followers: followers);
+            await firestoreService.updateUserInfo(newUserInfo);
+
+            globalUserBloc.add(GlobalUserUpdateEvent());
+            emit(state.copyWith(followed: false));
           } catch (e) {
             debugPrint('$e');
           }
