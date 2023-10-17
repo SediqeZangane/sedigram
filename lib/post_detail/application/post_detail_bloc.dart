@@ -20,13 +20,10 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
   }) : super(PostDetailState.init()) {
     on((event, emit) async {
       if (event is PostDetailInitEvent) {
-        final ownerId = globalUserBloc.state.user.userId;
-
         final postDetailModels = await getPostDetail(event.posts);
         emit(
           state.copyWith(
             posts: postDetailModels,
-            isMine: ownerId == event.posts[0].userId,
           ),
         );
       }
@@ -43,7 +40,13 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
 
   Future<List<PostDetailModel>> getPostDetail(List<Post> posts) async {
     final user = await firestoreService.getUser(posts.first.userId);
-    final postDetailModel = posts.map((e) => PostDetailModel(e, user)).toList();
+    final ownerId = globalUserBloc.state.user.userId;
+
+    final postDetailModel = posts
+        .map(
+          (e) => PostDetailModel(e, user, e.userId == ownerId),
+        )
+        .toList();
     return postDetailModel;
   }
 }

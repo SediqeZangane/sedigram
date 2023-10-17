@@ -29,7 +29,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 return Center(child: shimmerWidget());
               } else {
                 return PostWidget(
-                  isMine: false,
+                  isMine: timelineState.listPost[index].isMine,
                   postDetailModel: timelineState.listPost[index],
                 );
               }

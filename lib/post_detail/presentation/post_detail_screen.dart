@@ -46,7 +46,7 @@ class PostDetailScreen extends StatelessWidget {
             itemCount: postState.posts.length,
             itemBuilder: (context, index) {
               return PostWidget(
-                isMine: postState.isMine,
+                isMine: postState.posts[index].isMine,
                 postDetailModel: postState.posts[index],
                 onDelete: () {
                   context.read<PostDetailBloc>().add(
