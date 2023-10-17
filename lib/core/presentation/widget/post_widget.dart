@@ -96,6 +96,7 @@ class PostWidget extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 8),
           child: CachedNetworkImage(
             imageUrl: postDetailModel.post.imageUrl,
+            fit: BoxFit.fitWidth,
           ),
         ),
         Row(

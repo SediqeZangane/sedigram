@@ -55,6 +55,7 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
           //   allUserId.add(listUserIdFollowings);
           // }
 
+          allPosts.sort((b, a) => a.post.createdAt.compareTo(b.post.createdAt));
           emit(
             state.copyWith(
               isLoading: false,
