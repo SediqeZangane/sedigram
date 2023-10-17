@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/data/firestore_service.dart';
+import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/user/application/global_user_event.dart';
 import 'package:sedigram/user/application/global_user_state.dart';
 
@@ -28,6 +29,8 @@ class GlobalUserBloc extends Bloc<GlobalUserEvent, GlobalUserState> {
       if (event is GlobalUserUpdateEvent) {
         try {
           final userId = firebaseAuth.currentUser!.uid;
+          emit(state.copyWith(user: User.empty().copyWith(userId: userId)));
+
           final user = await firestoreService.getUser(userId);
           final userInfo = await firestoreService.getUserInfo(userId);
 

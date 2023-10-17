@@ -15,6 +15,9 @@ import 'package:sedigram/profile/application/profile_event.dart';
 import 'package:sedigram/profile/presentation/profile_screen.dart';
 import 'package:sedigram/search/application/search_bloc.dart';
 import 'package:sedigram/search/presentation/search_screen.dart';
+import 'package:sedigram/timeline_screen/application/timeline_bloc.dart';
+import 'package:sedigram/timeline_screen/application/timeline_event.dart';
+import 'package:sedigram/timeline_screen/presentation/timeline_screen.dart';
 import 'package:sedigram/user/application/global_user_bloc.dart';
 import 'package:sedigram/user/application/global_user_state.dart';
 
@@ -100,34 +103,45 @@ class HomeScreen extends StatelessWidget {
     //   default:
     //     return const Text('Not Yet');
     // }
+    return BlocBuilder<GlobalUserBloc, GlobalUserState>(
+      builder: (context, state) {
+        if (state.user.userId.isEmpty) {
+          return const CircularProgressIndicator();
+        }
 
-    return IndexedStack(
-      alignment: Alignment.center,
-      index: currentIndex,
-      children: [
-        const Text('home'),
-        BlocProvider(
-          create: (context) {
-            return SearchBloc(
-              firebaseAuth: FirebaseAuth.instance,
-              firestoreService: FirestoreService(FirebaseFirestore.instance),
-            );
-          },
-          child: const SearchScreen(),
-        ),
-        BlocProvider(
-          child: const CreatePostScreen(),
-          create: (context) {
-            return CreatePostBloc()..add(GetImagesEvent());
-          },
-        ),
-        const Text('like'),
-        BlocBuilder<GlobalUserBloc, GlobalUserState>(
-          builder: (context, state) {
-            if (state.user.userId.isEmpty) {
-              return const CircularProgressIndicator();
-            }
-            return BlocProvider(
+        return IndexedStack(
+          alignment: Alignment.center,
+          index: currentIndex,
+          children: [
+            BlocProvider(
+              child: const TimelineScreen(),
+              create: (context) {
+                return TimelineBloc(
+                  firebaseAuth: FirebaseAuth.instance,
+                  firestoreService:
+                      FirestoreService(FirebaseFirestore.instance),
+                  globalUserBloc: GlobalUserBloc(),
+                )..add(TimelineInitEvent());
+              },
+            ),
+            BlocProvider(
+              create: (context) {
+                return SearchBloc(
+                  firebaseAuth: FirebaseAuth.instance,
+                  firestoreService:
+                      FirestoreService(FirebaseFirestore.instance),
+                );
+              },
+              child: const SearchScreen(),
+            ),
+            BlocProvider(
+              child: const CreatePostScreen(),
+              create: (context) {
+                return CreatePostBloc()..add(GetImagesEvent());
+              },
+            ),
+            const Text('like'),
+            BlocProvider(
               create: (context) {
                 debugPrint('id global : ${state.user.userId}');
                 return ProfileBloc(
@@ -143,10 +157,10 @@ class HomeScreen extends StatelessWidget {
               child: ProfileScreen(
                 userId: state.user.userId,
               ),
-            );
-          },
-        ),
-      ],
+            ),
+          ],
+        );
+      },
     );
   }
 }
