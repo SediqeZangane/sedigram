@@ -1,7 +1,7 @@
-import 'package:sedigram/core/domain/post.dart';
+import 'package:sedigram/core/presentation/model/post_details_model.dart';
 
 class PostDetailState {
-  final List<Post> posts;
+  final List<PostDetailModel> posts;
   final bool isMine;
 
   PostDetailState({
@@ -14,7 +14,7 @@ class PostDetailState {
         isMine = false;
 
   PostDetailState copyWith({
-    List<Post>? posts,
+    List<PostDetailModel>? posts,
     bool? isMine,
   }) {
     return PostDetailState(

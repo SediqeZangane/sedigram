@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sedigram/core/domain/post.dart';
 import 'package:sedigram/core/presentation/widget/post_widget.dart';
 import 'package:sedigram/timeline_screen/application/timeline_bloc.dart';
 import 'package:sedigram/timeline_screen/application/timeline_state.dart';
@@ -30,15 +29,8 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 return Center(child: shimmerWidget());
               } else {
                 return PostWidget(
-                  userName: timelineState.userName,
                   isMine: false,
-                  post: Post(
-                    postId: timelineState.listPost[index].postId,
-                    caption: timelineState.listPost[index].caption,
-                    imageUrl: timelineState.listPost[index].imageUrl,
-                    createdAt: timelineState.listPost[index].createdAt,
-                    userId: timelineState.listPost[index].userId,
-                  ),
+                  postDetailModel: timelineState.listPost[index],
                 );
               }
             },

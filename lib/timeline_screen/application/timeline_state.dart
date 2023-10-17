@@ -1,28 +1,23 @@
-import 'package:sedigram/core/domain/post.dart';
+import 'package:sedigram/core/presentation/model/post_details_model.dart';
 
 class TimelineState {
-  final String userName;
-  final List<Post> listPost;
+  final List<PostDetailModel> listPost;
   final bool isLoading;
 
   const TimelineState({
-    required this.userName,
     required this.listPost,
     required this.isLoading,
   });
 
   TimelineState.init()
-      : userName = '',
-        listPost = [],
+      : listPost = [],
         isLoading = false;
 
   TimelineState copyWith({
-    String? userName,
-    List<Post>? listPost,
+    List<PostDetailModel>? listPost,
     bool? isLoading,
   }) {
     return TimelineState(
-      userName: userName ?? this.userName,
       listPost: listPost ?? this.listPost,
       isLoading: isLoading ?? this.isLoading,
     );

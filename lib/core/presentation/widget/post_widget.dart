@@ -1,19 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:sedigram/core/domain/post.dart';
+import 'package:sedigram/core/presentation/model/post_details_model.dart';
 
 class PostWidget extends StatelessWidget {
   static const List<String> actions = ['Delete', 'Edit'];
 
-  final String userName;
+  final PostDetailModel postDetailModel;
   final bool isMine;
-  final Post post;
   final void Function()? onDelete;
 
   const PostWidget({
-    required this.userName,
+    required this.postDetailModel,
     required this.isMine,
-    required this.post,
     this.onDelete,
     super.key,
   });
@@ -37,7 +35,7 @@ class PostWidget extends StatelessWidget {
                   const CircleAvatar(radius: 24),
                   const SizedBox(width: 10),
                   Text(
-                    userName,
+                    postDetailModel.user.userName,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w800,
@@ -97,7 +95,7 @@ class PostWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: CachedNetworkImage(
-            imageUrl: post.imageUrl,
+            imageUrl: postDetailModel.post.imageUrl,
           ),
         ),
         Row(
@@ -116,7 +114,7 @@ class PostWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 4, bottom: 8),
           child: Text(
-            post.caption,
+            postDetailModel.post.caption,
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w500,

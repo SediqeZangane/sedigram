@@ -46,13 +46,12 @@ class PostDetailScreen extends StatelessWidget {
             itemCount: postState.posts.length,
             itemBuilder: (context, index) {
               return PostWidget(
-                userName: userName,
                 isMine: postState.isMine,
-                post: postState.posts[index],
+                postDetailModel: postState.posts[index],
                 onDelete: () {
                   context.read<PostDetailBloc>().add(
                         PostDetailDeleteEvent(
-                          selectedPost: postState.posts[index],
+                          selectedPost: postState.posts[index].post,
                         ),
                       );
                 },
