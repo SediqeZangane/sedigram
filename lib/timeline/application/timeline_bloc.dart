@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/core/presentation/model/post_details_model.dart';
-import 'package:sedigram/timeline_screen/application/timeline_event.dart';
-import 'package:sedigram/timeline_screen/application/timeline_state.dart';
+import 'package:sedigram/timeline/application/timeline_event.dart';
+import 'package:sedigram/timeline/application/timeline_state.dart';
 import 'package:sedigram/user/application/global_user_bloc.dart';
 
 class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {

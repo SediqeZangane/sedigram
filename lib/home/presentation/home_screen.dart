@@ -15,9 +15,9 @@ import 'package:sedigram/profile/application/profile_event.dart';
 import 'package:sedigram/profile/presentation/profile_screen.dart';
 import 'package:sedigram/search/application/search_bloc.dart';
 import 'package:sedigram/search/presentation/search_screen.dart';
-import 'package:sedigram/timeline_screen/application/timeline_bloc.dart';
-import 'package:sedigram/timeline_screen/application/timeline_event.dart';
-import 'package:sedigram/timeline_screen/presentation/timeline_screen.dart';
+import 'package:sedigram/timeline/application/timeline_bloc.dart';
+import 'package:sedigram/timeline/application/timeline_event.dart';
+import 'package:sedigram/timeline/presentation/timeline_screen.dart';
 import 'package:sedigram/user/application/global_user_bloc.dart';
 import 'package:sedigram/user/application/global_user_state.dart';
 

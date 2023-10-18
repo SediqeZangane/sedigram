@@ -5,6 +5,7 @@ import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
+import 'package:sedigram/follow/presentation/follow_screen.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen_arguments.dart';
@@ -67,29 +68,49 @@ class ProfileScreen extends StatelessWidget {
                   Column(
                     children: [
                       Text(profileState.userInfo.posts.length.toString()),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: Text('Posts'),
-                      )
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      const Text('Posts')
                     ],
                   ),
-                  Column(
-                    children: [
-                      Text(profileState.userInfo.followers.length.toString()),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: Text('Followers'),
-                      )
-                    ],
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        FollowScreen.routeNamed,
+                        arguments: profileState.userInfo,
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Text(profileState.userInfo.followers.length.toString()),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        const Text(
+                          'Followers',
+                        )
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Text(profileState.userInfo.followings.length.toString()),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: Text('Following'),
-                      )
-                    ],
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        FollowScreen.routeNamed,
+                        arguments: profileState.userInfo,
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Text(
+                          profileState.userInfo.followings.length.toString(),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        const Text('Following')
+                      ],
+                    ),
                   ),
                 ],
               ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/widget/post_widget.dart';
-import 'package:sedigram/timeline_screen/application/timeline_bloc.dart';
-import 'package:sedigram/timeline_screen/application/timeline_event.dart';
-import 'package:sedigram/timeline_screen/application/timeline_state.dart';
+import 'package:sedigram/timeline/application/timeline_bloc.dart';
+import 'package:sedigram/timeline/application/timeline_event.dart';
+import 'package:sedigram/timeline/application/timeline_state.dart';
 
 class TimelineScreen extends StatefulWidget {
   const TimelineScreen({super.key});
