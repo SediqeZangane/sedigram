@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sedigram/core/presentation/model/post_details_model.dart';
 
 class PostWidget extends StatelessWidget {
-  static const List<String> actions = ['Delete', 'Edit'];
+  static const List<String> actions = ['Delete'];
 
   final PostDetailModel postDetailModel;
   final bool isMine;
@@ -30,64 +30,74 @@ class PostWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  const CircleAvatar(radius: 24),
-                  const SizedBox(width: 10),
-                  Text(
-                    postDetailModel.user.userName,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
+              SizedBox(
+                height: 54,
+                child: Row(
+                  children: [
+                    const CircleAvatar(radius: 32),
+                    const SizedBox(width: 10),
+                    Text(
+                      postDetailModel.user.userName,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               if (isMine)
-                DropdownButton(
-                  items: actions.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    if (value == 'Delete') {
-                      showDialog<void>(
-                        context: context,
-                        builder: (_) {
-                          return AlertDialog(
-                            title: const Text('Delete Post'),
-                            content: const Text('Are you sure ?\n'),
-                            actions: <Widget>[
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  textStyle:
-                                      Theme.of(context).textTheme.labelLarge,
-                                ),
-                                child: const Text('Yes'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  onDelete?.call();
-                                },
-                              ),
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  textStyle:
-                                      Theme.of(context).textTheme.labelLarge,
-                                ),
-                                child: const Text('NO'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
+                DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    items:
+                        actions.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
                       );
-                    }
-                  },
-                  icon: const Icon(Icons.more_horiz_sharp),
+                    }).toList(),
+                    onChanged: (String? value) {
+                      if (value == 'Delete') {
+                        showDialog<void>(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              title: const Text('Delete Post'),
+                              content: const Text('Are you sure ?\n'),
+                              actions: <Widget>[
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelLarge,
+                                  ),
+                                  child: const Text('Yes'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    onDelete?.call();
+                                  },
+                                ),
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelLarge,
+                                  ),
+                                  child: const Text('NO'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.more_horiz_sharp,
+                      size: 20,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
             ],
           ),
@@ -103,13 +113,22 @@ class PostWidget extends StatelessWidget {
           children: const [
             Padding(
               padding: EdgeInsets.only(left: 8),
-              child: Icon(Icons.favorite_border),
+              child: Icon(
+                Icons.favorite_border,
+                size: 26,
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(16),
-              child: Icon(Icons.mode_comment_outlined),
+              child: Icon(
+                Icons.mode_comment_outlined,
+                size: 23,
+              ),
             ),
-            Icon(Icons.share)
+            Icon(
+              Icons.share,
+              size: 23,
+            ),
           ],
         ),
         Padding(
@@ -122,7 +141,6 @@ class PostWidget extends StatelessWidget {
             ),
           ),
         ),
-        const Divider()
       ],
     );
   }

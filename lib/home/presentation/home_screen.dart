@@ -31,52 +31,54 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         final body = _buildBody(state.currentIndex);
-        return Scaffold(
-          body: Center(child: body),
-          bottomNavigationBar: BottomNavigationBar(
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  color: context.colorScheme.onSurface,
+        return SafeArea(
+          child: Scaffold(
+            body: Center(child: body),
+            bottomNavigationBar: BottomNavigationBar(
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.home,
+                    color: context.colorScheme.onSurface,
+                  ),
+                  label: '',
                 ),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.search,
-                  color: context.colorScheme.onSurface,
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.search_sharp,
+                    color: context.colorScheme.onSurface,
+                  ),
+                  label: '',
                 ),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.add_box_outlined,
-                  color: context.colorScheme.onSurface,
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.add_box_outlined,
+                    color: context.colorScheme.onSurface,
+                  ),
+                  label: '',
                 ),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.heart_broken,
-                  color: context.colorScheme.onSurface,
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.heart_broken,
+                    color: context.colorScheme.onSurface,
+                  ),
+                  label: '',
                 ),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.account_circle,
-                  color: context.colorScheme.onSurface,
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.account_circle,
+                    color: context.colorScheme.onSurface,
+                  ),
+                  label: '',
                 ),
-                label: '',
-              ),
-            ],
-            onTap: (value) {
-              context
-                  .read<HomeBloc>()
-                  .add(ChangedBottomNavigation(index: value));
-            },
-            currentIndex: state.currentIndex,
+              ],
+              onTap: (value) {
+                context
+                    .read<HomeBloc>()
+                    .add(ChangedBottomNavigation(index: value));
+              },
+              currentIndex: state.currentIndex,
+            ),
           ),
         );
       },
