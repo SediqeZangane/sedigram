@@ -27,8 +27,12 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
           final posts = await firestoreService.getPosts(ownerId);
           final postDetails = posts
               .map(
-                (post) =>
-                    PostDetailModel(post, globalUserBloc.state.user, true),
+                (post) => PostDetailModel(
+                  post,
+                  globalUserBloc.state.user,
+                  true,
+                  true,
+                ),
               )
               .toList();
           allPosts.addAll(postDetails);
@@ -40,20 +44,10 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
             final user = await firestoreService.getUser(userId);
             final userPosts = await firestoreService.getPosts(userId);
             final userPostDetails = userPosts
-                .map((post) => PostDetailModel(post, user, false))
+                .map((post) => PostDetailModel(post, user, false, true))
                 .toList();
             allPosts.addAll(userPostDetails);
           }
-          //
-          // final List<String> allUserId = [];
-          // allUserId.add(ownerId);
-          //
-          // for (var i = 0; i < listFollowings.length; i++) {
-          //   final listUserFollowings =
-          //       await firestoreService.getUser(listFollowings[i]);
-          //   final listUserIdFollowings = listUserFollowings.userName[i];
-          //   allUserId.add(listUserIdFollowings);
-          // }
 
           allPosts.sort((b, a) => a.post.createdAt.compareTo(b.post.createdAt));
           emit(

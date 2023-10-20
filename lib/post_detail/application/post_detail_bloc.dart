@@ -35,6 +35,18 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
         emit(state.copyWith(posts: newPostDetailModels));
         globalUserBloc.add(GlobalUserUpdateEvent());
       }
+
+      if (event is PostDetailLikeEvent) {
+        final ownerId = globalUserBloc.state.user.userId;
+        event.likedPost.likes.add(ownerId);
+        final a = firestoreService.updatePost(event.likedPost);
+
+        // final post = await firestoreService.getPost(event.likedPost.postId)
+        // post.likes.add(ownerId);
+        // final a=firestoreService.updatePost(post);
+      }
+
+      if (event is PostDetailUnLikeEvent) {}
     });
   }
 
@@ -44,7 +56,7 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
 
     final postDetailModel = posts
         .map(
-          (e) => PostDetailModel(e, user, e.userId == ownerId),
+          (e) => PostDetailModel(e, user, e.userId == ownerId, true),
         )
         .toList();
     return postDetailModel;

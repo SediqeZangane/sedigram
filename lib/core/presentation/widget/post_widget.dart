@@ -8,10 +8,16 @@ class PostWidget extends StatelessWidget {
   final PostDetailModel postDetailModel;
   final bool isMine;
   final void Function()? onDelete;
+  final bool liked;
+  final void Function()? like;
+  final void Function()? unlike;
 
   const PostWidget({
     required this.postDetailModel,
     required this.isMine,
+    required this.liked,
+    required this.like,
+    required this.unlike,
     this.onDelete,
     super.key,
   });
@@ -110,22 +116,32 @@ class PostWidget extends StatelessWidget {
           ),
         ),
         Row(
-          children: const [
+          children: [
             Padding(
-              padding: EdgeInsets.only(left: 8),
-              child: Icon(
-                Icons.favorite_border,
-                size: 26,
+              padding: const EdgeInsets.only(left: 8),
+              child: IconButton(
+                onPressed: () {
+                  if (liked) {
+                    unlike?.call();
+                  } else {
+                    like?.call();
+                  }
+                },
+                icon: Icon(
+                  Icons.favorite,
+                  size: 26,
+                  color: liked ? Colors.red : Colors.green,
+                ),
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(16),
               child: Icon(
                 Icons.mode_comment_outlined,
                 size: 23,
               ),
             ),
-            Icon(
+            const Icon(
               Icons.share,
               size: 23,
             ),

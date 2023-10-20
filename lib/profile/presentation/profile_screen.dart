@@ -74,8 +74,9 @@ class ProfileScreen extends StatelessWidget {
                       },
                       child: Column(
                         children: [
-                          Text(profileState.userInfo.followers.length
-                              .toString()),
+                          Text(
+                            profileState.userInfo.followers.length.toString(),
+                          ),
                           const SizedBox(
                             height: 12,
                           ),

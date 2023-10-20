@@ -55,6 +55,21 @@ class PostDetailScreen extends StatelessWidget {
                         ),
                       );
                 },
+                liked: true,
+                like: () {
+                  context.read<PostDetailBloc>().add(
+                        PostDetailLikeEvent(
+                          likedPost: postState.posts[index].post,
+                        ),
+                      );
+                },
+                unlike: () {
+                  context.read<PostDetailBloc>().add(
+                        PostDetailUnLikeEvent(
+                          unLikedPost: postState.posts[index].post,
+                        ),
+                      );
+                },
               );
             },
           );

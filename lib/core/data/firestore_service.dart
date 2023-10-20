@@ -120,4 +120,20 @@ class FirestoreService {
       return [];
     }
   }
+
+  Future<void> updatePost(Post updatedPost) async {
+    final collection = FirebaseFirestore.instance.collection('posts');
+    final doc = collection.doc(updatedPost.postId);
+
+    final exist = (await doc.get()).exists;
+
+    if (exist) {
+      await doc
+          .update(updatedPost.toJson())
+          .then((_) => print('Success'))
+          .catchError((error) => print('Failed: $error'));
+    } else {
+      return doc.set(updatedPost.toJson());
+    }
+  }
 }

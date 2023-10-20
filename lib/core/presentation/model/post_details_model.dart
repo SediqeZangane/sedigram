@@ -5,11 +5,13 @@ class PostDetailModel {
   final Post post;
   final User user;
   final bool isMine;
+  final bool liked;
 
   PostDetailModel(
     this.post,
     this.user,
     // ignore: avoid_positional_boolean_parameters
     this.isMine,
+    this.liked,
   );
 }

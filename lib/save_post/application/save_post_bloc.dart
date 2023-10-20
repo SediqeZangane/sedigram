@@ -47,6 +47,7 @@ class SavePostBloc extends Bloc<SavePostEvent, SavePostState> {
               imageUrl: imageUrl,
               createdAt: DateTime.now().millisecondsSinceEpoch,
               userId: userId,
+              likes: [],
             );
             final result = await firestoreService.insertPosts(newPostInfo);
             if (result) {

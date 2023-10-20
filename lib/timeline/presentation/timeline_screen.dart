@@ -49,6 +49,9 @@ class _TimelineScreenState extends State<TimelineScreen> {
                               PostWidget(
                                 isMine: timelineState.listPost[index].isMine,
                                 postDetailModel: timelineState.listPost[index],
+                                liked: timelineState.listPost[index].liked,
+                                like: () {},
+                                unlike: () {},
                               ),
                             ],
                           );
