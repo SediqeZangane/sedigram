@@ -94,7 +94,12 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
 
     final postDetailModel = posts
         .map(
-          (e) => PostDetailModel(e, user, e.userId == ownerId, true),
+          (e) => PostDetailModel(
+            e,
+            user,
+            e.userId == ownerId,
+            e.likes.contains(ownerId),
+          ),
         )
         .toList();
     return postDetailModel;

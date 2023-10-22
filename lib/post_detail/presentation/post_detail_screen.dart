@@ -41,6 +41,7 @@ class PostDetailScreen extends StatelessWidget {
       ),
       body: BlocBuilder<PostDetailBloc, PostDetailState>(
         builder: (context, postState) {
+          if (postState.posts.isEmpty) return const CircularProgressIndicator();
           return ScrollablePositionedList.builder(
             initialScrollIndex: postIndex,
             itemCount: postState.posts.length,

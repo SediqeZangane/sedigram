@@ -31,7 +31,7 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
                   post,
                   globalUserBloc.state.user,
                   true,
-                  true,
+                  post.likes.contains(ownerId),
                 ),
               )
               .toList();
@@ -44,7 +44,14 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
             final user = await firestoreService.getUser(userId);
             final userPosts = await firestoreService.getPosts(userId);
             final userPostDetails = userPosts
-                .map((post) => PostDetailModel(post, user, false, true))
+                .map(
+                  (post) => PostDetailModel(
+                    post,
+                    user,
+                    false,
+                    post.likes.contains(ownerId),
+                  ),
+                )
                 .toList();
             allPosts.addAll(userPostDetails);
           }

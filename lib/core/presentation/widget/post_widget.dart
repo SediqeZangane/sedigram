@@ -128,22 +128,22 @@ class PostWidget extends StatelessWidget {
                   }
                 },
                 icon: Icon(
-                  Icons.favorite,
+                  liked ? Icons.favorite : Icons.favorite_border,
                   size: 26,
-                  color: liked ? Colors.red : Colors.green,
+                  color: liked ? Colors.red : Colors.black,
                 ),
               ),
             ),
+            const Icon(
+              Icons.mode_comment_outlined,
+              size: 23,
+            ),
             const Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.only(left: 8),
               child: Icon(
-                Icons.mode_comment_outlined,
+                Icons.share,
                 size: 23,
               ),
-            ),
-            const Icon(
-              Icons.share,
-              size: 23,
             ),
           ],
         ),
