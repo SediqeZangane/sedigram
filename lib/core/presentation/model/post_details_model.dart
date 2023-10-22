@@ -14,4 +14,18 @@ class PostDetailModel {
     this.isMine,
     this.liked,
   );
+
+  PostDetailModel copyWith({
+    Post? post,
+    User? user,
+    bool? isMine,
+    bool? liked,
+  }) {
+    return PostDetailModel(
+      post ?? this.post,
+      user ?? this.user,
+      isMine ?? this.isMine,
+      liked ?? this.liked,
+    );
+  }
 }

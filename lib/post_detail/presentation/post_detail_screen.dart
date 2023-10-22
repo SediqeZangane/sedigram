@@ -55,7 +55,7 @@ class PostDetailScreen extends StatelessWidget {
                         ),
                       );
                 },
-                liked: true,
+                liked: postState.posts[index].liked,
                 like: () {
                   context.read<PostDetailBloc>().add(
                         PostDetailLikeEvent(

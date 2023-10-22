@@ -60,6 +60,59 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
           debugPrint('$e');
         }
       }
+
+      if (event is TimelineLikeEvent) {
+        final ownerId = globalUserBloc.state.user.userId;
+
+        final post = await firestoreService.getPost(event.likedPost.postId);
+        if (post != null) {
+          post.likes.add(ownerId);
+
+          final updatedPost = post;
+          await firestoreService.updatePost(updatedPost);
+        }
+
+        event.likedPost.likes.add(ownerId);
+
+        final likedPostIndex = state.listPost.indexWhere(
+          (element) => element.post.postId == event.likedPost.postId,
+        );
+        if (likedPostIndex != -1) {
+          final postDetail = state.listPost[likedPostIndex]
+              .copyWith(post: event.likedPost, liked: true);
+
+          state.listPost[likedPostIndex] = postDetail;
+
+          emit(state.copyWith(listPost: state.listPost));
+        }
+      }
+
+      if (event is TimelineUnLikeEvent) {
+        final ownerId = globalUserBloc.state.user.userId;
+
+        final post = await firestoreService.getPost(event.unLikedPost.postId);
+        if (post != null) {
+          post.likes.remove(ownerId);
+
+          final updatedPost = post;
+          await firestoreService.updatePost(updatedPost);
+        }
+
+        event.unLikedPost.likes.remove(ownerId);
+
+        final unLikedPostIndex = state.listPost.indexWhere(
+          (element) => element.post.postId == event.unLikedPost.postId,
+        );
+
+        if (unLikedPostIndex != -1) {
+          final postDetail = state.listPost[unLikedPostIndex]
+              .copyWith(post: event.unLikedPost, liked: false);
+
+          state.listPost[unLikedPostIndex] = postDetail;
+
+          emit(state.copyWith(listPost: state.listPost));
+        }
+      }
     });
   }
 }

@@ -50,8 +50,22 @@ class _TimelineScreenState extends State<TimelineScreen> {
                                 isMine: timelineState.listPost[index].isMine,
                                 postDetailModel: timelineState.listPost[index],
                                 liked: timelineState.listPost[index].liked,
-                                like: () {},
-                                unlike: () {},
+                                like: () {
+                                  context.read<TimelineBloc>().add(
+                                        TimelineLikeEvent(
+                                          likedPost: timelineState
+                                              .listPost[index].post,
+                                        ),
+                                      );
+                                },
+                                unlike: () {
+                                  context.read<TimelineBloc>().add(
+                                        TimelineUnLikeEvent(
+                                          unLikedPost: timelineState
+                                              .listPost[index].post,
+                                        ),
+                                      );
+                                },
                               ),
                             ],
                           );

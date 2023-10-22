@@ -38,15 +38,53 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
 
       if (event is PostDetailLikeEvent) {
         final ownerId = globalUserBloc.state.user.userId;
-        event.likedPost.likes.add(ownerId);
-        final a = firestoreService.updatePost(event.likedPost);
 
-        // final post = await firestoreService.getPost(event.likedPost.postId)
-        // post.likes.add(ownerId);
-        // final a=firestoreService.updatePost(post);
+        final post = await firestoreService.getPost(event.likedPost.postId);
+        if (post != null) {
+          post.likes.add(ownerId);
+          await firestoreService.updatePost(post);
+        }
+
+        event.likedPost.likes.add(ownerId);
+
+        final index = state.posts.indexWhere(
+          (element) => element.post.postId == event.likedPost.postId,
+        );
+        if (index != -1) {
+          final postDetails = state.posts;
+          final postDetail = postDetails[index].copyWith(
+            post: post,
+            liked: true,
+          );
+          postDetails[index] = postDetail;
+          emit(state.copyWith(posts: postDetails));
+        }
       }
 
-      if (event is PostDetailUnLikeEvent) {}
+      if (event is PostDetailUnLikeEvent) {
+        final ownerId = globalUserBloc.state.user.userId;
+
+        final post = await firestoreService.getPost(event.unLikedPost.postId);
+        if (post != null) {
+          post.likes.remove(ownerId);
+          await firestoreService.updatePost(post);
+        }
+
+        event.unLikedPost.likes.remove(ownerId);
+
+        final index = state.posts.indexWhere(
+          (element) => element.post.postId == event.unLikedPost.postId,
+        );
+        if (index != -1) {
+          final postDetails = state.posts;
+          final postDetail = postDetails[index].copyWith(
+            post: post,
+            liked: false,
+          );
+          postDetails[index] = postDetail;
+          emit(state.copyWith(posts: postDetails));
+        }
+      }
     });
   }
 
