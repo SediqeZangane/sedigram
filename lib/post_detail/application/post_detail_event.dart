@@ -17,3 +17,19 @@ class PostDetailInitEvent implements PostDetailEvent {
     required this.posts,
   });
 }
+
+class PostDetailLikeEvent implements PostDetailEvent {
+  final Post likedPost;
+
+  PostDetailLikeEvent({
+    required this.likedPost,
+  });
+}
+
+class PostDetailUnLikeEvent implements PostDetailEvent {
+  final Post unLikedPost;
+
+  PostDetailUnLikeEvent({
+    required this.unLikedPost,
+  });
+}

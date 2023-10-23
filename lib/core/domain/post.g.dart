@@ -12,6 +12,9 @@ Post _$PostFromJson(Map<String, dynamic> json) => Post(
       imageUrl: json['imageUrl'] as String,
       createdAt: json['createdAt'] as int,
       userId: json['userId'] as String,
+      likes:
+          (json['likes'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              [],
     );
 
 Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
@@ -20,4 +23,5 @@ Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'imageUrl': instance.imageUrl,
       'createdAt': instance.createdAt,
       'userId': instance.userId,
+      'likes': instance.likes,
     };

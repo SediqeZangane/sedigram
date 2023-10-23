@@ -1,25 +1,19 @@
-import 'package:sedigram/core/domain/post.dart';
+import 'package:sedigram/core/presentation/model/post_details_model.dart';
 
 class PostDetailState {
-  final List<Post> posts;
-  final bool isMine;
+  final List<PostDetailModel> posts;
 
   PostDetailState({
     required this.posts,
-    required this.isMine,
   });
 
-  PostDetailState.init()
-      : posts = [],
-        isMine = false;
+  PostDetailState.init() : posts = [];
 
   PostDetailState copyWith({
-    List<Post>? posts,
-    bool? isMine,
+    List<PostDetailModel>? posts,
   }) {
     return PostDetailState(
       posts: posts ?? this.posts,
-      isMine: isMine ?? this.isMine,
     );
   }
 }

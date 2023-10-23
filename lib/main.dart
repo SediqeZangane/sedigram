@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide UserInfo;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +11,15 @@ import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/core/data/fire_storage.dart';
 import 'package:sedigram/core/data/firestore_service.dart';
+import 'package:sedigram/core/domain/user_info.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
 import 'package:sedigram/firebase_options.dart';
+import 'package:sedigram/follow/application/follow_bloc.dart';
+import 'package:sedigram/follow/application/follow_event.dart';
+import 'package:sedigram/follow/presentation/follow_screen.dart';
 import 'package:sedigram/home/application/home_bloc.dart';
 import 'package:sedigram/home/presentation/home_screen.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
@@ -35,6 +39,8 @@ import 'package:sedigram/theme/presentation/text_theme.dart';
 import 'package:sedigram/user/application/global_user_bloc.dart';
 import 'package:sedigram/user/application/global_user_event.dart';
 import 'package:uuid/uuid.dart';
+
+import 'profile_photo/presentation/profile_photo_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -138,7 +144,24 @@ class MyApp extends StatelessWidget {
                 userId: userId!,
               ),
             );
-          }
+          },
+          FollowScreen.routeNamed: (context) {
+            final userInfo =
+                ModalRoute.of(context)!.settings.arguments as UserInfo?;
+
+            return BlocProvider(
+              create: (context) {
+                return FollowBloc(
+                  firestoreService: FirestoreService(
+                    FirebaseFirestore.instance,
+                  ),
+                )..add(FollowInitEvent(userInfo: userInfo!));
+              },
+              child: const FollowScreen(),
+            );
+          },
+          ProfilePhotoScreen.routeNamed: (context) =>
+              const ProfilePhotoScreen(),
         },
         theme: ThemeData(
           textTheme: textTheme,

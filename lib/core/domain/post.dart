@@ -9,6 +9,8 @@ class Post {
   String imageUrl;
   int createdAt;
   String userId;
+  @JsonKey(defaultValue: [])
+  List<String> likes;
 
   Post({
     required this.postId,
@@ -16,6 +18,7 @@ class Post {
     required this.imageUrl,
     required this.createdAt,
     required this.userId,
+    required this.likes,
   });
 
   Post.empty()
@@ -23,7 +26,8 @@ class Post {
         caption = '',
         imageUrl = '',
         createdAt = DateTime.now().millisecondsSinceEpoch,
-        userId = '';
+        userId = '',
+        likes = [];
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 
@@ -35,6 +39,7 @@ class Post {
     String? imageUrl,
     int? createdAt,
     String? userId,
+    List<String>? likes,
   }) {
     return Post(
       postId: postId ?? this.postId,
@@ -42,6 +47,7 @@ class Post {
       imageUrl: imageUrl ?? this.imageUrl,
       createdAt: createdAt ?? this.createdAt,
       userId: userId ?? this.userId,
+      likes: likes ?? this.likes,
     );
   }
 }

@@ -1,0 +1,3 @@
+class ProfilePhotoState {
+  ProfilePhotoState.init();
+}

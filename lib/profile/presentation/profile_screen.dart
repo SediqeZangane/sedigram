@@ -5,6 +5,7 @@ import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
+import 'package:sedigram/follow/presentation/follow_screen.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen_arguments.dart';
@@ -24,132 +25,146 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        leading: const Center(child: Text('')),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 40),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: 'state.folddddder',
-              items: const [],
-              onChanged: (value) {},
-            ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          leading: const Center(child: Text('')),
+          iconTheme: const IconThemeData(color: Colors.black, size: 30),
+        ),
+        endDrawer: Drawer(
+          child: ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Log Out'),
+            onTap: () {
+              Navigator.of(context).pop();
+              deleteDialog(context);
+            },
           ),
         ),
-        iconTheme: const IconThemeData(color: Colors.black, size: 30),
-      ),
-      endDrawer: Drawer(
-        child: ListTile(
-          leading: const Icon(Icons.logout),
-          title: const Text('Log Out'),
-          onTap: () {
-            Navigator.of(context).pop();
-            deleteDialog(context);
-          },
-        ),
-      ),
-      body: BlocBuilder<ProfileBloc, ProfileState>(
-        builder: (context, profileState) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const CircleAvatar(
-                    radius: 48,
-                  ),
-                  Column(
-                    children: [
-                      Text(profileState.userInfo.posts.length.toString()),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: Text('Posts'),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(profileState.userInfo.followers.length.toString()),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: Text('Followers'),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(profileState.userInfo.followings.length.toString()),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: Text('Following'),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 24, bottom: 8, left: 32),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        body: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, profileState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(profileState.user.name),
-                    const SizedBox(
-                      height: 8,
+                    const CircleAvatar(
+                      radius: 43,
                     ),
-                    Text(profileState.user.userName),
-                    const SizedBox(
-                      height: 8,
+                    Column(
+                      children: [
+                        Text(profileState.userInfo.posts.length.toString()),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        const Text('Posts')
+                      ],
                     ),
-                    Text(
-                      profileState.user.bio,
-                      style: const TextStyle(fontWeight: FontWeight.w400),
-                    )
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          FollowScreen.routeNamed,
+                          arguments: profileState.userInfo,
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Text(
+                            profileState.userInfo.followers.length.toString(),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          const Text(
+                            'Followers',
+                          )
+                        ],
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          FollowScreen.routeNamed,
+                          arguments: profileState.userInfo,
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Text(
+                            profileState.userInfo.followings.length.toString(),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          const Text('Following')
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              _buildCTA(profileState),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 4,
-                      mainAxisSpacing: 4,
-                    ),
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            PostDetailScreen.routeNamed,
-                            arguments: PostDetailScreenArguments(
-                              posts: profileState.posts,
-                              postIndex: index,
-                              userName: profileState.user.userName,
-                            ),
-                          );
-                        },
-                        child: CachedNetworkImage(
-                          imageUrl: profileState.posts[index].imageUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    },
-                    itemCount: profileState.posts.length,
+                Padding(
+                  padding: const EdgeInsets.only(top: 24, bottom: 8, left: 32),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(profileState.user.name),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(profileState.user.userName),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        profileState.user.bio,
+                        style: const TextStyle(fontWeight: FontWeight.w400),
+                      )
+                    ],
                   ),
                 ),
-              ),
-            ],
-          );
-        },
+                _buildCTA(profileState),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 4,
+                        mainAxisSpacing: 4,
+                      ),
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              PostDetailScreen.routeNamed,
+                              arguments: PostDetailScreenArguments(
+                                posts: profileState.posts,
+                                postIndex: index,
+                                userName: profileState.user.userName,
+                              ),
+                            );
+                          },
+                          child: CachedNetworkImage(
+                            imageUrl: profileState.posts[index].imageUrl,
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      },
+                      itemCount: profileState.posts.length,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
