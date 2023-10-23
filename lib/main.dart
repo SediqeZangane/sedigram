@@ -40,6 +40,8 @@ import 'package:sedigram/user/application/global_user_bloc.dart';
 import 'package:sedigram/user/application/global_user_event.dart';
 import 'package:uuid/uuid.dart';
 
+import 'profile_photo/presentation/profile_photo_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -158,6 +160,8 @@ class MyApp extends StatelessWidget {
               child: const FollowScreen(),
             );
           },
+          ProfilePhotoScreen.routeNamed: (context) =>
+              const ProfilePhotoScreen(),
         },
         theme: ThemeData(
           textTheme: textTheme,

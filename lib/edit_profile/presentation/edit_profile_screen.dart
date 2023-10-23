@@ -6,6 +6,7 @@ import 'package:sedigram/core/presentation/widget/form_text_field.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_state.dart';
+import 'package:sedigram/profile_photo/presentation/profile_photo_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -145,12 +146,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               radius: 48,
             ),
             infoRow(
+                child: TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, ProfilePhotoScreen.routeNamed);
+              },
               child: Text(
                 'Change Profile Photo',
                 style:
                     TextStyle(color: context.colorScheme.primary, fontSize: 16),
               ),
-            ),
+            )),
             const Divider(),
             profileInfo(
               nameField: 'Name',
