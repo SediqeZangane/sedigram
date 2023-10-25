@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sedigram/core/presentation/model/post_details_model.dart';
+import 'package:sedigram/core/presentation/widget/profile_image.dart';
 
 class PostWidget extends StatelessWidget {
   static const List<String> actions = ['Delete'];
@@ -40,18 +41,7 @@ class PostWidget extends StatelessWidget {
                 height: 54,
                 child: Row(
                   children: [
-                    if (postDetailModel.user.profilePicture != '')
-                      CachedNetworkImage(
-                        imageUrl: postDetailModel.user.profilePicture,
-                        imageBuilder: (context, imageProvider) => CircleAvatar(
-                          radius: 32,
-                          backgroundImage: imageProvider,
-                        ),
-                      )
-                    else
-                      const CircleAvatar(
-                        radius: 32,
-                      ),
+                    ProfileImage(user: postDetailModel.user),
                     const SizedBox(width: 10),
                     Text(
                       postDetailModel.user.userName,

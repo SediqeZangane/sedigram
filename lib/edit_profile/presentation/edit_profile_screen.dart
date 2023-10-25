@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/core/presentation/widget/form_text_field.dart';
+import 'package:sedigram/core/presentation/widget/profile_image.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
@@ -140,18 +140,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (state.user.profilePicture != '')
-              CachedNetworkImage(
-                imageUrl: state.user.profilePicture,
-                imageBuilder: (context, imageProvider) => CircleAvatar(
-                  radius: 48,
-                  backgroundImage: imageProvider,
-                ),
-              )
-            else
-              const CircleAvatar(
-                radius: 48,
-              ),
+            ProfileImage(
+              user: state.user,
+              radius: 64,
+            ),
             infoRow(
               child: TextButton(
                 onPressed: () {

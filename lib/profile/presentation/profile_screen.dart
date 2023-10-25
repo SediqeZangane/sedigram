@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
+import 'package:sedigram/core/presentation/widget/profile_image.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
 import 'package:sedigram/follow/presentation/follow_screen.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
@@ -53,18 +54,10 @@ class ProfileScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    if (profileState.user.profilePicture != '')
-                      CachedNetworkImage(
-                        imageUrl: profileState.user.profilePicture,
-                        imageBuilder: (context, imageProvider) => CircleAvatar(
-                          radius: 48,
-                          backgroundImage: imageProvider,
-                        ),
-                      )
-                    else
-                      const CircleAvatar(
-                        radius: 48,
-                      ),
+                    ProfileImage(
+                      user: profileState.user,
+                      radius: 48,
+                    ),
                     Column(
                       children: [
                         Text(profileState.userInfo.posts.length.toString()),

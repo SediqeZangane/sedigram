@@ -5,6 +5,7 @@ import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/profile_photo/application/profile_photo_event.dart';
 import 'package:sedigram/profile_photo/application/profile_photo_state.dart';
 import 'package:sedigram/user/application/global_user_bloc.dart';
+import 'package:sedigram/user/application/global_user_event.dart';
 import 'package:uuid/uuid.dart';
 
 class ProfilePhotoBloc extends Bloc<ProfilePhotoEvent, ProfilePhotoState> {
@@ -38,6 +39,7 @@ class ProfilePhotoBloc extends Bloc<ProfilePhotoEvent, ProfilePhotoState> {
         final currentUser = await fireStoreService.getUser(userId);
         final updatedUser = currentUser.copyWith(profilePicture: imageUrl);
         await fireStoreService.updateUser(updatedUser);
+        globalUserBloc.add(GlobalUserUpdateEvent());
         emit(state.copyWith(isLoading: false));
       }
     });

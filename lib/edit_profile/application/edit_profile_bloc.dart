@@ -25,8 +25,14 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       }
       if (event is EditProfileSaveEvent) {
         try {
+          //hamechiro user por mikone ,userId va aks ro ma bayad por konim
+
           final userId = firebaseAuth.currentUser!.uid;
-          final user = event.updateUser.copyWith(userId: userId);
+
+          final user = event.updateUser.copyWith(
+            userId: userId,
+            profilePicture: state.user.profilePicture,
+          );
 
           await firestoreService.updateUser(user);
           emit(state.copyWith(saved: true, user: user, error: ''));
