@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/domain/user.dart';
+import 'package:sedigram/core/presentation/widget/profile_image.dart';
 import 'package:sedigram/follow/application/follow_bloc.dart';
 import 'package:sedigram/follow/application/follow_state.dart';
+import 'package:sedigram/profile/presentation/profile_screen.dart';
 
 class FollowScreen extends StatefulWidget {
   static const String routeNamed = 'followScreen';
@@ -107,13 +109,21 @@ class _FollowScreenState extends State<FollowScreen> {
 
   Widget listViewWidget(List<User> user, String text) {
     return ListView.builder(
-      itemCount: 1,
+      itemCount: user.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          onTap: () {},
-          leading: const CircleAvatar(
+          onTap: () {
+            final selectedUserId = user[index].userId;
+
+            Navigator.pushNamed(
+              context,
+              ProfileScreen.routeNamed,
+              arguments: selectedUserId,
+            );
+          },
+          leading: ProfileImage(
+            user: user[index],
             radius: 24,
-            backgroundColor: Colors.cyanAccent,
           ),
           title: Text(
             user[index].userName,
@@ -122,19 +132,19 @@ class _FollowScreenState extends State<FollowScreen> {
             ),
           ),
           subtitle: Text(user[index].name),
-          trailing: TextButton(
-            onPressed: () {},
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.grey[300]),
-              elevation: MaterialStateProperty.all(4),
-            ),
-            child: Text(
-              text,
-              style: const TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ),
+          // trailing: TextButton(
+          //   onPressed: () {},
+          //   style: ButtonStyle(
+          //     backgroundColor: MaterialStateProperty.all(Colors.grey[300]),
+          //     elevation: MaterialStateProperty.all(4),
+          //   ),
+          //   child: Text(
+          //     text,
+          //     style: const TextStyle(
+          //       color: Colors.black,
+          //     ),
+          //   ),
+          // ),
         );
       },
     );
