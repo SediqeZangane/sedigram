@@ -40,7 +40,18 @@ class PostWidget extends StatelessWidget {
                 height: 54,
                 child: Row(
                   children: [
-                    const CircleAvatar(radius: 32),
+                    if (postDetailModel.user.profilePicture != '')
+                      CachedNetworkImage(
+                        imageUrl: postDetailModel.user.profilePicture,
+                        imageBuilder: (context, imageProvider) => CircleAvatar(
+                          radius: 32,
+                          backgroundImage: imageProvider,
+                        ),
+                      )
+                    else
+                      const CircleAvatar(
+                        radius: 32,
+                      ),
                     const SizedBox(width: 10),
                     Text(
                       postDetailModel.user.userName,
