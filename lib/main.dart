@@ -12,6 +12,8 @@ import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/core/data/fire_storage.dart';
 import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/core/domain/user_info.dart';
+import 'package:sedigram/create_post/application/create_post_bloc.dart';
+import 'package:sedigram/create_post/application/create_post_event.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
@@ -30,6 +32,7 @@ import 'package:sedigram/post_detail/presentation/post_detail_screen_arguments.d
 import 'package:sedigram/profile/application/profile_bloc.dart';
 import 'package:sedigram/profile/application/profile_event.dart';
 import 'package:sedigram/profile/presentation/profile_screen.dart';
+import 'package:sedigram/profile_photo/application/profile_photo_bloc.dart';
 import 'package:sedigram/save_post/application/save_post_bloc.dart';
 import 'package:sedigram/save_post/presentation/save_post_screen.dart';
 import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
@@ -83,7 +86,14 @@ class MyApp extends StatelessWidget {
                 child: const HomeScreen(),
               ),
           SplashScreen.routeNamed: (context) => const SplashScreen(),
-          CreatePostScreen.routeNamed: (context) => const CreatePostScreen(),
+          CreatePostScreen.routeNamed: (context) {
+            return BlocProvider(
+              create: (context) {
+                return CreatePostBloc()..add(GetImagesEvent());
+              },
+              child: const CreatePostScreen(nextPage: NextPage.profilePhoto),
+            );
+          },
           SavePostScreen.routeNamed: (context) {
             final path = ModalRoute.of(context)!.settings.arguments as String?;
 
@@ -160,8 +170,23 @@ class MyApp extends StatelessWidget {
               child: const FollowScreen(),
             );
           },
-          ProfilePhotoScreen.routeNamed: (context) =>
-              const ProfilePhotoScreen(),
+          ProfilePhotoScreen.routeNamed: (context) {
+            final imagePath =
+                ModalRoute.of(context)!.settings.arguments as String?;
+
+            return BlocProvider(
+              create: (context) {
+                return ProfilePhotoBloc(
+                  fireStoreService:
+                      FirestoreService(FirebaseFirestore.instance),
+                  globalUserBloc: GlobalUserBloc(),
+                  uuid: const Uuid(),
+                  fireStorage: FireStorage(FirebaseStorage.instance),
+                );
+              },
+              child: ProfilePhotoScreen(imagePath: imagePath!),
+            );
+          }
         },
         theme: ThemeData(
           textTheme: textTheme,

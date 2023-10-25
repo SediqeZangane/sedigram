@@ -12,6 +12,8 @@ class User {
   final String email;
   final String phone;
   final String gender;
+  @JsonKey(defaultValue: '')
+  final String profilePicture;
 
   User({
     required this.userId,
@@ -22,6 +24,7 @@ class User {
     required this.email,
     required this.phone,
     required this.gender,
+    required this.profilePicture,
   });
 
   User.empty()
@@ -32,24 +35,12 @@ class User {
         bio = '',
         email = '',
         phone = '',
-        gender = '';
+        gender = '',
+        profilePicture = '';
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
-
-  // factory User.fromJson(Map<String, dynamic> json) {
-  //   return User(
-  //     userId: json['userId'] as String? ?? '',
-  //     name: json['name'] as String? ?? '',
-  //     userName: json['userName'] as String? ?? '',
-  //     webSite: json['webSite'] as String? ?? '',
-  //     bio: json['bio'] as String? ?? '',
-  //     email: json['email'] as String? ?? '',
-  //     phone: json['phone'] as String? ?? '',
-  //     gender: json['gender'] as String? ?? '',
-  //   );
-  // }
 
   User copyWith({
     String? userId,
@@ -60,6 +51,7 @@ class User {
     String? email,
     String? phone,
     String? gender,
+    String? profilePicture,
   }) {
     return User(
       userId: userId ?? this.userId,
@@ -70,6 +62,19 @@ class User {
       email: email ?? this.email,
       phone: phone ?? this.phone,
       gender: gender ?? this.gender,
+      profilePicture: profilePicture ?? this.profilePicture,
     );
   }
+// factory User.fromJson(Map<String, dynamic> json) {
+//   return User(
+//     userId: json['userId'] as String? ?? '',
+//     name: json['name'] as String? ?? '',
+//     userName: json['userName'] as String? ?? '',
+//     webSite: json['webSite'] as String? ?? '',
+//     bio: json['bio'] as String? ?? '',
+//     email: json['email'] as String? ?? '',
+//     phone: json['phone'] as String? ?? '',
+//     gender: json['gender'] as String? ?? '',
+//   );
+// }
 }

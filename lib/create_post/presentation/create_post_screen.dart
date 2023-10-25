@@ -7,12 +7,16 @@ import 'package:sedigram/create_post/application/create_post_bloc.dart';
 import 'package:sedigram/create_post/application/create_post_event.dart';
 import 'package:sedigram/create_post/application/create_post_state.dart';
 import 'package:sedigram/create_post/domain/model/folder_path_model.dart';
+import 'package:sedigram/profile_photo/presentation/profile_photo_screen.dart';
 import 'package:sedigram/save_post/presentation/save_post_screen.dart';
+
+enum NextPage { savePost, profilePhoto }
 
 class CreatePostScreen extends StatelessWidget {
   static const String routeNamed = 'createPostScreen';
+  final NextPage? nextPage;
 
-  const CreatePostScreen({super.key});
+  const CreatePostScreen({this.nextPage, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +64,17 @@ class CreatePostScreen extends StatelessWidget {
                       ),
                       onPressed: () {
                         if (state.selectedPath != null) {
-                          Navigator.of(context).pushNamed<void>(
-                            SavePostScreen.routeNamed,
-                            arguments: state.selectedPath,
-                          );
+                          if (nextPage == NextPage.savePost) {
+                            Navigator.of(context).pushNamed<void>(
+                              SavePostScreen.routeNamed,
+                              arguments: state.selectedPath,
+                            );
+                          } else if (nextPage == NextPage.profilePhoto) {
+                            Navigator.of(context).pushNamed<void>(
+                              ProfilePhotoScreen.routeNamed,
+                              arguments: state.selectedPath,
+                            );
+                          }
                         }
                       },
                     ),

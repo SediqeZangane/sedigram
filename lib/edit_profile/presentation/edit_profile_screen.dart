@@ -1,12 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
 import 'package:sedigram/core/presentation/widget/form_text_field.dart';
+import 'package:sedigram/create_post/presentation/create_post_screen.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_state.dart';
-import 'package:sedigram/profile_photo/presentation/profile_photo_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -142,20 +143,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const CircleAvatar(
-              radius: 48,
-            ),
-            infoRow(
-                child: TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, ProfilePhotoScreen.routeNamed);
-              },
-              child: Text(
-                'Change Profile Photo',
-                style:
-                    TextStyle(color: context.colorScheme.primary, fontSize: 16),
+            if (state.user.profilePicture != '')
+              CachedNetworkImage(
+                imageUrl: state.user.profilePicture,
+                imageBuilder: (context, imageProvider) => CircleAvatar(
+                  radius: 48,
+                  backgroundImage: imageProvider,
+                ),
+              )
+            else
+              const CircleAvatar(
+                radius: 48,
               ),
-            )),
+            infoRow(
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, CreatePostScreen.routeNamed);
+                },
+                child: Text(
+                  'Change Profile Photo',
+                  style: TextStyle(
+                    color: context.colorScheme.primary,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
             const Divider(),
             profileInfo(
               nameField: 'Name',

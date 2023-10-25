@@ -1,3 +1,9 @@
 abstract class ProfilePhotoEvent {}
 
-class ProfilePhotoInitEvent implements ProfilePhotoEvent {}
+class ProfilePhotoSaveEvent implements ProfilePhotoEvent {
+  final String imagePath;
+
+  const ProfilePhotoSaveEvent({
+    required this.imagePath,
+  });
+}

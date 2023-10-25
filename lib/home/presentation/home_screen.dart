@@ -137,7 +137,7 @@ class HomeScreen extends StatelessWidget {
               child: const SearchScreen(),
             ),
             BlocProvider(
-              child: const CreatePostScreen(),
+              child: const CreatePostScreen(nextPage: NextPage.savePost),
               create: (context) {
                 return CreatePostBloc()..add(GetImagesEvent());
               },

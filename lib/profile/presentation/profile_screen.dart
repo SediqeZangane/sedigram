@@ -53,9 +53,18 @@ class ProfileScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const CircleAvatar(
-                      radius: 43,
-                    ),
+                    if (profileState.user.profilePicture != '')
+                      CachedNetworkImage(
+                        imageUrl: profileState.user.profilePicture,
+                        imageBuilder: (context, imageProvider) => CircleAvatar(
+                          radius: 48,
+                          backgroundImage: imageProvider,
+                        ),
+                      )
+                    else
+                      const CircleAvatar(
+                        radius: 48,
+                      ),
                     Column(
                       children: [
                         Text(profileState.userInfo.posts.length.toString()),
