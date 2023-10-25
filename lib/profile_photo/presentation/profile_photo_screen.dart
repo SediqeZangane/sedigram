@@ -55,6 +55,7 @@ class ProfilePhotoScreen extends StatelessWidget {
                                 ),
                               );
                           Navigator.of(context).pop();
+                          Navigator.of(context).pop();
                         }
                       },
                       style: ButtonStyle(

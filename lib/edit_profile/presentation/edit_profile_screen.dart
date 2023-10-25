@@ -30,17 +30,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(top: 16, left: 4),
-          child: TextButton(
-            child: const Text(
-              'Cancel',
-              style: TextStyle(color: Colors.black, fontSize: 16),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+        leading: IconButton(
+          icon: const Icon(
+            Icons.clear,
+            color: Colors.black,
           ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
         title: const Text(
           'Edit Profile',
@@ -141,7 +138,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       child: Form(
         key: formKey,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (state.user.profilePicture != '')
               CachedNetworkImage(
