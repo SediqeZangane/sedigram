@@ -33,6 +33,7 @@ import 'package:sedigram/profile/application/profile_bloc.dart';
 import 'package:sedigram/profile/application/profile_event.dart';
 import 'package:sedigram/profile/presentation/profile_screen.dart';
 import 'package:sedigram/profile_photo/application/profile_photo_bloc.dart';
+import 'package:sedigram/profile_photo/presentation/profile_photo_screen.dart';
 import 'package:sedigram/save_post/application/save_post_bloc.dart';
 import 'package:sedigram/save_post/presentation/save_post_screen.dart';
 import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
@@ -42,8 +43,6 @@ import 'package:sedigram/theme/presentation/text_theme.dart';
 import 'package:sedigram/user/application/global_user_bloc.dart';
 import 'package:sedigram/user/application/global_user_event.dart';
 import 'package:uuid/uuid.dart';
-
-import 'profile_photo/presentation/profile_photo_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

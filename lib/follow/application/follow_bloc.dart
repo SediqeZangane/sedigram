@@ -20,14 +20,47 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
           final userFollowings = await firestoreService.getUser(followings[i]);
           listUserFollowings.add(userFollowings);
         }
-        emit(state.copyWith(listUserFollowings: listUserFollowings));
+        emit(
+          state.copyWith(
+            listUserFollowings: listUserFollowings,
+            listSearchFollowings: listUserFollowings,
+          ),
+        );
 
         final List<User> listUserFollowers = [];
         for (var i = 0; i < followers.length; i++) {
           final userFollowers = await firestoreService.getUser(followers[i]);
           listUserFollowers.add(userFollowers);
         }
-        emit(state.copyWith(listUserFollowers: listUserFollowers));
+        emit(
+          state.copyWith(
+            listUserFollowers: listUserFollowers,
+            listSearchFollowers: listUserFollowers,
+          ),
+        );
+      }
+
+      if (event is FollowersUpdateSearchEvent) {
+        final items = state.listUserFollowers;
+
+        final filteredItems = items.where((item) {
+          return item.userName
+              .toLowerCase()
+              .contains(event.followersSearch.toLowerCase());
+        }).toList();
+
+        emit(state.copyWith(listSearchFollowers: filteredItems));
+      }
+
+      if (event is FollowingsUpdateSearchEvent) {
+        final items = state.listUserFollowings;
+
+        final filteredItems = items.where((item) {
+          return item.userName
+              .toLowerCase()
+              .contains(event.followingsSearch.toLowerCase());
+        }).toList();
+        emit(state.copyWith(listSearchFollowings: filteredItems));
       }
     });
   }

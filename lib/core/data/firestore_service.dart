@@ -131,6 +131,7 @@ class FirestoreService {
       await doc
           .update(updatedPost.toJson())
           .then((_) => debugPrint('Success'))
+          // ignore: inference_failure_on_untyped_parameter
           .catchError((error) => debugPrint('Failed: $error'));
     } else {
       return doc.set(updatedPost.toJson());

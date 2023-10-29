@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/widget/follow_list_tile.dart';
+import 'package:sedigram/core/presentation/widget/search_box.dart';
 import 'package:sedigram/follow/application/follow_bloc.dart';
+import 'package:sedigram/follow/application/follow_event.dart';
 import 'package:sedigram/follow/application/follow_state.dart';
 
 class FollowScreen extends StatefulWidget {
@@ -50,10 +52,18 @@ class _FollowScreenState extends State<FollowScreen> {
               children: [
                 Column(
                   children: [
-                    // searchWidget(),
+                    SearchBox(
+                      onChanged: (searchText) {
+                        context.read<FollowBloc>().add(
+                              FollowersUpdateSearchEvent(
+                                followersSearch: searchText,
+                              ),
+                            );
+                      },
+                    ),
                     Expanded(
                       child: FollowListTile(
-                        user: state.listUserFollowers,
+                        user: state.listSearchFollowers,
                         text: 'Remove',
                       ),
                     ),
@@ -61,10 +71,18 @@ class _FollowScreenState extends State<FollowScreen> {
                 ),
                 Column(
                   children: [
-                    // searchWidget(),
+                    SearchBox(
+                      onChanged: (searchText) {
+                        context.read<FollowBloc>().add(
+                              FollowingsUpdateSearchEvent(
+                                followingsSearch: searchText,
+                              ),
+                            );
+                      },
+                    ),
                     Expanded(
                       child: FollowListTile(
-                        user: state.listUserFollowings,
+                        user: state.listSearchFollowings,
                         text: 'Following',
                       ),
                     ),
@@ -74,38 +92,6 @@ class _FollowScreenState extends State<FollowScreen> {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget searchWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: SizedBox(
-        height: 45,
-        child: TextField(
-          // controller: controller,
-          onChanged: (searchText) {},
-          decoration: const InputDecoration(
-            filled: true,
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-            hintText: 'Search',
-            hintStyle: TextStyle(
-              color: Colors.red,
-              fontSize: 18,
-              fontStyle: FontStyle.italic,
-            ),
-            prefixIcon: Icon(
-              Icons.search,
-              color: Colors.red,
-              size: 28,
-            ),
-          ),
-        ),
       ),
     );
   }

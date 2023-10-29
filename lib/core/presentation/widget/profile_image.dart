@@ -21,16 +21,17 @@ class ProfileImage extends StatelessWidget {
         }
         if (userToBuild.profilePicture != '') {
           return CachedNetworkImage(
-              imageUrl: userToBuild.profilePicture,
-              imageBuilder: (context, imageProvider) => CircleAvatar(
-                    radius: radius,
-                    backgroundImage: imageProvider,
-                  ),
-              placeholder: (context, url) {
-                return CircleAvatar(
-                  radius: radius,
-                );
-              });
+            imageUrl: userToBuild.profilePicture,
+            imageBuilder: (context, imageProvider) => CircleAvatar(
+              radius: radius,
+              backgroundImage: imageProvider,
+            ),
+            placeholder: (context, url) {
+              return CircleAvatar(
+                radius: radius,
+              );
+            },
+          );
         } else {
           return CircleAvatar(
             radius: radius,
