@@ -8,14 +8,28 @@ import 'package:sedigram/follow/application/follow_state.dart';
 
 class FollowScreen extends StatefulWidget {
   static const String routeNamed = 'followScreen';
+  final int index;
 
-  const FollowScreen({super.key});
+  const FollowScreen({required this.index, super.key});
 
   @override
   State<FollowScreen> createState() => _FollowScreenState();
 }
 
-class _FollowScreenState extends State<FollowScreen> {
+class _FollowScreenState extends State<FollowScreen>
+    with SingleTickerProviderStateMixin {
+  late final TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(
+      length: 2,
+      vsync: this,
+      initialIndex: widget.index,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -28,6 +42,7 @@ class _FollowScreenState extends State<FollowScreen> {
               backgroundColor: Colors.transparent,
               bottom: TabBar(
                 indicatorColor: Colors.black,
+                controller: tabController,
                 tabs: [
                   Tab(
                     icon: Text(
@@ -49,6 +64,7 @@ class _FollowScreenState extends State<FollowScreen> {
               ),
             ),
             body: TabBarView(
+              controller: tabController,
               children: [
                 Column(
                   children: [
@@ -94,5 +110,11 @@ class _FollowScreenState extends State<FollowScreen> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
   }
 }

@@ -11,7 +11,6 @@ import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
 import 'package:sedigram/core/data/fire_storage.dart';
 import 'package:sedigram/core/data/firestore_service.dart';
-import 'package:sedigram/core/domain/user_info.dart';
 import 'package:sedigram/create_post/application/create_post_bloc.dart';
 import 'package:sedigram/create_post/application/create_post_event.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
@@ -22,6 +21,7 @@ import 'package:sedigram/firebase_options.dart';
 import 'package:sedigram/follow/application/follow_bloc.dart';
 import 'package:sedigram/follow/application/follow_event.dart';
 import 'package:sedigram/follow/presentation/follow_screen.dart';
+import 'package:sedigram/follow/presentation/follow_screen_args.dart';
 import 'package:sedigram/home/application/home_bloc.dart';
 import 'package:sedigram/home/presentation/home_screen.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
@@ -155,8 +155,8 @@ class MyApp extends StatelessWidget {
             );
           },
           FollowScreen.routeNamed: (context) {
-            final userInfo =
-                ModalRoute.of(context)!.settings.arguments as UserInfo?;
+            final followScreenArgs =
+                ModalRoute.of(context)!.settings.arguments as FollowScreenArgs?;
 
             return BlocProvider(
               create: (context) {
@@ -164,9 +164,11 @@ class MyApp extends StatelessWidget {
                   firestoreService: FirestoreService(
                     FirebaseFirestore.instance,
                   ),
-                )..add(FollowInitEvent(userInfo: userInfo!));
+                )..add(FollowInitEvent(userInfo: followScreenArgs.userInfo));
               },
-              child: const FollowScreen(),
+              child: FollowScreen(
+                index: followScreenArgs!.initIndex,
+              ),
             );
           },
           ProfilePhotoScreen.routeNamed: (context) {
