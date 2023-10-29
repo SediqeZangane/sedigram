@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sedigram/core/domain/user.dart';
-import 'package:sedigram/core/presentation/widget/profile_image.dart';
+import 'package:sedigram/core/presentation/widget/follow_list_tile.dart';
 import 'package:sedigram/follow/application/follow_bloc.dart';
 import 'package:sedigram/follow/application/follow_state.dart';
-import 'package:sedigram/profile/presentation/profile_screen.dart';
 
 class FollowScreen extends StatefulWidget {
   static const String routeNamed = 'followScreen';
@@ -54,7 +52,10 @@ class _FollowScreenState extends State<FollowScreen> {
                   children: [
                     // searchWidget(),
                     Expanded(
-                      child: listViewWidget(state.listUserFollowers, 'Remove'),
+                      child: FollowListTile(
+                        user: state.listUserFollowers,
+                        text: 'Remove',
+                      ),
                     ),
                   ],
                 ),
@@ -62,8 +63,10 @@ class _FollowScreenState extends State<FollowScreen> {
                   children: [
                     // searchWidget(),
                     Expanded(
-                      child:
-                          listViewWidget(state.listUserFollowings, 'Following'),
+                      child: FollowListTile(
+                        user: state.listUserFollowings,
+                        text: 'Following',
+                      ),
                     ),
                   ],
                 ),
@@ -104,49 +107,6 @@ class _FollowScreenState extends State<FollowScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget listViewWidget(List<User> user, String text) {
-    return ListView.builder(
-      itemCount: user.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          onTap: () {
-            final selectedUserId = user[index].userId;
-
-            Navigator.pushNamed(
-              context,
-              ProfileScreen.routeNamed,
-              arguments: selectedUserId,
-            );
-          },
-          leading: ProfileImage(
-            user: user[index],
-            radius: 24,
-          ),
-          title: Text(
-            user[index].userName,
-            style: const TextStyle(
-              color: Colors.black,
-            ),
-          ),
-          subtitle: Text(user[index].name),
-          // trailing: TextButton(
-          //   onPressed: () {},
-          //   style: ButtonStyle(
-          //     backgroundColor: MaterialStateProperty.all(Colors.grey[300]),
-          //     elevation: MaterialStateProperty.all(4),
-          //   ),
-          //   child: Text(
-          //     text,
-          //     style: const TextStyle(
-          //       color: Colors.black,
-          //     ),
-          //   ),
-          // ),
-        );
-      },
     );
   }
 }

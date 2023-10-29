@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sedigram/profile/presentation/profile_screen.dart';
+import 'package:sedigram/core/presentation/widget/follow_list_tile.dart';
 import 'package:sedigram/search/application/search_bloc.dart';
 import 'package:sedigram/search/application/search_event.dart';
 import 'package:sedigram/search/application/search_state.dart';
@@ -63,27 +63,8 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
-          return ListView.builder(
-            itemCount: state.user.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                onTap: () {
-                  final selectedUserId = state.user[index].userId;
-
-                  Navigator.pushNamed(
-                    context,
-                    ProfileScreen.routeNamed,
-                    arguments: selectedUserId,
-                  );
-                },
-                leading: const CircleAvatar(
-                  radius: 24,
-                  backgroundColor: Colors.cyanAccent,
-                ),
-                title: Text(state.user[index].userName),
-                subtitle: Text(state.user[index].name),
-              );
-            },
+          return FollowListTile(
+            user: state.user,
           );
         },
       ),
