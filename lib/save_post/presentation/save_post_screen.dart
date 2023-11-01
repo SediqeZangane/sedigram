@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
+import 'package:sedigram/edit_image/presentation/edit_image_screen.dart';
 import 'package:sedigram/save_post/application/save_post_bloc.dart';
-import 'package:sedigram/save_post/application/save_post_event.dart';
 import 'package:sedigram/save_post/application/save_post_state.dart';
 
 class SavePostScreen extends StatefulWidget {
@@ -76,47 +76,60 @@ class _SavePostScreenState extends State<SavePostScreen> {
                   hintText: 'Write your caption . . . . ',
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 8, top: 16),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: BlocBuilder<SavePostBloc, SavePostState>(
-                    builder: (context, state) {
-                      return TextButton(
-                        onPressed: () {
-                          if (!state.isLoading) {
-                            context.read<SavePostBloc>().add(
-                                  SavePostUploadEvent(
-                                    imagePath: widget.imagePath,
-                                    caption: captionController.text,
-                                  ),
-                                );
-                          }
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.black),
-                        ),
-                        child: state.isLoading
-                            ? const SizedBox(
-                                height: 10,
-                                width: 10,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Text(
-                                'Save',
-                                style: context.textTheme.titleMedium
-                                    ?.copyWith(color: Colors.white),
-                              ),
-                      );
-                    },
-                  ),
-                ),
+              actionButton(
+                buttonName: 'Save',
+                action: () {},
               ),
+              actionButton(
+                buttonName: 'Edit',
+                action: () {
+                  Navigator.of(context).pushNamed(
+                    EditImageScreen.routeNamed,
+                    arguments: widget.imagePath,
+                  );
+                },
+              )
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget actionButton({
+    required String buttonName,
+    required VoidCallback action,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8, top: 16),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: BlocBuilder<SavePostBloc, SavePostState>(
+          builder: (context, state) {
+            return TextButton(
+              onPressed: () {
+                if (!state.isLoading) {
+                  action();
+                }
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.black),
+              ),
+              child: state.isLoading
+                  ? const SizedBox(
+                      height: 10,
+                      width: 10,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text(
+                      buttonName,
+                      style: context.textTheme.titleMedium
+                          ?.copyWith(color: Colors.white),
+                    ),
+            );
+          },
         ),
       ),
     );

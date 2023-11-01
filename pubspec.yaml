@@ -20,6 +20,7 @@ dependencies:
   flutter_native_splash: ^2.2.19
   flutter_storage_path: ^1.0.4
   google_sign_in: ^6.1.5
+  image_cropper: ^4.0.1
   intl: any
   json_annotation: ^4.8.1
   path: ^1.8.2

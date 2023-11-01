@@ -14,6 +14,9 @@ import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/create_post/application/create_post_bloc.dart';
 import 'package:sedigram/create_post/application/create_post_event.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
+import 'package:sedigram/edit_image/application/edit_image_bloc.dart';
+import 'package:sedigram/edit_image/application/edit_image_event.dart';
+import 'package:sedigram/edit_image/presentation/edit_image_screen.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
@@ -187,7 +190,18 @@ class MyApp extends StatelessWidget {
               },
               child: ProfilePhotoScreen(imagePath: imagePath!),
             );
-          }
+          },
+          EditImageScreen.routeNamed: (context) {
+            final imagePath =
+                ModalRoute.of(context)!.settings.arguments as String?;
+            return BlocProvider(
+              create: (context) {
+                return EditImageBloc()
+                  ..add(EditImageInitEvent(imagePath: imagePath!));
+              },
+              child: const EditImageScreen(),
+            );
+          },
         },
         theme: ThemeData(
           textTheme: textTheme,
