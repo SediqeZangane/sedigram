@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart' hide UserInfo;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:path/path.dart' as p;
 import 'package:sedigram/core/data/fire_storage.dart';
 import 'package:sedigram/core/data/firestore_service.dart';
@@ -26,16 +27,24 @@ class SavePostBloc extends Bloc<SavePostEvent, SavePostState> {
   ) : super(SavePostState.init()) {
     on<SavePostEvent>(
       (event, emit) async {
+        if (event is SavePostInitEvent) {
+          emit(
+            state.copyWith(
+              croppedImage: event.imagePath,
+            ),
+          );
+        }
+
         if (event is SavePostUploadEvent) {
           emit(state.copyWith(isLoading: true, uploaded: false));
           final userId = firebaseAuth.currentUser!.uid;
 
-          final extension = p.extension(event.imagePath);
+          final extension = p.extension(state.croppedImage);
           final randomId = uuid.v4();
           final uniqueRandomName = randomId + extension;
 
           final imageUrl = await fireStorage.uploadImageFile(
-            event.imagePath,
+            state.croppedImage,
             uniqueRandomName,
             userId,
           );
@@ -60,6 +69,19 @@ class SavePostBloc extends Bloc<SavePostEvent, SavePostState> {
             } else {
               emit(state.copyWith(isLoading: false, uploaded: false));
             }
+          }
+        }
+
+        if (event is SavePostEditEvent) {
+          final CroppedFile? croppedImage =
+              await ImageCropper().cropImage(sourcePath: state.croppedImage);
+
+          if (croppedImage != null) {
+            emit(
+              state.copyWith(
+                croppedImage: croppedImage.path,
+              ),
+            );
           }
         }
       },

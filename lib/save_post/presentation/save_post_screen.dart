@@ -3,17 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/util/context_extension.dart';
-import 'package:sedigram/edit_image/presentation/edit_image_screen.dart';
 import 'package:sedigram/save_post/application/save_post_bloc.dart';
+import 'package:sedigram/save_post/application/save_post_event.dart';
 import 'package:sedigram/save_post/application/save_post_state.dart';
 
 class SavePostScreen extends StatefulWidget {
   static const String routeNamed = 'savePostScreen';
 
-  final String imagePath;
-
   const SavePostScreen({
-    required this.imagePath,
     super.key,
   });
 
@@ -66,9 +63,13 @@ class _SavePostScreenState extends State<SavePostScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Image.file(
-                File(widget.imagePath),
-                fit: BoxFit.cover,
+              BlocBuilder<SavePostBloc, SavePostState>(
+                builder: (context, state) {
+                  return Image.file(
+                    File(state.croppedImage),
+                    fit: BoxFit.cover,
+                  );
+                },
               ),
               TextField(
                 controller: captionController,
@@ -78,15 +79,20 @@ class _SavePostScreenState extends State<SavePostScreen> {
               ),
               actionButton(
                 buttonName: 'Save',
-                action: () {},
+                action: () {
+                  context.read<SavePostBloc>().add(
+                        SavePostUploadEvent(
+                          caption: captionController.text,
+                        ),
+                      );
+                },
               ),
               actionButton(
                 buttonName: 'Edit',
                 action: () {
-                  Navigator.of(context).pushNamed(
-                    EditImageScreen.routeNamed,
-                    arguments: widget.imagePath,
-                  );
+                  context.read<SavePostBloc>().add(
+                        SavePostEditEvent(),
+                      );
                 },
               )
             ],

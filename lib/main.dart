@@ -14,9 +14,6 @@ import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/create_post/application/create_post_bloc.dart';
 import 'package:sedigram/create_post/application/create_post_event.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
-import 'package:sedigram/edit_image/application/edit_image_bloc.dart';
-import 'package:sedigram/edit_image/application/edit_image_event.dart';
-import 'package:sedigram/edit_image/presentation/edit_image_screen.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
@@ -38,6 +35,7 @@ import 'package:sedigram/profile/presentation/profile_screen.dart';
 import 'package:sedigram/profile_photo/application/profile_photo_bloc.dart';
 import 'package:sedigram/profile_photo/presentation/profile_photo_screen.dart';
 import 'package:sedigram/save_post/application/save_post_bloc.dart';
+import 'package:sedigram/save_post/application/save_post_event.dart';
 import 'package:sedigram/save_post/presentation/save_post_screen.dart';
 import 'package:sedigram/sign_up/presentation/sign_up_screen.dart';
 import 'package:sedigram/splash/presentation/splash_screen.dart';
@@ -100,9 +98,7 @@ class MyApp extends StatelessWidget {
             final path = ModalRoute.of(context)!.settings.arguments as String?;
 
             return BlocProvider(
-              child: SavePostScreen(
-                imagePath: path!,
-              ),
+              child: const SavePostScreen(),
               create: (context) => SavePostBloc(
                 FirebaseAuth.instance,
                 FireStorage(FirebaseStorage.instance),
@@ -111,7 +107,11 @@ class MyApp extends StatelessWidget {
                   FirebaseFirestore.instance,
                 ),
                 GlobalUserBloc(),
-              ),
+              )..add(
+                  SavePostInitEvent(
+                    imagePath: path!,
+                  ),
+                ),
             );
           },
           EditProfileScreen.routeNamed: (context) => BlocProvider(
@@ -189,17 +189,6 @@ class MyApp extends StatelessWidget {
                 );
               },
               child: ProfilePhotoScreen(imagePath: imagePath!),
-            );
-          },
-          EditImageScreen.routeNamed: (context) {
-            final imagePath =
-                ModalRoute.of(context)!.settings.arguments as String?;
-            return BlocProvider(
-              create: (context) {
-                return EditImageBloc()
-                  ..add(EditImageInitEvent(imagePath: imagePath!));
-              },
-              child: const EditImageScreen(),
             );
           },
         },
