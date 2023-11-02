@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sedigram/core/domain/chat.dart';
 import 'package:sedigram/core/domain/post.dart';
 import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/core/domain/user_info.dart';
@@ -145,6 +146,30 @@ class FirestoreService {
 
     if (postData != null) {
       return Post.fromJson(postData);
+    } else {
+      return null;
+    }
+  }
+
+  Future<bool> createChat(Chat newChat) async {
+    final collection = firebaseFirestore.collection('chats');
+    final doc = collection.doc(newChat.id);
+
+    try {
+      await doc.set(newChat.toJson());
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<Chat?> getChat(String chatId) async {
+    final collection = firebaseFirestore.collection('chats');
+    final doc = await collection.doc(chatId).get();
+    final chatData = doc.data();
+
+    if (chatData != null) {
+      return Chat.fromJson(chatData);
     } else {
       return null;
     }

@@ -4,10 +4,10 @@ part 'user_info.g.dart';
 
 @JsonSerializable()
 class UserInfo {
-  String userId;
-  List<String> followers;
-  List<String> followings;
-  List<String> posts;
+  final String userId;
+  final List<String> followers;
+  final List<String> followings;
+  final List<String> posts;
 
   UserInfo({
     required this.userId,

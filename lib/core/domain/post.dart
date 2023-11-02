@@ -4,13 +4,13 @@ part 'post.g.dart';
 
 @JsonSerializable()
 class Post {
-  String postId;
-  String caption;
-  String imageUrl;
-  int createdAt;
-  String userId;
+  final String postId;
+  final String caption;
+  final String imageUrl;
+  final int createdAt;
+  final String userId;
   @JsonKey(defaultValue: [])
-  List<String> likes;
+  final List<String> likes;
 
   Post({
     required this.postId,
