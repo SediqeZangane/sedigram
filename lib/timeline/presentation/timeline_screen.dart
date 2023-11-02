@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/widget/post_widget.dart';
+import 'package:sedigram/direct/presentation/direct_screen.dart';
 import 'package:sedigram/timeline/application/timeline_bloc.dart';
 import 'package:sedigram/timeline/application/timeline_event.dart';
 import 'package:sedigram/timeline/application/timeline_state.dart';
@@ -27,7 +28,17 @@ class _TimelineScreenState extends State<TimelineScreen> {
               color: Colors.black,
             ),
           ),
-          centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(DirectScreen.routeNamed);
+              },
+              icon: const Icon(
+                Icons.rocket_launch,
+                color: Colors.black,
+              ),
+            )
+          ],
         ),
         body: SafeArea(
           child: BlocBuilder<TimelineBloc, TimelineState>(

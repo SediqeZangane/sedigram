@@ -14,6 +14,7 @@ import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/create_post/application/create_post_bloc.dart';
 import 'package:sedigram/create_post/application/create_post_event.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
+import 'package:sedigram/direct/presentation/direct_screen.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
 import 'package:sedigram/edit_profile/presentation/edit_profile_screen.dart';
@@ -25,6 +26,7 @@ import 'package:sedigram/follow/presentation/follow_screen_args.dart';
 import 'package:sedigram/home/application/home_bloc.dart';
 import 'package:sedigram/home/presentation/home_screen.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
+import 'package:sedigram/new_message/presentation/new_message_screen.dart';
 import 'package:sedigram/post_detail/application/post_detail_bloc.dart';
 import 'package:sedigram/post_detail/application/post_detail_event.dart';
 import 'package:sedigram/post_detail/presentation/post_detail_screen.dart';
@@ -191,6 +193,8 @@ class MyApp extends StatelessWidget {
               child: ProfilePhotoScreen(imagePath: imagePath!),
             );
           },
+          DirectScreen.routeNamed: (context) => const DirectScreen(),
+          NewMessageScreen.routeNamed: (context) => const NewMessageScreen(),
         },
         theme: ThemeData(
           textTheme: textTheme,
