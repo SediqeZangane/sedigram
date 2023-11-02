@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sedigram/core/presentation/widget/search_box.dart';
 import 'package:sedigram/new_message/presentation/new_message_screen.dart';
 
 class DirectScreen extends StatelessWidget {
@@ -38,16 +37,7 @@ class DirectScreen extends StatelessWidget {
         ],
       ),
       body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: SearchBox(
-              onChanged: (searchText) {
-                // context.read<SearchBloc>().add(SearchUpdateEvent(text: searchText));
-              },
-            ),
-          ),
-        ],
+        children: [],
       ),
     );
   }

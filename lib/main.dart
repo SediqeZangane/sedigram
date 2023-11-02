@@ -26,6 +26,8 @@ import 'package:sedigram/follow/presentation/follow_screen_args.dart';
 import 'package:sedigram/home/application/home_bloc.dart';
 import 'package:sedigram/home/presentation/home_screen.dart';
 import 'package:sedigram/login/presentation/login_screen.dart';
+import 'package:sedigram/new_message/application/new_message_bloc.dart';
+import 'package:sedigram/new_message/application/new_message_event.dart';
 import 'package:sedigram/new_message/presentation/new_message_screen.dart';
 import 'package:sedigram/post_detail/application/post_detail_bloc.dart';
 import 'package:sedigram/post_detail/application/post_detail_event.dart';
@@ -194,7 +196,16 @@ class MyApp extends StatelessWidget {
             );
           },
           DirectScreen.routeNamed: (context) => const DirectScreen(),
-          NewMessageScreen.routeNamed: (context) => const NewMessageScreen(),
+          NewMessageScreen.routeNamed: (context) => BlocProvider(
+                create: (context) {
+                  return NewMessageBloc(
+                    globalUserBloc: GlobalUserBloc(),
+                    firestoreService:
+                        FirestoreService(FirebaseFirestore.instance),
+                  )..add(NewMessageInitEvent());
+                },
+                child: const NewMessageScreen(),
+              ),
         },
         theme: ThemeData(
           textTheme: textTheme,

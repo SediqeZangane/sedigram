@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sedigram/core/presentation/widget/follow_list_tile.dart';
+import 'package:sedigram/core/presentation/widget/search_box.dart';
+import 'package:sedigram/new_message/application/new_message_bloc.dart';
+import 'package:sedigram/new_message/application/new_message_event.dart';
+import 'package:sedigram/new_message/application/new_message_state.dart';
 
 class NewMessageScreen extends StatelessWidget {
   static const String routeNamed = 'newMessageScreen';
@@ -27,6 +33,35 @@ class NewMessageScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Divider(),
+            SearchBox(
+              onChanged: (searchText) {
+                context
+                    .read<NewMessageBloc>()
+                    .add(NewMessageSearchEvent(searchText: searchText));
+              },
+            ),
+            Expanded(
+              child: BlocBuilder<NewMessageBloc, NewMessageState>(
+                builder: (context, state) {
+                  if (state.listSearchFollowings.isNotEmpty) {
+                    return FollowListTile(
+                      user: state.listSearchFollowings,
+                    );
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
