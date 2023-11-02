@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/core/presentation/widget/profile_image.dart';
-import 'package:sedigram/profile/presentation/profile_screen.dart';
 
 class FollowListTile extends StatelessWidget {
   final List<User> user;
-
   final String? text;
+  final void Function(String userId)? function;
 
   const FollowListTile({
     required this.user,
+    required this.function,
     this.text,
     super.key,
   });
@@ -22,12 +22,12 @@ class FollowListTile extends StatelessWidget {
         return ListTile(
           onTap: () {
             final selectedUserId = user[index].userId;
-
-            Navigator.pushNamed(
-              context,
-              ProfileScreen.routeNamed,
-              arguments: selectedUserId,
-            );
+            function?.call(selectedUserId);
+            // Navigator.pushNamed(
+            //   context,
+            //   ProfileScreen.routeNamed,
+            //   arguments: selectedUserId,
+            // );
           },
           leading: ProfileImage(
             user: user[index],

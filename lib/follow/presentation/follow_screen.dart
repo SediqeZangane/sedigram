@@ -5,6 +5,7 @@ import 'package:sedigram/core/presentation/widget/search_box.dart';
 import 'package:sedigram/follow/application/follow_bloc.dart';
 import 'package:sedigram/follow/application/follow_event.dart';
 import 'package:sedigram/follow/application/follow_state.dart';
+import 'package:sedigram/profile/presentation/profile_screen.dart';
 
 class FollowScreen extends StatefulWidget {
   static const String routeNamed = 'followScreen';
@@ -81,6 +82,13 @@ class _FollowScreenState extends State<FollowScreen>
                       child: FollowListTile(
                         user: state.listSearchFollowers,
                         text: 'Remove',
+                        function: (selectedUserId) {
+                          Navigator.pushNamed(
+                            context,
+                            ProfileScreen.routeNamed,
+                            arguments: selectedUserId,
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -100,6 +108,13 @@ class _FollowScreenState extends State<FollowScreen>
                       child: FollowListTile(
                         user: state.listSearchFollowings,
                         text: 'Following',
+                        function: (selectedUserId) {
+                          Navigator.pushNamed(
+                            context,
+                            ProfileScreen.routeNamed,
+                            arguments: selectedUserId,
+                          );
+                        },
                       ),
                     ),
                   ],

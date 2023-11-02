@@ -9,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sedigram/auth/application/auth_bloc.dart';
 import 'package:sedigram/auth/application/auth_event.dart';
+import 'package:sedigram/chat_room/presentation/chat_room_screen.dart';
 import 'package:sedigram/core/data/fire_storage.dart';
 import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/create_post/application/create_post_bloc.dart';
@@ -206,6 +207,7 @@ class MyApp extends StatelessWidget {
                 },
                 child: const NewMessageScreen(),
               ),
+          ChatRoomScreen.routeNamed: (context) => const ChatRoomScreen(),
         },
         theme: ThemeData(
           textTheme: textTheme,

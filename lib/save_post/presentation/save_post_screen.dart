@@ -94,7 +94,7 @@ class _SavePostScreenState extends State<SavePostScreen> {
                         SavePostEditEvent(),
                       );
                 },
-              )
+              ),
             ],
           ),
         ),

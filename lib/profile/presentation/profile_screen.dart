@@ -65,7 +65,7 @@ class ProfileScreen extends StatelessWidget {
                         const SizedBox(
                           height: 12,
                         ),
-                        const Text('Posts')
+                        const Text('Posts'),
                       ],
                     ),
                     InkWell(
@@ -88,7 +88,7 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           const Text(
                             'Followers',
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -110,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
                           const SizedBox(
                             height: 12,
                           ),
-                          const Text('Following')
+                          const Text('Following'),
                         ],
                       ),
                     ),
@@ -132,7 +132,7 @@ class ProfileScreen extends StatelessWidget {
                       Text(
                         profileState.user.bio,
                         style: const TextStyle(fontWeight: FontWeight.w400),
-                      )
+                      ),
                     ],
                   ),
                 ),

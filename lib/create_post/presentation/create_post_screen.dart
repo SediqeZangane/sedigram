@@ -79,7 +79,7 @@ class CreatePostScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                )
+                ),
               ],
             );
           },
@@ -135,7 +135,7 @@ class CreatePostScreen extends StatelessWidget {
                                         visible: state.selectedPath == path,
                                         child: const Icon(Icons.check_circle),
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                                 onTap: () {

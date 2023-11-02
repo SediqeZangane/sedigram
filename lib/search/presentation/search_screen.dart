@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sedigram/core/presentation/widget/follow_list_tile.dart';
 import 'package:sedigram/core/presentation/widget/search_box.dart';
+import 'package:sedigram/profile/presentation/profile_screen.dart';
 import 'package:sedigram/search/application/search_bloc.dart';
 import 'package:sedigram/search/application/search_event.dart';
 import 'package:sedigram/search/application/search_state.dart';
@@ -33,6 +34,13 @@ class _SearchScreenState extends State<SearchScreen> {
         builder: (context, state) {
           return FollowListTile(
             user: state.user,
+            function: (selectedUserId) {
+              Navigator.pushNamed(
+                context,
+                ProfileScreen.routeNamed,
+                arguments: selectedUserId,
+              );
+            },
           );
         },
       ),

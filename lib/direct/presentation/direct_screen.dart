@@ -36,9 +36,6 @@ class DirectScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [],
-      ),
     );
   }
 }

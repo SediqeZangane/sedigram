@@ -37,7 +37,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 Icons.rocket_launch,
                 color: Colors.black,
               ),
-            )
+            ),
           ],
         ),
         body: SafeArea(

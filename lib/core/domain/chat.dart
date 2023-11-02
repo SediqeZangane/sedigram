@@ -1,21 +1,20 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:sedigram/core/domain/user.dart';
 
 part 'chat.g.dart';
 
 @JsonSerializable()
 class Chat {
   final String id;
-  final List<User> users;
+  final List<String> userIds;
 
   const Chat({
     required this.id,
-    required this.users,
+    required this.userIds,
   });
 
   Chat.empty()
       : id = '',
-        users = [];
+        userIds = [];
 
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
 
@@ -23,11 +22,11 @@ class Chat {
 
   Chat copyWith({
     String? id,
-    List<User>? users,
+    List<String>? userIds,
   }) {
     return Chat(
       id: id ?? this.id,
-      users: users ?? this.users,
+      userIds: userIds ?? this.userIds,
     );
   }
 }
