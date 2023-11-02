@@ -1,0 +1,3 @@
+class ChatRoomState {
+  ChatRoomState.init();
+}
