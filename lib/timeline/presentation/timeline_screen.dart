@@ -43,31 +43,26 @@ class _TimelineScreenState extends State<TimelineScreen> {
                     : ListView.builder(
                         itemCount: timelineState.listPost.length,
                         itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              const Divider(),
-                              PostWidget(
-                                isMine: timelineState.listPost[index].isMine,
-                                postDetailModel: timelineState.listPost[index],
-                                liked: timelineState.listPost[index].liked,
-                                like: () {
-                                  context.read<TimelineBloc>().add(
-                                        TimelineLikeEvent(
-                                          likedPost: timelineState
-                                              .listPost[index].post,
-                                        ),
-                                      );
-                                },
-                                unlike: () {
-                                  context.read<TimelineBloc>().add(
-                                        TimelineUnLikeEvent(
-                                          unLikedPost: timelineState
-                                              .listPost[index].post,
-                                        ),
-                                      );
-                                },
-                              ),
-                            ],
+                          return PostWidget(
+                            isMine: timelineState.listPost[index].isMine,
+                            postDetailModel: timelineState.listPost[index],
+                            liked: timelineState.listPost[index].liked,
+                            like: () {
+                              context.read<TimelineBloc>().add(
+                                    TimelineLikeEvent(
+                                      likedPost:
+                                          timelineState.listPost[index].post,
+                                    ),
+                                  );
+                            },
+                            unlike: () {
+                              context.read<TimelineBloc>().add(
+                                    TimelineUnLikeEvent(
+                                      unLikedPost:
+                                          timelineState.listPost[index].post,
+                                    ),
+                                  );
+                            },
                           );
                         },
                       ),
