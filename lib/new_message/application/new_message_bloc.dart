@@ -48,7 +48,7 @@ class NewMessageBloc extends Bloc<NewMessageEvent, NewMessageState> {
         final ownerUserId = globalUserBloc.state.user.userId;
         var chat = await firestoreService.getChatByUserIds(
           senderId: ownerUserId,
-          receiver: event.selectedUser,
+          receiverId: event.selectedUser,
         );
         if (chat == null) {
           final userIds = [ownerUserId, event.selectedUser];

@@ -15,6 +15,8 @@ import 'package:sedigram/core/data/firestore_service.dart';
 import 'package:sedigram/create_post/application/create_post_bloc.dart';
 import 'package:sedigram/create_post/application/create_post_event.dart';
 import 'package:sedigram/create_post/presentation/create_post_screen.dart';
+import 'package:sedigram/direct/application/direct_bloc.dart';
+import 'package:sedigram/direct/application/direct_event.dart';
 import 'package:sedigram/direct/presentation/direct_screen.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_bloc.dart';
 import 'package:sedigram/edit_profile/application/edit_profile_event.dart';
@@ -196,7 +198,16 @@ class MyApp extends StatelessWidget {
               child: ProfilePhotoScreen(imagePath: imagePath!),
             );
           },
-          DirectScreen.routeNamed: (context) => const DirectScreen(),
+          DirectScreen.routeNamed: (context) => BlocProvider(
+                create: (context) {
+                  return DirectBloc(
+                    firestoreService:
+                        FirestoreService(FirebaseFirestore.instance),
+                    globalUserBloc: GlobalUserBloc(),
+                  )..add(DirectInitEvent());
+                },
+                child: const DirectScreen(),
+              ),
           NewMessageScreen.routeNamed: (context) => BlocProvider(
                 create: (context) {
                   return NewMessageBloc(

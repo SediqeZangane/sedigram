@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sedigram/core/domain/chat.dart';
-import 'package:sedigram/core/domain/message.dart';
 import 'package:sedigram/core/domain/post.dart';
 import 'package:sedigram/core/domain/user.dart';
 import 'package:sedigram/core/domain/user_info.dart';
@@ -164,64 +163,63 @@ class FirestoreService {
     }
   }
 
-  Future<Chat?> getChat(String chatId) async {
+  Future<List<Chat>> getChats(String userId) async {
     final collection = firebaseFirestore.collection('chats');
-    final doc = await collection.doc(chatId).get();
-    final chatData = doc.data();
-
-    if (chatData != null) {
-      return Chat.fromJson(chatData);
-    } else {
-      return null;
-    }
+    final chatSnapshot =
+        await collection.where('userIds', arrayContains: userId).get();
+    final listQuery = chatSnapshot.docs;
+    return listQuery.map((e) => Chat.fromJson(e.data())).toList();
   }
+
+  // Future<Chat?> getChat(String chatId) async {
+  //   final collection = firebaseFirestore.collection('chats');
+  //   final doc = await collection.doc(chatId).get();
+  //   final chatData = doc.data();
+  //
+  //   if (chatData != null) {
+  //     return Chat.fromJson(chatData);
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   Future<Chat?> getChatByUserIds({
     required String senderId,
-    required String receiver,
+    required String receiverId,
   }) async {
-    final collection = firebaseFirestore.collection('chats');
-    final chatSnapshot = await collection
-        .where('userIds', arrayContains: senderId)
-        .where('userIds', arrayContains: receiver)
-        .get();
-
-    if (chatSnapshot.docs.isNotEmpty) {
-      final chatDocument = chatSnapshot.docs.first;
-      final chat = chatDocument.data();
-      return Chat.fromJson(chat);
-    } else {
-      return null;
-    }
+    final myConversationList = await getChats(senderId);
+    return myConversationList
+        .where((element) => element.userIds.contains(receiverId))
+        .firstOrNull;
   }
 
-  Future<bool> createMessage(Message newMessage) async {
-    final collection = firebaseFirestore
-        .collection('chats')
-        .doc(newMessage.chatId)
-        .collection('messages');
-    final doc = collection.doc(newMessage.id);
+// Future<bool> createMessage(Message newMessage) async {
+//   final collection = firebaseFirestore
+//       .collection('chats')
+//       .doc(newMessage.chatId)
+//       .collection('messages');
+//   final doc = collection.doc(newMessage.id);
+//
+//   try {
+//     await doc.set(newMessage.toJson());
+//     return true;
+//   } catch (_) {
+//     return false;
+//   }
+// }
 
-    try {
-      await doc.set(newMessage.toJson());
-      return true;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  Future<Message?> getMessage(String chatId, String id) async {
-    final collection = firebaseFirestore
-        .collection('chats')
-        .doc(chatId)
-        .collection('messages');
-    final doc = await collection.doc(id).get();
-    final messageData = doc.data();
-
-    if (messageData != null) {
-      return Message.fromJson(messageData);
-    } else {
-      return null;
-    }
-  }
+// Future<Message?> getMessage(String chatId, String id) async {
+//   final collection = firebaseFirestore
+//       .collection('chats')
+//       .doc(chatId)
+//       .collection('messages');
+//   final doc = await collection.doc(id).get();
+//   final messageData = doc.data();
+//
+//   if (messageData != null) {
+//     return Message.fromJson(messageData);
+//   } else {
+//     return null;
+//   }
+// }
 }
