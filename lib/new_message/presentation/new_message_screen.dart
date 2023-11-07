@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sedigram/chat_room/presentation/chat_room_screen.dart';
 import 'package:sedigram/core/presentation/widget/follow_list_tile.dart';
 import 'package:sedigram/core/presentation/widget/search_box.dart';
 import 'package:sedigram/new_message/application/new_message_bloc.dart';
@@ -56,11 +55,12 @@ class NewMessageScreen extends StatelessWidget {
                     return FollowListTile(
                       user: state.listSearchFollowings,
                       function: (selectedUserId) {
-                        Navigator.pushNamed(
-                          context,
-                          ChatRoomScreen.routeNamed,
-                          arguments: selectedUserId,
-                        );
+                        context.read<NewMessageBloc>().add(
+                              NewMessageSelectUserEvent(
+                                selectedUser: selectedUserId,
+                                navigatorState: Navigator.of(context),
+                              ),
+                            );
                       },
                     );
                   }
